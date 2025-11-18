@@ -1,12 +1,15 @@
 package fr.esgi.tracker.controller;
 
-import java.awt.*;
-import java.io.IOException;
-
-import fr.esgi.tracker.App;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import fr.esgi.tracker.App;
+import fr.esgi.tracker.services.LectureService;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class TrackerController {
+public class TrackerController  {
+    private LectureService lectureService;
     @FXML
     Button playButton;
     @FXML
@@ -14,19 +17,8 @@ public class TrackerController {
     @FXML
     Button stopButton;
 
-    public void initialize() {
-        // VÉRIFICATION 1 : Est-ce que le bouton a été injecté ?
-        if (playButton != null) {
-            System.out.println("✅ playButton est connecté ! Texte : " + playButton.getText());
-        } else {
-            System.out.println("❌ ERREUR : playButton est NULL. Vérifiez le fx:id.");
-        }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        // VÉRIFICATION 2 : Ajouter une action simple
-        if (playButton != null) {
-            playButton.setOnAction(event -> {
-                System.out.println("Bouton PLAY cliqué !");
-            });
-        }
     }
 }
