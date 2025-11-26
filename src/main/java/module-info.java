@@ -4,6 +4,8 @@ module fr.esgi.tracker {
     requires java.desktop;
     requires javafx.media;
     requires org.json;
+    requires javafx.base;
+    requires javafx.graphics;
     //requires fr.esgi.tracker;
 
     opens fr.esgi.tracker to javafx.fxml;
