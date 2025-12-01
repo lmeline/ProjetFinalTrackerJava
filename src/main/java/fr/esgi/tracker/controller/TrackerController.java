@@ -1,6 +1,15 @@
 package fr.esgi.tracker.controller;
 
+import fr.esgi.tracker.business.Hauteur;
 import fr.esgi.tracker.business.Note;
+import fr.esgi.tracker.business.Piste;
+import fr.esgi.tracker.services.AudioService;
+import fr.esgi.tracker.services.EnregistrementService;
+import fr.esgi.tracker.services.InstrumentService;
+import fr.esgi.tracker.services.impl.AudioServiceImpl;
+import fr.esgi.tracker.services.impl.EnregistrementServiceImpl;
+import fr.esgi.tracker.services.impl.InstrumentServiceImpl;
+import fr.esgi.tracker.services.impl.LectureServiceImpl;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -73,12 +82,21 @@ public class TrackerController  {
         buttonController.ButtonStopPressed();
     }
     private final PianoController pianoController = new PianoController();
-    private final ButtonController buttonController = new ButtonController();
+    private final ButtonController buttonController = new ButtonController(this);
     private final TableauController tableauController = new TableauController();
+    private final InstrumentService instrumentService = new InstrumentServiceImpl();
+    private final EnregistrementService enregistrementService = new EnregistrementServiceImpl();
 
 
     @FXML
     public void initialize() {
+
+        Note[] notes = new Note[64];
+        notes[0] = new Note(Hauteur.C3, instrumentService.getInstrument("guitare"), 1.0f);
+        notes[4] = new Note(Hauteur.D3, instrumentService.getInstrument("guitare"), 1.0f);
+        lectureService = new LectureServiceImpl(new Piste(notes));
+
+
         pianoController.initKeys(
                 C2, CSharp2, D2, DSharp2, E2, F2, FSharp2,
                 G2, GSharp2, A2, ASharp2, B2,
@@ -86,6 +104,10 @@ public class TrackerController  {
                 FSharp3, G3, GSharp3, A3, ASharp3, B3
         );
         tableauController.initTableau(TrackerList, NoteList);
+
     }
 
+    public LectureService getLectureService() {
+        return lectureService;
+    }
 }
