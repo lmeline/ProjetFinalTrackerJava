@@ -63,7 +63,7 @@ public class PianoController {
         C2.setOnAction(e -> {
             Instrument instrument = this.instrumentService.getInstrument("guitare");
             Note note = new Note(Hauteur.C2, instrument, 1.0f);
-            this.audioService.jouerNote(note, 1.0f);
+            new Thread(() -> {this.audioService.jouerNote(note, 1.0f);}).start();
         });
         CSharp2.setOnAction(e -> System.out.println("C#2 joué !"));
         D2.setOnAction(e -> System.out.println("D2 joué !"));

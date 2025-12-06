@@ -29,17 +29,17 @@ public class LectureServiceImpl implements LectureService {
     public void play() {
         this.arreterHorloge();
         this.statutLecture = StatutLecture.EN_COURS;
-        this.prechargerSequence();
+        //this.prechargerSequence();
         this.tache = this.horloge.scheduleAtFixedRate(() -> {
             try {
                 Note note = this.piste.getSequence()[this.step - 1];
-                if (note != null) audioService.jouerNote(note, this.piste.getVolume());
-                System.out.println("Step" + this.step);
+                if (note != null) new Thread(() -> {audioService.jouerNote(note, this.piste.getVolume());}).start();
+                //System.out.println("Step" + this.step);
                 this.incrementerStep();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }, 0, (60_000 / this.bpm/4), TimeUnit.MILLISECONDS);
+        }, 0, (60_000_000_000L / this.bpm/4), TimeUnit.NANOSECONDS);
     }
 
     @Override
