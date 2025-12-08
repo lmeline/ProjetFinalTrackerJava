@@ -1,6 +1,10 @@
 package fr.esgi.tracker.controller;
 
+import fr.esgi.tracker.business.Hauteur;
 import fr.esgi.tracker.business.Note;
+import fr.esgi.tracker.business.Piste;
+import fr.esgi.tracker.services.*;
+import fr.esgi.tracker.services.impl.*;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -11,7 +15,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import fr.esgi.tracker.App;
-import fr.esgi.tracker.services.LectureService;
 import javafx.event.ActionEvent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -23,6 +26,9 @@ import java.util.ResourceBundle;
 
 public class TrackerController  {
     private LectureService lectureService;
+    private PisteService pisteService = new PisteServiceImpl();
+    private InstrumentService instrumentService = new InstrumentServiceImpl();
+
 
     @FXML private Button playButton;
     @FXML private Button pauseButton;
@@ -72,13 +78,53 @@ public class TrackerController  {
     private void ButtonStopPressed() {
         buttonController.ButtonStopPressed();
     }
-    private final PianoController pianoController = new PianoController();
-    private final ButtonController buttonController = new ButtonController();
+    private final PianoController pianoController = new PianoController(this);
+    private final ButtonController buttonController = new ButtonController(this);
     private final TableauController tableauController = new TableauController();
+    private final EnregistrementService enregistrementService = new EnregistrementServiceImpl();
 
 
     @FXML
     public void initialize() {
+
+        PisteService pisteService = new PisteServiceImpl();
+        pisteService.chargerToutesLesPistes();
+        this.instrumentService.chargerTousLesInstruments();
+
+
+
+        Note[] notes = new Note[64];
+        notes[0] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
+        notes[4] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
+        notes[8] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
+        notes[12] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
+        notes[16] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
+        notes[20] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
+        notes[24] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
+        notes[28] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
+        notes[32] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
+        notes[36] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
+        notes[40] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
+        notes[44] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
+        notes[48] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
+        notes[52] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
+        notes[56] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
+        notes[60] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
+
+        Piste pistetest = new Piste(
+                "test",
+                notes
+        );
+
+        pisteService.enregistrerPiste(pistetest);
+
+
+        try {
+            lectureService = new LectureServiceImpl(pisteService.chargerPiste("test"));
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
         pianoController.initKeys(
                 C2, CSharp2, D2, DSharp2, E2, F2, FSharp2,
                 G2, GSharp2, A2, ASharp2, B2,
@@ -86,6 +132,14 @@ public class TrackerController  {
                 FSharp3, G3, GSharp3, A3, ASharp3, B3
         );
         tableauController.initTableau(TrackerList, NoteList);
+
     }
 
+    public LectureService getLectureService() {
+        return lectureService;
+    }
+
+    public InstrumentService getInstrumentService() {
+        return instrumentService;
+    }
 }

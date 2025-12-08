@@ -38,7 +38,7 @@ public class Instrument {
         this.cheminFichier = cheminFichier;
     }
 
-    public Hauteur gethauteurDuSample() {
+    public Hauteur getHauteurDuSample() {
         return hauteurDuSample;
     }
 
@@ -46,16 +46,17 @@ public class Instrument {
         this.hauteurDuSample = hauteurDuSample;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Instrument that = (Instrument) o;
-        return Objects.equals(getId(), that.getId()) && Objects.equals(getNom(), that.getNom()) && Objects.equals(getCheminFichier(), that.getCheminFichier()) && gethauteurDuSample() == that.gethauteurDuSample();
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getNom(), that.getNom()) && Objects.equals(getCheminFichier(), that.getCheminFichier()) && hauteurDuSample == that.hauteurDuSample;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getNom(), getCheminFichier(), gethauteurDuSample());
+        return Objects.hash(getId(), getNom(), getCheminFichier(), hauteurDuSample);
     }
 
     @Override

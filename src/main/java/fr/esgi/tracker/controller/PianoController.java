@@ -1,9 +1,22 @@
 package fr.esgi.tracker.controller;
 
+import fr.esgi.tracker.business.Hauteur;
+import fr.esgi.tracker.business.Instrument;
+import fr.esgi.tracker.business.Note;
+import fr.esgi.tracker.services.AudioService;
+import fr.esgi.tracker.services.InstrumentService;
+import fr.esgi.tracker.services.impl.AudioServiceImpl;
+import fr.esgi.tracker.services.impl.InstrumentServiceImpl;
 import javafx.scene.control.Button;
 import javafx.scene.Scene;
 
 public class PianoController {
+    private final AudioService audioService = new AudioServiceImpl();
+    private final TrackerController trackerController;
+
+    public PianoController(TrackerController trackerController) {
+        this.trackerController = trackerController;
+    }
 
     public void initKeys(
             Button C2, Button CSharp2, Button D2, Button DSharp2,
@@ -51,7 +64,11 @@ public class PianoController {
         });
 
         // ACTIONS DES TOUCHES
-        C2.setOnAction(e -> System.out.println("C2 joué !"));
+        C2.setOnAction(e -> {
+            Instrument instrument = this.trackerController.getInstrumentService().getInstrument("piano");
+            Note note = new Note(Hauteur.C2, instrument, 1.0f);
+            new Thread(() -> {this.audioService.jouerNote(note, 1.0f);}).start();
+        });
         CSharp2.setOnAction(e -> System.out.println("C#2 joué !"));
         D2.setOnAction(e -> System.out.println("D2 joué !"));
         DSharp2.setOnAction(e -> System.out.println("D#2 joué !"));
