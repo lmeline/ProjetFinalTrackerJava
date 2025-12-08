@@ -5,6 +5,7 @@ import fr.esgi.tracker.business.Note;
 import fr.esgi.tracker.business.Piste;
 import fr.esgi.tracker.services.*;
 import fr.esgi.tracker.services.impl.*;
+import fr.esgi.tracker.utils.AudioPlayer;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -28,6 +29,7 @@ public class TrackerController  {
     private LectureService lectureService;
     private PisteService pisteService = new PisteServiceImpl();
     private InstrumentService instrumentService = new InstrumentServiceImpl();
+    private AudioService audioService = new AudioServiceImpl();
 
 
     @FXML private Button playButton;
@@ -141,5 +143,13 @@ public class TrackerController  {
 
     public InstrumentService getInstrumentService() {
         return instrumentService;
+    }
+
+    @FXML
+    public void noteTriggered(ActionEvent e) {
+        Button btn = (Button) e.getSource();
+        Note note = new Note(Hauteur.valueOf(btn.getId()), instrumentService.getInstrument("piano"), 1.0f);
+        this.audioService.jouerNote(note, 1.0F);
+        System.out.println(btn.getId());
     }
 }

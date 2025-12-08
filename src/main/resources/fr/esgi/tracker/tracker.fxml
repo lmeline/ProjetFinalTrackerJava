@@ -12,57 +12,57 @@
    <bottom>
       <AnchorPane prefHeight="201.0" prefWidth="762.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="C2" alignment="BOTTOM_CENTER" layoutX="200.0" mnemonicParsing="false" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey;" text="C2" />
-            <Button fx:id="D2" alignment="BOTTOM_CENTER" layoutX="240.0" mnemonicParsing="false" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey;" text="D2" />
-            <Button fx:id="E2" alignment="BOTTOM_CENTER" layoutX="282.0" mnemonicParsing="false" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey;" text="E2" />
-            <Button fx:id="F2" alignment="BOTTOM_CENTER" layoutX="324.0" mnemonicParsing="false" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey;" text="F2" />
-            <Button fx:id="G2" alignment="BOTTOM_CENTER" layoutX="366.0" mnemonicParsing="false" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey;" text="G2" />
-            <Button fx:id="A2" alignment="BOTTOM_CENTER" layoutX="408.0" mnemonicParsing="false" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey;" text="A2" />
-            <Button fx:id="B2" alignment="BOTTOM_CENTER" layoutX="450.0" mnemonicParsing="false" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey;" text="B2" />
-            <Button fx:id="C3" alignment="BOTTOM_CENTER" layoutX="492.0" mnemonicParsing="false" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey;" text="C3" />
-            <Button fx:id="D3" alignment="BOTTOM_CENTER" layoutX="534.0" mnemonicParsing="false" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey;" text="D3" />
-            <Button fx:id="E3" alignment="BOTTOM_CENTER" layoutX="576.0" mnemonicParsing="false" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey;" text="E3" />
-            <Button fx:id="F3" alignment="BOTTOM_CENTER" layoutX="618.0" mnemonicParsing="false" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey;" text="F3" />
-            <Button fx:id="G3" alignment="BOTTOM_CENTER" layoutX="660.0" mnemonicParsing="false" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey;" text="G3" />
-            <Button fx:id="A3" alignment="BOTTOM_CENTER" layoutX="702.0" mnemonicParsing="false" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey;" text="A3" />
-            <Button fx:id="B3" alignment="BOTTOM_CENTER" layoutX="744.0" mnemonicParsing="false" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey;" text="B3" />
-            <Button fx:id="CSharp2" alignment="BOTTOM_CENTER" layoutX="220.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="30.0" style="-fx-background-color: black; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey; -fx-text-fill: white;" text="C#">
+             <Button fx:id="C2" alignment="BOTTOM_CENTER" layoutX="200.0" mnemonicParsing="false" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey;" text="C2" onAction="#noteTriggered"/>
+             <Button fx:id="D2" alignment="BOTTOM_CENTER" layoutX="240.0" mnemonicParsing="false" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey;" text="D2" onAction="#noteTriggered"/>
+             <Button fx:id="E2" alignment="BOTTOM_CENTER" layoutX="282.0" mnemonicParsing="false" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey;" text="E2" onAction="#noteTriggered"/>
+            <Button fx:id="F2" alignment="BOTTOM_CENTER" layoutX="324.0" mnemonicParsing="false" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey;" text="F2" onAction="#noteTriggered"/>
+            <Button fx:id="G2" alignment="BOTTOM_CENTER" layoutX="366.0" mnemonicParsing="false" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey;" text="G2" onAction="#noteTriggered"/>
+            <Button fx:id="A2" alignment="BOTTOM_CENTER" layoutX="408.0" mnemonicParsing="false" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey;" text="A2" onAction="#noteTriggered"/>
+            <Button fx:id="B2" alignment="BOTTOM_CENTER" layoutX="450.0" mnemonicParsing="false" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey;" text="B2" onAction="#noteTriggered"/>
+            <Button fx:id="C3" alignment="BOTTOM_CENTER" layoutX="492.0" mnemonicParsing="false" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey;" text="C3" onAction="#noteTriggered"/>
+            <Button fx:id="D3" alignment="BOTTOM_CENTER" layoutX="534.0" mnemonicParsing="false" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey;" text="D3" onAction="#noteTriggered"/>
+            <Button fx:id="E3" alignment="BOTTOM_CENTER" layoutX="576.0" mnemonicParsing="false" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey;" text="E3" onAction="#noteTriggered"/>
+            <Button fx:id="F3" alignment="BOTTOM_CENTER" layoutX="618.0" mnemonicParsing="false" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey;" text="F3" onAction="#noteTriggered"/>
+            <Button fx:id="G3" alignment="BOTTOM_CENTER" layoutX="660.0" mnemonicParsing="false" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey;" text="G3" onAction="#noteTriggered"/>
+            <Button fx:id="A3" alignment="BOTTOM_CENTER" layoutX="702.0" mnemonicParsing="false" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey;" text="A3" onAction="#noteTriggered"/>
+            <Button fx:id="B3" alignment="BOTTOM_CENTER" layoutX="744.0" mnemonicParsing="false" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey;" text="B3" onAction="#noteTriggered"/>
+            <Button fx:id="CSharp2" alignment="BOTTOM_CENTER" layoutX="220.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="30.0" style="-fx-background-color: black; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey; -fx-text-fill: white;" text="C#" onAction="#noteTriggered">
                <font>
                   <Font name="Arial" size="8.0" />
                </font></Button>
-            <Button fx:id="DSharp2" alignment="BOTTOM_CENTER" layoutX="261.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="30.0" style="-fx-background-color: black; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey; -fx-text-fill: white;" text="D#">
+            <Button fx:id="DSharp2" alignment="BOTTOM_CENTER" layoutX="261.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="30.0" style="-fx-background-color: black; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey; -fx-text-fill: white;" text="D#" onAction="#noteTriggered">
                <font>
                   <Font name="Arial" size="8.0" />
                </font></Button>
-            <Button fx:id="FSharp2" alignment="BOTTOM_CENTER" layoutX="359.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="30.0" style="-fx-background-color: black; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey; -fx-text-fill: white;" text="F#">
+            <Button fx:id="FSharp2" alignment="BOTTOM_CENTER" layoutX="359.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="30.0" style="-fx-background-color: black; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey; -fx-text-fill: white;" text="F#" onAction="#noteTriggered">
                <font>
                   <Font name="Arial" size="8.0" />
                </font></Button>
-            <Button fx:id="GSharp2" alignment="BOTTOM_CENTER" layoutX="399.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="30.0" style="-fx-background-color: black; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey; -fx-text-fill: white;" text="G#">
+            <Button fx:id="GSharp2" alignment="BOTTOM_CENTER" layoutX="399.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="30.0" style="-fx-background-color: black; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey; -fx-text-fill: white;" text="G#" onAction="#noteTriggered">
                <font>
                   <Font name="Arial" size="8.0" />
                </font></Button>
-            <Button fx:id="ASharp2" alignment="BOTTOM_CENTER" layoutX="440.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="30.0" style="-fx-background-color: black; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey; -fx-text-fill: white;" text="A#">
+            <Button fx:id="ASharp2" alignment="BOTTOM_CENTER" layoutX="440.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="30.0" style="-fx-background-color: black; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey; -fx-text-fill: white;" text="A#" onAction="#noteTriggered">
                <font>
                   <Font name="Arial" size="8.0" />
                </font></Button>
-            <Button fx:id="CSharp3" alignment="BOTTOM_CENTER" layoutX="526.0" layoutY="1.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="30.0" style="-fx-background-color: black; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey; -fx-text-fill: white;" text="C#">
+            <Button fx:id="CSharp3" alignment="BOTTOM_CENTER" layoutX="526.0" layoutY="1.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="30.0" style="-fx-background-color: black; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey; -fx-text-fill: white;" text="C#" onAction="#noteTriggered">
                <font>
                   <Font name="Arial" size="8.0" />
                </font></Button>
-            <Button fx:id="DSharp3" alignment="BOTTOM_CENTER" layoutX="567.0" layoutY="1.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="30.0" style="-fx-background-color: black; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey; -fx-text-fill: white;" text="D#">
+            <Button fx:id="DSharp3" alignment="BOTTOM_CENTER" layoutX="567.0" layoutY="1.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="30.0" style="-fx-background-color: black; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey; -fx-text-fill: white;" text="D#" onAction="#noteTriggered">
                <font>
                   <Font name="Arial" size="8.0" />
                </font></Button>
-            <Button fx:id="FSharp3" alignment="BOTTOM_CENTER" layoutX="643.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="30.0" style="-fx-background-color: black; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey; -fx-text-fill: white;" text="F#">
+            <Button fx:id="FSharp3" alignment="BOTTOM_CENTER" layoutX="643.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="30.0" style="-fx-background-color: black; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey; -fx-text-fill: white;" text="F#" onAction="#noteTriggered">
                <font>
                   <Font name="Arial" size="8.0" />
                </font></Button>
-            <Button fx:id="GSharp3" alignment="BOTTOM_CENTER" layoutX="686.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="30.0" style="-fx-background-color: black; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey; -fx-text-fill: white;" text="G#">
+            <Button fx:id="GSharp3" alignment="BOTTOM_CENTER" layoutX="686.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="30.0" style="-fx-background-color: black; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey; -fx-text-fill: white;" text="G#" onAction="#noteTriggered">
                <font>
                   <Font name="Arial" size="8.0" />
                </font></Button>
-            <Button fx:id="ASharp3" alignment="BOTTOM_CENTER" layoutX="728.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="30.0" style="-fx-background-color: black; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey; -fx-text-fill: white;" text="A#">
+            <Button fx:id="ASharp3" alignment="BOTTOM_CENTER" layoutX="728.0" mnemonicParsing="false" prefHeight="130.0" prefWidth="30.0" style="-fx-background-color: black; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey; -fx-text-fill: white;" text="A#" onAction="#noteTriggered">
                <font>
                   <Font name="Arial" size="8.0" />
                </font></Button>
