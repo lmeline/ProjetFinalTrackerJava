@@ -63,34 +63,5 @@ public class PianoController {
             }
         });
 
-        // ACTIONS DES TOUCHES
-        C2.setOnAction(e -> {
-            Instrument instrument = this.trackerController.getInstrumentService().getInstrument("piano");
-            Note note = new Note(Hauteur.C2, instrument, 1.0f);
-            new Thread(() -> {this.audioService.jouerNote(note, 1.0f);}).start();
-        });
-        CSharp2.setOnAction(e -> System.out.println("C#2 joué !"));
-        D2.setOnAction(e -> System.out.println("D2 joué !"));
-        DSharp2.setOnAction(e -> System.out.println("D#2 joué !"));
-        E2.setOnAction(e -> System.out.println("E2 joué !"));
-        F2.setOnAction(e -> System.out.println("F2 joué !"));
-        FSharp2.setOnAction(e -> System.out.println("F#2 joué !"));
-        G2.setOnAction(e -> System.out.println("G2 joué !"));
-        GSharp2.setOnAction(e -> System.out.println("G#2 joué !"));
-        A2.setOnAction(e -> System.out.println("A2 joué !"));
-        ASharp2.setOnAction(e -> System.out.println("A#2 joué !"));
-        B2.setOnAction(e -> System.out.println("B2 joué !"));
-        C3.setOnAction(e -> System.out.println("C3 joué !"));
-        CSharp3.setOnAction(e -> System.out.println("C#3 joué !"));
-        D3.setOnAction(e -> System.out.println("D3 joué !"));
-        DSharp3.setOnAction(e -> System.out.println("D#3 joué !"));
-        E3.setOnAction(e -> System.out.println("E3 joué !"));
-        F3.setOnAction(e -> System.out.println("F3 joué !"));
-        FSharp3.setOnAction(e -> System.out.println("F#3 joué !"));
-        G3.setOnAction(e -> System.out.println("G3 joué !"));
-        GSharp3.setOnAction(e -> System.out.println("G#3 joué !"));
-        A3.setOnAction(e -> System.out.println("A3 joué !"));
-        ASharp3.setOnAction(e -> System.out.println("A#3 joué !"));
-        B3.setOnAction(e -> System.out.println("B3 joué !"));
     }
 }
