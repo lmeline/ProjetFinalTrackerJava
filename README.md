@@ -4,7 +4,7 @@
 
 **JavaFx Tracker** est une application de composition musicale moderne inspirée des célèbres **Trackers** des années 90, comme Protracker sur Amiga. Il permet de jouer des *samples* audio et de placer ces séquences sur une grille temporelle appelée piste. La composition peut être enregistrée dans un fichier.
 
-Ce projet a été réalisé dans le cadre du cours de **B3 - Java Avancé** de l'ESGI et compte pour **50%** de la matière Java Avancé et **50%** de la matière Tests Unitaires.
+
 
 ---
 
