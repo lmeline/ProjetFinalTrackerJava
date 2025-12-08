@@ -94,44 +94,11 @@ public class TrackerController  {
 
     @FXML
     public void initialize() {
-
-        PisteService pisteService = new PisteServiceImpl();
-        pisteService.chargerToutesLesPistes();
+        this.pisteService.chargerToutesLesPistes();
+        this.pisteService.chargerPiste("4onTheFloor");
         this.instrumentService.chargerTousLesInstruments();
+        this.lectureService = new LectureServiceImpl(this.pisteService);
 
-
-
-        Note[] notes = new Note[64];
-        notes[0] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
-        notes[4] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
-        notes[8] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
-        notes[12] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
-        notes[16] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
-        notes[20] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
-        notes[24] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
-        notes[28] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
-        notes[32] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
-        notes[36] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
-        notes[40] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
-        notes[44] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
-        notes[48] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
-        notes[52] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
-        notes[56] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
-        notes[60] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
-
-        Piste pistetest = new Piste(
-                "test",
-                notes
-        );
-
-        pisteService.enregistrerPiste(pistetest);
-
-
-        try {
-            lectureService = new LectureServiceImpl(pisteService.chargerPiste("test"));
-        } catch (Exception e){
-            e.printStackTrace();
-        }
 
         pianoController.initKeys(
                 C2, CSharp2, D2, DSharp2, E2, F2, FSharp2,

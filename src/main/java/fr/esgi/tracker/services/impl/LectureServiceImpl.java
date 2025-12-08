@@ -5,6 +5,7 @@ import fr.esgi.tracker.business.Piste;
 import fr.esgi.tracker.business.StatutLecture;
 import fr.esgi.tracker.services.AudioService;
 import fr.esgi.tracker.services.LectureService;
+import fr.esgi.tracker.services.PisteService;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -12,28 +13,29 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 public class LectureServiceImpl implements LectureService {
-    private Piste piste;
     private int bpm = 120;
     private StatutLecture statutLecture = StatutLecture.ARRETE;
+    private PisteService pisteService;
     private AudioService audioService;
     private ScheduledExecutorService horloge = Executors.newSingleThreadScheduledExecutor();
     private ScheduledFuture<?> tache;
     private int step = 1;
 
-    public LectureServiceImpl(Piste piste) {
-        this.piste = piste;
+    public LectureServiceImpl(PisteService pisteService) {
         this.audioService = new AudioServiceImpl();
+        this.pisteService = pisteService;
     }
 
     @Override
     public void play() {
+        Piste piste = this.pisteService.getPisteCourante();
         this.arreterHorloge();
         this.statutLecture = StatutLecture.EN_COURS;
         //this.prechargerSequence();
         this.tache = this.horloge.scheduleAtFixedRate(() -> {
             try {
-                Note note = this.piste.getSequence()[this.step - 1];
-                if (note != null) new Thread(() -> {audioService.jouerNote(note, this.piste.getVolume());}).start();
+                Note note = piste.getSequence()[this.step - 1];
+                if (note != null) new Thread(() -> {audioService.jouerNote(note, piste.getVolume());}).start();
                 //System.out.println("Step" + this.step);
                 this.incrementerStep();
             } catch (Exception e) {
@@ -76,7 +78,7 @@ public class LectureServiceImpl implements LectureService {
     }
 
     private void prechargerSequence() {
-        for (Note note : this.piste.getSequence()) {
+        for (Note note : this.pisteService.getPisteCourante().getSequence()) {
             if (note != null) audioService.jouerNote(note, 0);
         }
     }

@@ -2,9 +2,11 @@ package fr.esgi.tracker.services;
 
 import fr.esgi.tracker.business.Piste;
 
+import java.util.Map;
+
 public interface PisteService {
 
-    Piste chargerPiste(String nom) throws Exception;
+    Piste chargerPiste(String nom);
 
     void enregistrerPiste(Piste piste);
 
@@ -13,6 +15,8 @@ public interface PisteService {
     void chargerToutesLesPistes();
 
     Piste getPisteCourante();
+
+    Map<String, Piste> getToutesLesPistes();
 
 }
 
