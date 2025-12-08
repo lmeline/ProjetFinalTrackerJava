@@ -5,12 +5,13 @@ import java.util.Objects;
 
 public class Piste {
     private int id;
-    private int nomPreset;
+    private String nomPreset;
     private static int compteur = 0;
     private float volume;
     private Note[] sequence;
 
-    public Piste(Note[] sequence) {
+    public Piste(String nomPreset, Note[] sequence) {
+        this.nomPreset = nomPreset;
         this.id = ++compteur;
         this.volume = 1.0f;
         this.sequence = sequence;
@@ -36,11 +37,11 @@ public class Piste {
         this.volume = volume;
     }
 
-    public int getNomPreset() {
+    public String getNomPreset() {
         return nomPreset;
     }
 
-    public void setNomPreset(int nomPreset) {
+    public void setNomPreset(String nomPreset) {
         this.nomPreset = nomPreset;
     }
 

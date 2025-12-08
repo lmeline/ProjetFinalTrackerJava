@@ -4,7 +4,7 @@ import fr.esgi.tracker.business.Piste;
 
 public interface PisteService {
 
-    Piste chargerPiste(String nom);
+    Piste chargerPiste(String nom) throws Exception;
 
     void enregistrerPiste(Piste piste);
 
@@ -12,4 +12,8 @@ public interface PisteService {
 
     void chargerToutesLesPistes();
 
+    Piste getPisteCourante();
+
 }
+
+

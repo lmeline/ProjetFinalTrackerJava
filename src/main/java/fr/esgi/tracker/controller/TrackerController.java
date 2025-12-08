@@ -3,13 +3,8 @@ package fr.esgi.tracker.controller;
 import fr.esgi.tracker.business.Hauteur;
 import fr.esgi.tracker.business.Note;
 import fr.esgi.tracker.business.Piste;
-import fr.esgi.tracker.services.AudioService;
-import fr.esgi.tracker.services.EnregistrementService;
-import fr.esgi.tracker.services.InstrumentService;
-import fr.esgi.tracker.services.impl.AudioServiceImpl;
-import fr.esgi.tracker.services.impl.EnregistrementServiceImpl;
-import fr.esgi.tracker.services.impl.InstrumentServiceImpl;
-import fr.esgi.tracker.services.impl.LectureServiceImpl;
+import fr.esgi.tracker.services.*;
+import fr.esgi.tracker.services.impl.*;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -20,7 +15,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import fr.esgi.tracker.App;
-import fr.esgi.tracker.services.LectureService;
 import javafx.event.ActionEvent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -32,6 +26,7 @@ import java.util.ResourceBundle;
 
 public class TrackerController  {
     private LectureService lectureService;
+    private PisteService pisteService = new PisteServiceImpl();
 
     @FXML private Button playButton;
     @FXML private Button pauseButton;
@@ -91,6 +86,15 @@ public class TrackerController  {
     @FXML
     public void initialize() {
 
+        PisteService pisteService = new PisteServiceImpl();
+        pisteService.chargerToutesLesPistes();
+
+        try {
+            lectureService = new LectureServiceImpl(pisteService.chargerPiste("init"));
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
         Note[] notes = new Note[64];
         notes[0] = new Note(Hauteur.D3, instrumentService.getInstrument("kick"), 1.0f);
         notes[2] = new Note(Hauteur.D3, instrumentService.getInstrument("kick"), 1.0f);
@@ -110,9 +114,18 @@ public class TrackerController  {
         notes[56] = new Note(Hauteur.D3, instrumentService.getInstrument("kick"), 1.0f);
         notes[60] = new Note(Hauteur.D3, instrumentService.getInstrument("kick"), 1.0f);
 
+        Piste pistetest = new Piste(
+                "test",
+                notes
+        );
 
-        lectureService = new LectureServiceImpl(new Piste(notes));
+        pisteService.enregistrerPiste(pistetest);
 
+        try {
+            pisteService.chargerPiste("init");
+        } catch(Exception e) {
+            System.out.println("Piste init non trouvée");
+        }
 
         pianoController.initKeys(
                 C2, CSharp2, D2, DSharp2, E2, F2, FSharp2,

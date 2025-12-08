@@ -8,7 +8,6 @@ public class Instrument {
     private Long id;
     private String nom;
     private String cheminFichier;
-    private AudioClip audioClip;
     private Hauteur hauteurDuSample;
     private static Long compteur = 0L;
 
@@ -17,7 +16,6 @@ public class Instrument {
         this.nom = nom;
         this.cheminFichier = cheminFichier;
         this.hauteurDuSample = hauteurDuSample;
-        this.audioClip = new AudioClip(getClass().getResource(cheminFichier).toExternalForm());
     }
 
     public Long getId() {
@@ -48,20 +46,17 @@ public class Instrument {
         this.hauteurDuSample = hauteurDuSample;
     }
 
-    public AudioClip getAudioClip() {
-        return audioClip;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Instrument that = (Instrument) o;
-        return Objects.equals(getId(), that.getId()) && Objects.equals(getNom(), that.getNom()) && Objects.equals(getCheminFichier(), that.getCheminFichier()) && Objects.equals(getAudioClip(), that.getAudioClip()) && hauteurDuSample == that.hauteurDuSample;
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getNom(), that.getNom()) && Objects.equals(getCheminFichier(), that.getCheminFichier()) && hauteurDuSample == that.hauteurDuSample;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getNom(), getCheminFichier(), getAudioClip(), hauteurDuSample);
+        return Objects.hash(getId(), getNom(), getCheminFichier(), hauteurDuSample);
     }
 
     @Override
