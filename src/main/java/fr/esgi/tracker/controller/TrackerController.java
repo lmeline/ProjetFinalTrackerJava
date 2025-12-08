@@ -27,6 +27,8 @@ import java.util.ResourceBundle;
 public class TrackerController  {
     private LectureService lectureService;
     private PisteService pisteService = new PisteServiceImpl();
+    private InstrumentService instrumentService = new InstrumentServiceImpl();
+
 
     @FXML private Button playButton;
     @FXML private Button pauseButton;
@@ -76,10 +78,9 @@ public class TrackerController  {
     private void ButtonStopPressed() {
         buttonController.ButtonStopPressed();
     }
-    private final PianoController pianoController = new PianoController();
+    private final PianoController pianoController = new PianoController(this);
     private final ButtonController buttonController = new ButtonController(this);
     private final TableauController tableauController = new TableauController();
-    private final InstrumentService instrumentService = new InstrumentServiceImpl();
     private final EnregistrementService enregistrementService = new EnregistrementServiceImpl();
 
 
@@ -88,31 +89,27 @@ public class TrackerController  {
 
         PisteService pisteService = new PisteServiceImpl();
         pisteService.chargerToutesLesPistes();
+        this.instrumentService.chargerTousLesInstruments();
 
-        try {
-            lectureService = new LectureServiceImpl(pisteService.chargerPiste("init"));
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+
 
         Note[] notes = new Note[64];
-        notes[0] = new Note(Hauteur.D3, instrumentService.getInstrument("kick"), 1.0f);
-        notes[2] = new Note(Hauteur.D3, instrumentService.getInstrument("kick"), 1.0f);
-        notes[4] = new Note(Hauteur.D3, instrumentService.getInstrument("kick"), 1.0f);
-        notes[8] = new Note(Hauteur.D3, instrumentService.getInstrument("kick"), 1.0f);
-        notes[12] = new Note(Hauteur.D3, instrumentService.getInstrument("kick"), 1.0f);
-        notes[16] = new Note(Hauteur.D3, instrumentService.getInstrument("kick"), 1.0f);
-        notes[20] = new Note(Hauteur.D3, instrumentService.getInstrument("kick"), 1.0f);
-        notes[24] = new Note(Hauteur.D3, instrumentService.getInstrument("kick"), 1.0f);
-        notes[28] = new Note(Hauteur.D3, instrumentService.getInstrument("kick"), 1.0f);
-        notes[32] = new Note(Hauteur.D3, instrumentService.getInstrument("kick"), 1.0f);
-        notes[36] = new Note(Hauteur.D3, instrumentService.getInstrument("kick"), 1.0f);
-        notes[40] = new Note(Hauteur.D3, instrumentService.getInstrument("kick"), 1.0f);
-        notes[44] = new Note(Hauteur.D3, instrumentService.getInstrument("kick"), 1.0f);
-        notes[48] = new Note(Hauteur.D3, instrumentService.getInstrument("kick"), 1.0f);
-        notes[52] = new Note(Hauteur.D3, instrumentService.getInstrument("kick"), 1.0f);
-        notes[56] = new Note(Hauteur.D3, instrumentService.getInstrument("kick"), 1.0f);
-        notes[60] = new Note(Hauteur.D3, instrumentService.getInstrument("kick"), 1.0f);
+        notes[0] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
+        notes[4] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
+        notes[8] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
+        notes[12] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
+        notes[16] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
+        notes[20] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
+        notes[24] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
+        notes[28] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
+        notes[32] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
+        notes[36] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
+        notes[40] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
+        notes[44] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
+        notes[48] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
+        notes[52] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
+        notes[56] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
+        notes[60] = new Note(Hauteur.D3, instrumentService.getInstrument("piano"), 1.0f);
 
         Piste pistetest = new Piste(
                 "test",
@@ -121,10 +118,11 @@ public class TrackerController  {
 
         pisteService.enregistrerPiste(pistetest);
 
+
         try {
-            pisteService.chargerPiste("init");
-        } catch(Exception e) {
-            System.out.println("Piste init non trouvée");
+            lectureService = new LectureServiceImpl(pisteService.chargerPiste("test"));
+        } catch (Exception e){
+            e.printStackTrace();
         }
 
         pianoController.initKeys(
@@ -139,5 +137,9 @@ public class TrackerController  {
 
     public LectureService getLectureService() {
         return lectureService;
+    }
+
+    public InstrumentService getInstrumentService() {
+        return instrumentService;
     }
 }
