@@ -12,7 +12,11 @@ import javafx.scene.Scene;
 
 public class PianoController {
     private final AudioService audioService = new AudioServiceImpl();
-    private final InstrumentService instrumentService = new InstrumentServiceImpl();
+    private final TrackerController trackerController;
+
+    public PianoController(TrackerController trackerController) {
+        this.trackerController = trackerController;
+    }
 
     public void initKeys(
             Button C2, Button CSharp2, Button D2, Button DSharp2,
@@ -61,7 +65,7 @@ public class PianoController {
 
         // ACTIONS DES TOUCHES
         C2.setOnAction(e -> {
-            Instrument instrument = this.instrumentService.getInstrument("guitare");
+            Instrument instrument = this.trackerController.getInstrumentService().getInstrument("piano");
             Note note = new Note(Hauteur.C2, instrument, 1.0f);
             new Thread(() -> {this.audioService.jouerNote(note, 1.0f);}).start();
         });
