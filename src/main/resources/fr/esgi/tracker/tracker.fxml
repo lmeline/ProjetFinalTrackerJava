@@ -10,6 +10,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Arc?>
+<?import javafx.scene.shape.SVGPath?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" style="-fx-background-color: #111215;" styleClass="frame" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.esgi.tracker.controller.TrackerController">
    <bottom>
       <AnchorPane prefHeight="201.0" prefWidth="762.0" BorderPane.alignment="CENTER">
@@ -79,10 +83,37 @@
    <top>
       <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="2.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="playButton" alignment="BOTTOM_CENTER" layoutY="20.0" mnemonicParsing="false" onAction="#ButtonPlayPressed" text="Play" />
-            <Button fx:id="pauseButton" alignment="TOP_CENTER" mnemonicParsing="false" onAction="#ButtonPausePressed" text="Pause" />
-            <Button fx:id="stopButton" alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#ButtonStopPressed" text="Stop" textAlignment="RIGHT" />
-            <Button fx:id="recordButton" mnemonicParsing="false" text="Record" />
+             <Button fx:id="playButton" alignment="BOTTOM_CENTER"  mnemonicParsing="false" onAction="#ButtonPlayPressed" style="-fx-background-radius: 40px;">
+                 <graphic>
+                     <SVGPath content="M0 0 L20 10 L0 20 Z"
+                              fill="green"
+                              scaleX="0.5"
+                              scaleY="0.5"
+                     />
+                 </graphic>
+             </Button>
+            <Button fx:id="pauseButton" alignment="TOP_CENTER" mnemonicParsing="false" onAction="#ButtonPausePressed" style="-fx-background-radius: 40px;">
+                <graphic>
+                    <SVGPath content="M0 0 H10 V20 H0 Z M20 0 H30 V20 H20 Z"
+                             fill="white"
+                             scaleX="0.5"
+                             scaleY="0.5"
+                    />
+                </graphic>
+            </Button>
+            <Button fx:id="stopButton" alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#ButtonStopPressed" textAlignment="RIGHT" style="-fx-background-radius: 40px;">
+                 <graphic>
+                     <SVGPath content="M0 0 H20 V20 H0 Z"
+                              fill="white"
+                              scaleX="0.5"
+                              scaleY="0.5"/>
+                 </graphic>
+             </Button>
+             <Button fx:id="recordButton" mnemonicParsing="false" style="-fx-background-radius: 40px;">
+                 <graphic>
+                     <Circle fx:id="stopCircle" fill="#FF6666" scaleX="0.5" scaleY="0.5" radius="10" style="-fx-" />
+                 </graphic>
+             </Button>
             <ComboBox fx:id="piste_loader" prefWidth="150.0" promptText="Charger une piste" />
              <Button fx:id="creditButton" alignment="CENTER" mnemonicParsing="false" onAction="#openCredits" text="Crédits --&gt;" />
          </children>
