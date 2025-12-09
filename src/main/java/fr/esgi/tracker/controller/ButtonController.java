@@ -22,4 +22,6 @@ public class ButtonController {
         trackerController.getLectureService().stop();
         System.out.println("Lecture arrêtée");
     }
+
+
 }

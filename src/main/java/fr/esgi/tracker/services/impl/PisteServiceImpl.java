@@ -84,4 +84,6 @@ public class PisteServiceImpl implements PisteService {
     public Map<String, Piste> getToutesLesPistes() {
         return this.pistes;
     }
+
+
 }

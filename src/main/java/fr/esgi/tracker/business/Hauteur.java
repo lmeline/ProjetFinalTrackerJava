@@ -27,7 +27,7 @@ public enum Hauteur {
     B3(246.94),
     C4(261.62);
 
-    private final double frequence;
+    private final double frequence;;
 
     Hauteur(double frequence) {
         this.frequence = frequence;
