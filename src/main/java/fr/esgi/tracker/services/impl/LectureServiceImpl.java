@@ -3,10 +3,13 @@ package fr.esgi.tracker.services.impl;
 import fr.esgi.tracker.business.Note;
 import fr.esgi.tracker.business.Piste;
 import fr.esgi.tracker.business.StatutLecture;
+import fr.esgi.tracker.observer.LectureObserver;
 import fr.esgi.tracker.services.AudioService;
 import fr.esgi.tracker.services.LectureService;
 import fr.esgi.tracker.services.PisteService;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -20,6 +23,7 @@ public class LectureServiceImpl implements LectureService {
     private ScheduledExecutorService horloge = Executors.newSingleThreadScheduledExecutor();
     private ScheduledFuture<?> tache;
     private int step = 1;
+    private List<LectureObserver> observers = new ArrayList<>();
 
     public LectureServiceImpl(PisteService pisteService) {
         this.audioService = new AudioServiceImpl();
@@ -35,8 +39,16 @@ public class LectureServiceImpl implements LectureService {
         this.tache = this.horloge.scheduleAtFixedRate(() -> {
             try {
                 Note note = piste.getSequence()[this.step - 1];
-                if (note != null) new Thread(() -> {audioService.jouerNote(note, piste.getVolume());}).start();
+                if (note != null) {
+                    System.out.println(step + " - " + note.toString());
+                } else {
+                    System.out.println(step + " - " + "-- | ----");
+                }
+
+                // if (note != null) new Thread(() -> {audioService.jouerNote(note, piste.getVolume());}).start();
+
                 //System.out.println("Step" + this.step);
+                this.notifyObservers(this.step - 1);
                 this.incrementerStep();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -49,6 +61,7 @@ public class LectureServiceImpl implements LectureService {
         this.arreterHorloge();
         this.statutLecture = StatutLecture.ARRETE;
         this.step = 1;
+        this.notifyObservers(this.step -1);
     }
 
     @Override
@@ -60,12 +73,14 @@ public class LectureServiceImpl implements LectureService {
     /**
      * Incrémente le pas sur la séquence, et fait un retour au début (boucle) lorsqu'on arrive au bout de la séquence
      */
-    private void incrementerStep() {
+    @Override
+    public void incrementerStep() {
         if (this.step == 64) {
             this.step = 1;
         } else {
             this.step ++;
         }
+        notifyObservers(step);
     }
 
     /**
@@ -81,5 +96,39 @@ public class LectureServiceImpl implements LectureService {
         for (Note note : this.pisteService.getPisteCourante().getSequence()) {
             if (note != null) audioService.jouerNote(note, 0);
         }
+    }
+
+    @Override
+    public void addObserver(LectureObserver observer) {
+        this.observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(LectureObserver observer) {
+        this.observers.remove(observer);
+    }
+
+    @Override
+    public int getStep() {
+        return this.step;
+    }
+
+
+
+    @Override
+    public void notifyObservers(int step) {
+        for (LectureObserver observer : this.observers) {
+            observer.onStepChange(step);
+        }
+    }
+
+    @Override
+    public void setStatutLecture(StatutLecture statutLecture) {
+        this.statutLecture = statutLecture;
+    }
+
+    @Override
+    public StatutLecture getStatutLecture() {
+        return this.statutLecture;
     }
 }
