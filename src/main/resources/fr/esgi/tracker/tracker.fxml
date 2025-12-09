@@ -82,7 +82,7 @@
             <Button fx:id="playButton" alignment="BOTTOM_CENTER" layoutY="20.0" mnemonicParsing="false" onAction="#ButtonPlayPressed" text="Play" />
             <Button fx:id="pauseButton" alignment="TOP_CENTER" mnemonicParsing="false" onAction="#ButtonPausePressed" text="Pause" />
             <Button fx:id="stopButton" alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#ButtonStopPressed" text="Stop" textAlignment="RIGHT" />
-            <Button fx:id="recordButton" mnemonicParsing="false" text="Record" />
+            <Button fx:id="recordButton" mnemonicParsing="false" text="Record" onAction="#ButtonRecordPressed"/>
             <ComboBox fx:id="piste_loader" prefWidth="150.0" promptText="Charger une piste" />
              <Button fx:id="creditButton" alignment="CENTER" mnemonicParsing="false" onAction="#openCredits" text="Crédits --&gt;" />
          </children>

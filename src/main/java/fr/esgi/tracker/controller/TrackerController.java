@@ -1,8 +1,7 @@
 package fr.esgi.tracker.controller;
 
-import fr.esgi.tracker.business.Hauteur;
-import fr.esgi.tracker.business.Note;
-import fr.esgi.tracker.business.Piste;
+import fr.esgi.tracker.business.*;
+import fr.esgi.tracker.observer.LectureObserver;
 import fr.esgi.tracker.services.*;
 import fr.esgi.tracker.services.impl.*;
 import fr.esgi.tracker.utils.AudioPlayer;
@@ -19,12 +18,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import fr.esgi.tracker.App;
 import javafx.event.ActionEvent;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -33,7 +29,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class TrackerController  {
+public class TrackerController implements LectureObserver {
     private LectureService lectureService;
     private PisteService pisteService = new PisteServiceImpl();
     private InstrumentService instrumentService = new InstrumentServiceImpl();
@@ -89,6 +85,18 @@ public class TrackerController  {
     private void ButtonStopPressed() {
         buttonController.ButtonStopPressed();
     }
+
+    @FXML
+    private void ButtonRecordPressed() {
+        if (enregistrementService.getStatutRecord() == StatutRecord.ARRETE)
+            enregistrementService.setStatutRecord(StatutRecord.EN_COURS);
+        else {
+            enregistrementService.setStatutRecord(StatutRecord.ARRETE);
+        }
+        System.out.println(enregistrementService.getStatutRecord());
+    }
+
+
     private final PianoController pianoController = new PianoController(this);
     private final ButtonController buttonController = new ButtonController(this);
     private final EnregistrementService enregistrementService = new EnregistrementServiceImpl();
@@ -100,12 +108,20 @@ public class TrackerController  {
         this.pisteService.chargerPiste("4onTheFloor");
         this.instrumentService.chargerTousLesInstruments();
         this.lectureService = new LectureServiceImpl(this.pisteService);
+        this.lectureService.addObserver(this);
 
+        // 1) Fournit le texte d'origine
         NoteList.setCellValueFactory(cellData -> {
             Note note = cellData.getValue();
-            String label = (note != null) ? note.toString() : "-- | ----";
+            String label = (note != null) ? note.toString() : "---------";
             return new ReadOnlyStringWrapper(label);
         });
+
+
+
+
+
+
 
         piste_loader.getItems().addAll(this.pisteService.getToutesLesPistes().keySet());
 
@@ -138,8 +154,15 @@ public class TrackerController  {
     public void noteTriggered(ActionEvent e) {
         Button btn = (Button) e.getSource();
         Note note = new Note(Hauteur.valueOf(btn.getId()), instrumentService.getInstrument("piano"), 1.0f);
-        this.audioService.jouerNote(note, 1.0F);
+        //this.audioService.jouerNote(note, 1.0F);
         System.out.println(btn.getId());
+        if (enregistrementService.getStatutRecord() == StatutRecord.EN_COURS) {
+            this.enregistrementService.EnregistrerNote(note, pisteService, lectureService.getStep()-1);
+            updateTrackerList();
+            if (lectureService.getStatutLecture() != StatutLecture.EN_COURS) {
+                lectureService.incrementerStep();
+            }
+        }
     }
     @FXML
     private void openCredits(ActionEvent event) {
@@ -154,15 +177,61 @@ public class TrackerController  {
     }
 
     private void updateTrackerList() {
+
         ObservableList<Note> notes = FXCollections.observableArrayList(pisteService.getPisteCourante().getSequence());
+        notes.add(0, null);
+        notes.add(0, null);
+        notes.add(0, null);
+        notes.add(0, null);
+        notes.add(0, null);
+        notes.add(0, null);
+        notes.add(null);
+        notes.add(null);
+        notes.add(null);
+        notes.add(null);
+        notes.add(null);
+        notes.add(null);
+        notes.add(null);
+
         TrackerList.setItems(notes);
-        highlightStep(0);
+
+        highlightStep(lectureService.getStep()+ 6);
     }
 
     private void highlightStep(int step) {
         if (!TrackerList.getItems().isEmpty()) {
             TrackerList.getSelectionModel().select(step); // sélectionne le premier élément
-            TrackerList.scrollTo(step); // scroll jusqu’au premier élément si nécessaire
+            TrackerList.scrollTo(step);
+            NoteList.setCellFactory(col -> new TableCell<>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    if (empty || item == null) {
+                        setStyle("");
+                        setText(null);
+                        return;
+                    }
+
+                    int rowIndex = getIndex();
+
+                    // Ton highlight dynamique
+                    if (rowIndex == step + 6) {
+                        setStyle("-fx-background-color: red; -fx-text-fill: white;");
+                    } else {
+                        setStyle("");
+                    }
+
+                    setText(item);
+                }
+            });// scroll jusqu’au premier élément si nécessaire
         }
+    }
+
+    @Override
+    public void onStepChange(int step) {
+        System.out.println(step);
+        highlightStep(step);
+
     }
 }
