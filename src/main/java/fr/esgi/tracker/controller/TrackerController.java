@@ -117,12 +117,6 @@ public class TrackerController implements LectureObserver {
             return new ReadOnlyStringWrapper(label);
         });
 
-
-
-
-
-
-
         piste_loader.getItems().addAll(this.pisteService.getToutesLesPistes().keySet());
 
         piste_loader.valueProperty().addListener((obs, oldVal, newVal) -> {
