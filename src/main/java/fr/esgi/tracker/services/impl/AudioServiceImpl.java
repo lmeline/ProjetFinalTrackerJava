@@ -13,6 +13,10 @@ public class AudioServiceImpl implements AudioService {
     private volatile SourceDataLine currentLine; // ligne en cours
     @Override
     public void jouerNote(Note note, float volume) {
+        AudioClip audioClip = new AudioClip(getClass().getResource(note.getInstrument().getCheminFichier()).toExternalForm());
+        audioClip.setRate( note.getHauteur().getFrequence() /  note.getInstrument().getHauteurDuSample().getFrequence());
+        audioClip.setVolume(volume);
+        audioClip.play();
         /*try {
             InputStream is = getClass().getResourceAsStream(note.getInstrument().getCheminFichier());
             if (is == null) throw new IllegalArgumentException("Fichier audio introuvable");
@@ -56,11 +60,11 @@ public class AudioServiceImpl implements AudioService {
         } catch (Exception e) {
             e.printStackTrace();
         }*/
-        try {
+        /*try {
             AudioPlayer.playSound(note);
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
 

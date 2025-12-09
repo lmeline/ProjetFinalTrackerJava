@@ -154,7 +154,7 @@ public class TrackerController implements LectureObserver {
     public void noteTriggered(ActionEvent e) {
         Button btn = (Button) e.getSource();
         Note note = new Note(Hauteur.valueOf(btn.getId()), instrumentService.getInstrument("piano"), 1.0f);
-        //this.audioService.jouerNote(note, 1.0F);
+        this.audioService.jouerNote(note, 1.0F);
         System.out.println(btn.getId());
         if (enregistrementService.getStatutRecord() == StatutRecord.EN_COURS) {
             this.enregistrementService.EnregistrerNote(note, pisteService, lectureService.getStep()-1);

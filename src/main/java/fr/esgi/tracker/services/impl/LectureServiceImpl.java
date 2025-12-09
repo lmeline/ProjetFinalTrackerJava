@@ -45,7 +45,7 @@ public class LectureServiceImpl implements LectureService {
                     System.out.println(step + " - " + "-- | ----");
                 }
 
-                // if (note != null) new Thread(() -> {audioService.jouerNote(note, piste.getVolume());}).start();
+                if (note != null) new Thread(() -> {audioService.jouerNote(note, piste.getVolume());}).start();
 
                 //System.out.println("Step" + this.step);
                 this.notifyObservers(this.step - 1);
