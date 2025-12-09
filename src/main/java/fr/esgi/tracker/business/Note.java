@@ -57,6 +57,6 @@ public class Note {
 
     @Override
     public String toString() {
-        return "Note : " + this.getHauteur() + " | Instrument : " + this.getInstrument().getNom() + " | Volume : " + this.getVolume() ;
+        return this.getHauteur().name() + " | " + this.getInstrument().getNom();
     }
 }

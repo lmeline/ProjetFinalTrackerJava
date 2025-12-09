@@ -9,6 +9,7 @@ import fr.esgi.tracker.utils.AudioPlayer;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,6 +22,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import fr.esgi.tracker.App;
 import javafx.event.ActionEvent;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -41,8 +43,9 @@ public class TrackerController  {
     @FXML private Button playButton;
     @FXML private Button pauseButton;
     @FXML private Button stopButton;
-    @FXML private TableView<String> TrackerList;
-    @FXML private TableColumn<String, String> NoteList;
+    @FXML private TableView<Note> TrackerList;
+    @FXML private TableColumn<Note, String> NoteList;
+    @FXML private ComboBox<String> piste_loader;
 
     // Touches Blanches
     @FXML private Button C2;
@@ -88,7 +91,6 @@ public class TrackerController  {
     }
     private final PianoController pianoController = new PianoController(this);
     private final ButtonController buttonController = new ButtonController(this);
-    private final TableauController tableauController = new TableauController();
     private final EnregistrementService enregistrementService = new EnregistrementServiceImpl();
 
 
@@ -99,6 +101,21 @@ public class TrackerController  {
         this.instrumentService.chargerTousLesInstruments();
         this.lectureService = new LectureServiceImpl(this.pisteService);
 
+        NoteList.setCellValueFactory(cellData -> {
+            Note note = cellData.getValue();
+            String label = (note != null) ? note.toString() : "-- | ----";
+            return new ReadOnlyStringWrapper(label);
+        });
+
+        piste_loader.getItems().addAll(this.pisteService.getToutesLesPistes().keySet());
+
+        piste_loader.valueProperty().addListener((obs, oldVal, newVal) -> {
+            this.pisteService.chargerPiste(newVal);
+            updateTrackerList();
+            this.lectureService.stop();
+        });
+        piste_loader.setValue("4onTheFloor");
+
 
         pianoController.initKeys(
                 C2, CSharp2, D2, DSharp2, E2, F2, FSharp2,
@@ -106,7 +123,6 @@ public class TrackerController  {
                 C3, CSharp3, D3, DSharp3, E3, F3,
                 FSharp3, G3, GSharp3, A3, ASharp3, B3
         );
-        tableauController.initTableau(TrackerList, NoteList);
 
     }
 
@@ -134,6 +150,19 @@ public class TrackerController  {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void updateTrackerList() {
+        ObservableList<Note> notes = FXCollections.observableArrayList(pisteService.getPisteCourante().getSequence());
+        TrackerList.setItems(notes);
+        highlightStep(0);
+    }
+
+    private void highlightStep(int step) {
+        if (!TrackerList.getItems().isEmpty()) {
+            TrackerList.getSelectionModel().select(step); // sélectionne le premier élément
+            TrackerList.scrollTo(step); // scroll jusqu’au premier élément si nécessaire
         }
     }
 }
