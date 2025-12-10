@@ -5,6 +5,7 @@ import fr.esgi.tracker.business.Instrument;
 import fr.esgi.tracker.business.Note;
 import fr.esgi.tracker.services.AudioService;
 import fr.esgi.tracker.services.InstrumentService;
+import fr.esgi.tracker.utils.AudioPlayer;
 import javafx.scene.media.AudioClip;
 
 import javax.sound.sampled.*;
@@ -26,7 +27,7 @@ public class AudioServiceImpl implements AudioService {
 
     @Override
     public void jouerNote(Note note, float volume) {
-        EnumMap<Hauteur, AudioClip[]> poolMap = this.audioClipsByInstrument.get(note.getInstrument().getNom());
+        /* EnumMap<Hauteur, AudioClip[]> poolMap = this.audioClipsByInstrument.get(note.getInstrument().getNom());
         EnumMap<Hauteur, AtomicInteger> indexMap = this.audioClipsIndexes.get(note.getInstrument().getNom());
 
         if (poolMap != null && indexMap != null){
@@ -39,6 +40,12 @@ public class AudioServiceImpl implements AudioService {
                 ac.setVolume(volume);
                 ac.play();
             }
+        } */
+
+        try {
+            AudioPlayer.playSound(note, volume);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

@@ -3,10 +3,7 @@ package fr.esgi.tracker.utils;
 import fr.esgi.tracker.business.Instrument;
 import fr.esgi.tracker.business.Note;
 
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.SourceDataLine;
+import javax.sound.sampled.*;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 
@@ -15,49 +12,55 @@ public class AudioPlayer {
     private static volatile boolean stop;
     private static volatile SourceDataLine currentLine = null;
 
-    public static synchronized void playSound(Note note) throws Exception {
-        // Stop playback précédent
-        /*stop = true;
-        if (currentLine != null) {
-            currentLine.stop();
-            currentLine.close();
-        }
+    public static void playSound(Note note, float volume) {
+        new Thread(() -> {
+            try {
+                float pitchFactor = (float) note.getHauteur().getFrequence() /
+                        (float) note.getInstrument().getHauteurDuSample().getFrequence();
 
-        // Démarre nouveau playback
-        stop = false;*/
-        float speed = (float) note.getHauteur().getFrequence() / (float) note.getInstrument().getHauteurDuSample().getFrequence();
-        InputStream is = AudioPlayer.class.getResourceAsStream(note.getInstrument().getCheminFichier());
-        if (is == null) throw new IllegalArgumentException("Ressource introuvable : " + note.getInstrument().getCheminFichier());
+                InputStream is = AudioPlayer.class.getResourceAsStream(note.getInstrument().getCheminFichier());
+                if (is == null) {
+                    System.err.println("Ressource introuvable : " + note.getInstrument().getCheminFichier());
+                    return;
+                }
 
-        AudioInputStream in = AudioSystem.getAudioInputStream(new BufferedInputStream(is));
-        AudioFormat f = in.getFormat();
+                AudioInputStream ais = AudioSystem.getAudioInputStream(new BufferedInputStream(is));
+                AudioFormat format = ais.getFormat();
 
-        AudioFormat pitched = new AudioFormat(
-                f.getEncoding(),
-                f.getSampleRate() * speed,
-                f.getSampleSizeInBits(),
-                f.getChannels(),
-                f.getFrameSize(),
-                f.getFrameRate() * speed,
-                f.isBigEndian()
-        );
+                // Ouvre une ligne audio DANS LE FORMAT ORIGINAL
+                SourceDataLine line = AudioSystem.getSourceDataLine(format);
+                line.open(format);
+                //setVolume(line, volume);
+                line.start();
 
-        AudioInputStream converted = AudioSystem.getAudioInputStream(pitched, in);
-        currentLine = AudioSystem.getSourceDataLine(pitched);
+                int frameSize = format.getFrameSize();
+                int sampleRate = (int) format.getSampleRate();
 
-        currentLine.open(pitched);
-        currentLine.start();
+                byte[] sample = ais.readAllBytes(); // On charge tout (ok pour petits samples)
+                int totalFrames = sample.length / frameSize;
 
-        byte[] buf = new byte[4096];
-        int n;
-        while (!stop && (n = converted.read(buf)) != -1) {
-            currentLine.write(buf, 0, n);
-        }
+                double pos = 0;
 
-        currentLine.drain();
-        currentLine.stop();
-        currentLine.close();
-        currentLine = null;
+                byte[] frameBuffer = new byte[frameSize];
 
+                while (pos < totalFrames) {
+                    int frameIndex = (int) pos;
+
+                    // Copie d'une frame
+                    System.arraycopy(sample, frameIndex * frameSize, frameBuffer, 0, frameSize);
+                    line.write(frameBuffer, 0, frameSize);
+
+                    pos += pitchFactor; // <-- pitch réel ici (plus grand = plus aigu)
+                }
+
+                line.drain();
+                line.stop();
+                line.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
+
+
 }
