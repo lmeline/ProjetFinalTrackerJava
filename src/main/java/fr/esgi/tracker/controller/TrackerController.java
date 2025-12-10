@@ -8,6 +8,7 @@ import fr.esgi.tracker.utils.AudioPlayer;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -33,7 +34,7 @@ public class TrackerController implements LectureObserver {
     private LectureService lectureService;
     private PisteService pisteService = new PisteServiceImpl();
     private InstrumentService instrumentService = new InstrumentServiceImpl();
-    private AudioService audioService = new AudioServiceImpl();
+    private AudioService audioService;
 
 
     @FXML private Button playButton;
@@ -105,10 +106,13 @@ public class TrackerController implements LectureObserver {
     @FXML
     public void initialize() {
         this.pisteService.chargerToutesLesPistes();
-        this.pisteService.chargerPiste("4onTheFloor");
+        this.pisteService.chargerPiste("init");
         this.instrumentService.chargerTousLesInstruments();
-        this.lectureService = new LectureServiceImpl(this.pisteService);
+        this.audioService = new AudioServiceImpl(this.instrumentService);
+        this.audioService.loadAudioClips();
+        this.lectureService = new LectureServiceImpl(this.pisteService, this.audioService);
         this.lectureService.addObserver(this);
+
 
         // 1) Fournit le texte d'origine
         NoteList.setCellValueFactory(cellData -> {
@@ -130,7 +134,7 @@ public class TrackerController implements LectureObserver {
             updateTrackerList();
             this.lectureService.stop();
         });
-        piste_loader.setValue("4onTheFloor");
+        piste_loader.setValue(pisteService.getPisteCourante().getNomPreset());
 
 
         pianoController.initKeys(
@@ -154,7 +158,7 @@ public class TrackerController implements LectureObserver {
     public void noteTriggered(ActionEvent e) {
         Button btn = (Button) e.getSource();
         Note note = new Note(Hauteur.valueOf(btn.getId()), instrumentService.getInstrument("piano"), 1.0f);
-        //this.audioService.jouerNote(note, 1.0F);
+        this.audioService.jouerNote(note, 1.0F);
         System.out.println(btn.getId());
         if (enregistrementService.getStatutRecord() == StatutRecord.EN_COURS) {
             this.enregistrementService.EnregistrerNote(note, pisteService, lectureService.getStep()-1);
@@ -176,7 +180,7 @@ public class TrackerController implements LectureObserver {
         }
     }
 
-    private void updateTrackerList() {
+    public void updateTrackerList() {
 
         ObservableList<Note> notes = FXCollections.observableArrayList(pisteService.getPisteCourante().getSequence());
         notes.add(0, null);
@@ -230,8 +234,15 @@ public class TrackerController implements LectureObserver {
 
     @Override
     public void onStepChange(int step) {
-        System.out.println(step);
-        highlightStep(step);
-
+        Platform.runLater(()-> highlightStep(step));
     }
+
+    public EnregistrementService getEnregistrementService() {
+        return enregistrementService;
+    }
+
+    public PisteService getPisteService() {
+        return pisteService;
+    }
+
 }

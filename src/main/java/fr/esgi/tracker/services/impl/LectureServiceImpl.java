@@ -7,13 +7,11 @@ import fr.esgi.tracker.observer.LectureObserver;
 import fr.esgi.tracker.services.AudioService;
 import fr.esgi.tracker.services.LectureService;
 import fr.esgi.tracker.services.PisteService;
+import javafx.application.Platform;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 public class LectureServiceImpl implements LectureService {
     private int bpm = 120;
@@ -21,33 +19,31 @@ public class LectureServiceImpl implements LectureService {
     private PisteService pisteService;
     private AudioService audioService;
     private ScheduledExecutorService horloge = Executors.newSingleThreadScheduledExecutor();
+    private final ExecutorService audioExecutor = Executors.newSingleThreadExecutor();
     private ScheduledFuture<?> tache;
     private int step = 1;
     private List<LectureObserver> observers = new ArrayList<>();
 
-    public LectureServiceImpl(PisteService pisteService) {
-        this.audioService = new AudioServiceImpl();
+    public LectureServiceImpl(PisteService pisteService, AudioService audioService) {
         this.pisteService = pisteService;
+        this.audioService = audioService;
     }
 
     @Override
     public void play() {
         Piste piste = this.pisteService.getPisteCourante();
+        if (this.statutLecture == StatutLecture.ARRETE && this.step != 1) {
+            this.step = 1;
+            this.notifyObservers(this.step - 1);
+        }
         this.arreterHorloge();
         this.statutLecture = StatutLecture.EN_COURS;
         //this.prechargerSequence();
         this.tache = this.horloge.scheduleAtFixedRate(() -> {
             try {
                 Note note = piste.getSequence()[this.step - 1];
-                if (note != null) {
-                    System.out.println(step + " - " + note.toString());
-                } else {
-                    System.out.println(step + " - " + "-- | ----");
-                }
 
-                // if (note != null) new Thread(() -> {audioService.jouerNote(note, piste.getVolume());}).start();
-
-                //System.out.println("Step" + this.step);
+                if (note != null) audioExecutor.submit(() -> audioService.jouerNote(note, piste.getVolume()));
                 this.notifyObservers(this.step - 1);
                 this.incrementerStep();
             } catch (Exception e) {
@@ -92,12 +88,6 @@ public class LectureServiceImpl implements LectureService {
         }
     }
 
-    private void prechargerSequence() {
-        for (Note note : this.pisteService.getPisteCourante().getSequence()) {
-            if (note != null) audioService.jouerNote(note, 0);
-        }
-    }
-
     @Override
     public void addObserver(LectureObserver observer) {
         this.observers.add(observer);
@@ -118,6 +108,7 @@ public class LectureServiceImpl implements LectureService {
     @Override
     public void notifyObservers(int step) {
         for (LectureObserver observer : this.observers) {
+            Platform.runLater(() -> observer.onStepChange(step));
             observer.onStepChange(step);
         }
     }
