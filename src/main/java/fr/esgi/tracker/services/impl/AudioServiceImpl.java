@@ -27,7 +27,7 @@ public class AudioServiceImpl implements AudioService {
 
     @Override
     public void jouerNote(Note note, float volume) {
-        /* EnumMap<Hauteur, AudioClip[]> poolMap = this.audioClipsByInstrument.get(note.getInstrument().getNom());
+        EnumMap<Hauteur, AudioClip[]> poolMap = this.audioClipsByInstrument.get(note.getInstrument().getNom());
         EnumMap<Hauteur, AtomicInteger> indexMap = this.audioClipsIndexes.get(note.getInstrument().getNom());
 
         if (poolMap != null && indexMap != null){
@@ -40,13 +40,13 @@ public class AudioServiceImpl implements AudioService {
                 ac.setVolume(volume);
                 ac.play();
             }
-        } */
+        }
 
-        try {
+        /*try {
             AudioPlayer.playSound(note, volume);
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
 
