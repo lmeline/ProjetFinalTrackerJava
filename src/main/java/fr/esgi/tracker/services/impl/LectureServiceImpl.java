@@ -43,7 +43,7 @@ public class LectureServiceImpl implements LectureService {
             try {
                 Note note = piste.getSequence()[this.step - 1];
 
-                if (note != null) audioExecutor.submit(() -> audioService.jouerNote(note, piste.getVolume()));
+                if (note != null) audioService.jouerNote(note, piste.getVolume());
                 this.notifyObservers(this.step - 1);
                 this.incrementerStep();
             } catch (Exception e) {
@@ -108,7 +108,7 @@ public class LectureServiceImpl implements LectureService {
     @Override
     public void notifyObservers(int step) {
         for (LectureObserver observer : this.observers) {
-            Platform.runLater(() -> observer.onStepChange(step));
+            //Platform.runLater(() -> observer.onStepChange(step));
             observer.onStepChange(step);
         }
     }
