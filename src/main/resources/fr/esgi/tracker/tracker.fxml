@@ -8,15 +8,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.shape.Polygon?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Arc?>
-<?import javafx.scene.shape.SVGPath?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" style="-fx-background-color: #111215;" styleClass="frame" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.esgi.tracker.controller.TrackerController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="1045.0" style="-fx-background-color: #111215;" styleClass="frame" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.esgi.tracker.controller.TrackerController">
    <bottom>
-      <AnchorPane prefHeight="201.0" prefWidth="762.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="235.0" prefWidth="1045.0" BorderPane.alignment="CENTER">
          <children>
              <Button fx:id="C2" alignment="BOTTOM_CENTER" layoutX="200.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey;" text="C2" />
              <Button fx:id="D2" alignment="BOTTOM_CENTER" layoutX="240.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: grey;" text="D2" />
@@ -72,7 +70,7 @@
                <font>
                   <Font name="Arial" size="8.0" />
                </font></Button>
-            <TableView fx:id="TrackerList" layoutX="6.0" layoutY="-156.0" prefHeight="357.0" prefWidth="187.0">
+            <TableView fx:id="TrackerList" layoutX="6.0" layoutY="-156.0" prefHeight="356.0" prefWidth="187.0">
               <columns>
                 <TableColumn fx:id="NoteList" prefWidth="185.9999998410543" text="Note" />
               </columns>
@@ -81,41 +79,44 @@
       </AnchorPane>
    </bottom>
    <top>
-      <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="2.0" BorderPane.alignment="CENTER">
+      <HBox alignment="BOTTOM_CENTER" prefHeight="47.0" prefWidth="1045.0" spacing="2.0" BorderPane.alignment="CENTER">
          <children>
-             <Button fx:id="playButton" alignment="BOTTOM_CENTER"  mnemonicParsing="false" onAction="#ButtonPlayPressed" style="-fx-background-radius: 40px;">
+             <Button fx:id="playButton" alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#ButtonPlayPressed" style="-fx-background-radius: 40px;">
                  <graphic>
-                     <SVGPath content="M0 0 L20 10 L0 20 Z"
-                              fill="green"
-                              scaleX="0.5"
-                              scaleY="0.5"
-                     />
+                     <SVGPath content="M0 0 L20 10 L0 20 Z" fill="green" scaleX="0.5" scaleY="0.5" />
                  </graphic>
              </Button>
             <Button fx:id="pauseButton" alignment="TOP_CENTER" mnemonicParsing="false" onAction="#ButtonPausePressed" style="-fx-background-radius: 40px;">
                 <graphic>
-                    <SVGPath content="M0 0 H10 V20 H0 Z M20 0 H30 V20 H20 Z"
-                             fill="white"
-                             scaleX="0.5"
-                             scaleY="0.5"
-                    />
+                    <SVGPath content="M0 0 H10 V20 H0 Z M20 0 H30 V20 H20 Z" fill="white" scaleX="0.5" scaleY="0.5" />
                 </graphic>
             </Button>
-            <Button fx:id="stopButton" alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#ButtonStopPressed" textAlignment="RIGHT" style="-fx-background-radius: 40px;">
+            <Button fx:id="stopButton" alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#ButtonStopPressed" style="-fx-background-radius: 40px;" textAlignment="RIGHT">
                  <graphic>
-                     <SVGPath content="M0 0 H20 V20 H0 Z"
-                              fill="white"
-                              scaleX="0.5"
-                              scaleY="0.5"/>
+                     <SVGPath content="M0 0 H20 V20 H0 Z" fill="white" scaleX="0.5" scaleY="0.5" />
                  </graphic>
              </Button>
              <Button fx:id="recordButton" mnemonicParsing="false" style="-fx-background-radius: 40px;">
                  <graphic>
-                     <Circle fx:id="stopCircle" fill="#FF6666" scaleX="0.5" scaleY="0.5" radius="10" style="-fx-" />
+                     <Circle fx:id="stopCircle" fill="#FF6666" radius="10" scaleX="0.5" scaleY="0.5" style="-fx-" />
                  </graphic>
              </Button>
-            <ComboBox fx:id="piste_loader" prefWidth="150.0" promptText="Charger une piste" />
+             <Button fx:id="saveButton" mnemonicParsing="false" style="-fx-background-radius: 40px;">
+                 <graphic>
+                     <SVGPath content="
+                            M2 0 H16 L20 4 V18 H2 Z
+                            M5 2 H12 V7 H5 Z
+                            M6 3 H11 V6 H6 Z
+                            M5 10 H15 V17 H5 Z
+                            " fill="dodgerblue"
+                              scaleX="0.5"
+                              scaleY="0.5"/>
+                 </graphic>
+             </Button>
+             <ComboBox fx:id="piste_loader" prefWidth="150.0" promptText="Charger une piste" />
              <Button fx:id="creditButton" alignment="CENTER" mnemonicParsing="false" onAction="#openCredits" text="Crédits --&gt;" />
+            <ComboBox prefHeight="25.0" prefWidth="181.0" promptText="charger un instrument" />
+            <Button mnemonicParsing="false" text="sauvegarder" />
          </children>
          <padding>
             <Insets left="5.0" />
