@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.concurrent.*;
 
 public class LectureServiceImpl implements LectureService {
-    private int bpm = 120;
+    private int bpm = 90;
     private StatutLecture statutLecture = StatutLecture.ARRETE;
     private PisteService pisteService;
     private AudioService audioService;
