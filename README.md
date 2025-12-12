@@ -1,10 +1,29 @@
-# JavaFx Tracker
+# JavaFx Tracker ![Java](https://img.shields.io/badge/Java-23-orange)
 
 ## Aperçu du Projet
 
 **JavaFx Tracker** est une application de composition musicale moderne inspirée des célèbres **Trackers** des années 90, comme Protracker sur Amiga. Il permet de jouer des *samples* audio et de placer ces séquences sur une grille temporelle appelée piste. La composition peut être enregistrée dans un fichier.
 
 
+
+---
+
+## Guide d'Utilisation Rapide
+
+### Piano Virtuel (Contrôles Clavier)
+
+Le clavier de votre ordinateur est transformé en piano. L'application est configurée pour mapper les rangées de touches aux notes de musique :
+
+* **Notes naturelles (Blanches) :** Utilisez la rangée de lettres (ex: `A`, `Z`, `E`, `R`... en configuration AZERTY).
+    * *Exemple :* `A` = Do (C-2), `Z` = Ré (D-2)...
+* **Altérations (Noires - Dièses) :** Utilisez la rangée de chiffres située juste au-dessus.
+    * *Exemple :* `2` = Do# (C#2)...
+
+### Composition (Tracker)
+
+1.  **Sélectionner une case :** Cliquez sur une ligne de la grille (Step).
+2.  **Placer une note :** Appuyez sur une touche du clavier (voir ci-dessus) pour insérer la note correspondante.
+3.  **Jouer la piste :** Appuyez sur le bouton **Play** pour écouter votre séquence.
 
 ---
 
@@ -69,7 +88,7 @@ Le service de lecture gère la progression de la séquence musicale.
 1.  **Cloner le dépôt :**
 
     ```bash
-    git clone git clone --branch main https://github.com/lmeline/ProjetFinalTrackerJava.git
+    git clone --branch main https://github.com/lmeline/ProjetFinalTrackerJava.git
     cd ProjetFinalTrackerJava
     ```
 2. **Lancer les tests unitaires**
@@ -93,54 +112,44 @@ Le service de lecture gère la progression de la séquence musicale.
 Le projet suit l'architecture standard Java/Maven, en séparant clairement les couches métier, service et présentation.
 
 --
+```
 
-tracker_poc/ 
+tracker_poc/
+├── README.md               # Le présent document.
+├── .gitignore              # Fichier de configuration Git.
+├── pom.xml                 # Configuration Maven (Dépendances JavaFX, JUnit, Mockito).
+├── .idea/                  # Configuration IntelliJ.
+└── src/
+    ├── main/
+    │   ├── java/
+    │   │   └── fr/esgi/tracker/
+    │   │       ├── module-info.java      # Définitions des modules et permissions (opens/exports).
+    │   │       ├── App.java              # Point de lancement JavaFX.
+    │   │       ├── business/             # Objets métier (Piste, Note, Instrument, Hauteur).
+    │   │       ├── controller/           # Contrôleurs FXML (TrackerController).
+    │   │       ├── dao/                  # Accès aux données (PisteDao).
+    │   │       ├── observer/             # Pattern Observer (LectureObserver).
+    │   │       ├── services/             # Interfaces de service.
+    │   │       │   └── impl/             # Implémentations (AudioServiceImpl, LectureServiceImpl).
+    │   │       └── utils/                # Utilitaires statiques (AudioTools, PisteJsonManager).
+    │   │
+    │   └── resources/
+    │       └── fr/esgi/tracker/
+    │           ├── tracker.fxml          # Vues FXML.
+    │           ├── style.css             # Feuilles de style.
+    │           └── instruments/          # Samples audio (.wav).
+    │
+    └── test/
+        ├── java/
+        │   └── fr/esgi/tracker/
+        │       ├── business/             # Tests unitaires des objets métier.
+        │       └── service/              # Tests unitaires des services (Mocks & Réflexion).
+        │
+        └── resources/
+            └── mockito-extensions/
+                └── org.mockito.plugins.MockMaker  # Configuration pour supporter le Mocking sur Java 21+.
+```
 
-README.md # Le présent document.
-
-├── .gitignore # Fichier de configuration pour ignorer les dossiers de compilation.
-
-├── pom.xml # Configuration Maven et dépendances.
-
-├── target/ # Dossier généré par Maven contenant les classes et le JAR.
-
-├── .idea/ # Dossier de configuration de IntelliJ.
-
-└── src/ └── main/ ├── java/ │ 
-
-└── fr/ │ └── esgi/ │ └── tracker/ │
-
-├── module-info.java # Définitions des modules utilisés. │
-
-├── App.java # Point de lancement de l'application JavaFX. │ 
-
-├── business/ # Classes métier (Piste, Note, Instrument, Hauteur, StatutLecture). │ 
-
-├── controller/ # Contrôleurs FXML (TrackerController, PianoController). │ 
-
-├── services/ # Interfaces de service (AudioService, LectureService, PisteService). │ 
-
-└── services/impl/ # Implémentations concrètes des services. 
-
-└── resources/ └── fr/ └── esgi/ └── tracker/ | 
-
-├── credits.fxml # Vue des crédits. 
-
-├── tracker.fxml # Vue principale de l'interface Tracker/Piano. 
-
-├── style.css # Styles de l'application. 
-
-└── instruments/ # Dossier contenant les samples audio (guitar.wav, kick.wav).
-test/
-
-├── java/
-   └── fr/esgi/tracker/
-       ├── business/             # Tests unitaires des objets métier.
-       └── service/              # Tests unitaires des services (Mocks & Réflexion).
-
-└── resources/
-└── mockito-extensions/
-└── org.mockito.plugins.MockMaker  # Configuration pour supporter le Mocking sur Java 21+.
 ---
 
 ## Développeurs
