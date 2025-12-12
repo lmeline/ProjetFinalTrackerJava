@@ -29,7 +29,6 @@ class EnregistrementServiceImplTest {
     @Mock
     private Note note;
 
-    // On utilise un tableau pour simuler la séquence de notes
     private Note[] sequence;
 
     @BeforeEach
