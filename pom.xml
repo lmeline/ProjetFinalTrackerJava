@@ -101,6 +101,7 @@
                         --add-opens fr.esgi.tracker/fr.esgi.tracker.services.impl=ALL-UNNAMED
                         --add-opens fr.esgi.tracker/fr.esgi.tracker.business=ALL-UNNAMED
                         --add-opens fr.esgi.tracker/fr.esgi.tracker.dao=ALL-UNNAMED
+                        --add-opens fr.esgi.tracker/fr.esgi.tracker.observer=ALL-UNNAMED
                     </argLine>
                 </configuration>
             </plugin>
