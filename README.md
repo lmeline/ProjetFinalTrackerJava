@@ -72,8 +72,13 @@ Le service de lecture gère la progression de la séquence musicale.
     git clone git clone --branch main https://github.com/lmeline/ProjetFinalTrackerJava.git
     cd ProjetFinalTrackerJava
     ```
+2. **Lancer les tests unitaires**
+    Avant de lancer l'application, il est recommandé d'exécuter les tests unitaires pour s'assurer que tout fonctionne correctement.
+    ```bash
+    mvn test
+    ```
 
-2.  **Lancer l'application avec Maven :**
+3. **Lancer l'application avec Maven :**
     Le `pom.xml` est configuré pour l'utilisation des dépendances JavaFX spécifiques à l'environnement de l'utilisateur.
 
     ```bash
@@ -126,7 +131,16 @@ README.md # Le présent document.
 ├── style.css # Styles de l'application. 
 
 └── instruments/ # Dossier contenant les samples audio (guitar.wav, kick.wav).
+test/
 
+├── java/
+   └── fr/esgi/tracker/
+       ├── business/             # Tests unitaires des objets métier.
+       └── service/              # Tests unitaires des services (Mocks & Réflexion).
+
+└── resources/
+└── mockito-extensions/
+└── org.mockito.plugins.MockMaker  # Configuration pour supporter le Mocking sur Java 21+.
 ---
 
 ## Développeurs
