@@ -12,7 +12,7 @@ public class PisteTest {
     private final InstrumentService instrumentService = new InstrumentServiceImpl();
 
     @Test
-    @DisplayName(value = "Cette méthode teste les getters setters de la classe métier Piste")
+    @DisplayName(value = "Vérifications getters setters de la classe métier Piste")
     public void testerGettersSetters() {
         //Arrange
         String nom = "PisteTest";
