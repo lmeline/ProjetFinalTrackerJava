@@ -1,8 +1,6 @@
 package fr.esgi.tracker.controller;
 
-import fr.esgi.tracker.business.Hauteur;
-import fr.esgi.tracker.business.Instrument;
-import fr.esgi.tracker.business.Note;
+import fr.esgi.tracker.business.*;
 import fr.esgi.tracker.services.AudioService;
 import fr.esgi.tracker.services.InstrumentService;
 import fr.esgi.tracker.services.impl.AudioServiceImpl;
@@ -11,7 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.Scene;
 
 public class PianoController {
-    private final AudioService audioService = new AudioServiceImpl();
+    private final AudioService audioService = new AudioServiceImpl(new InstrumentServiceImpl());
     private final TrackerController trackerController;
 
     public PianoController(TrackerController trackerController) {
@@ -56,6 +54,16 @@ public class PianoController {
                         case C: A3.fire(); break;
                         case F: ASharp3.fire(); break;
                         case V: B3.fire(); break;
+                        case DOLLAR: {
+                            if (trackerController.getEnregistrementService().getStatutRecord() == StatutRecord.EN_COURS && trackerController.getLectureService().getStatutLecture() == StatutLecture.ARRETE) {
+                                System.out.println("enter pressed");
+                                trackerController.getEnregistrementService().EnregistrerNote(null, trackerController.getPisteService(), trackerController.getLectureService().getStep() - 1);
+                                trackerController.getLectureService().incrementerStep();
+                                trackerController.updateTrackerList();
+                            } else {
+                                trackerController.getLectureService().incrementerStep();
+                            }
+                        } break;
                     }
                 });
 
