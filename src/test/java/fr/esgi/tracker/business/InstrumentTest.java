@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class InstrumentTest {
 
     @Test
-    @DisplayName("ID : Devrait être unique pour chaque instance (Auto-incrément)")
+    @DisplayName("Test ID Unique")
     void testIdUnique() {
         // Act
         Instrument i1 = new Instrument("Instru1", "path1", Hauteur.A2);
