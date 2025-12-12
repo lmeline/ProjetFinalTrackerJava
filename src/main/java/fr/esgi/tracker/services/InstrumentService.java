@@ -13,6 +13,10 @@ public interface InstrumentService {
 
     void chargerTousLesInstruments();
 
+    void setInstrumentCourant(Instrument instrument);
+
+    Instrument getInstrumentCourant();
+
 
 
 }

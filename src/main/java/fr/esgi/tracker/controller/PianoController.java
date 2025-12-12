@@ -54,7 +54,7 @@ public class PianoController {
                         case C: A3.fire(); break;
                         case F: ASharp3.fire(); break;
                         case V: B3.fire(); break;
-                        case ENTER: {
+                        case DOLLAR: {
                             if (trackerController.getEnregistrementService().getStatutRecord() == StatutRecord.EN_COURS && trackerController.getLectureService().getStatutLecture() == StatutLecture.ARRETE) {
                                 System.out.println("enter pressed");
                                 trackerController.getEnregistrementService().EnregistrerNote(null, trackerController.getPisteService(), trackerController.getLectureService().getStep() - 1);
