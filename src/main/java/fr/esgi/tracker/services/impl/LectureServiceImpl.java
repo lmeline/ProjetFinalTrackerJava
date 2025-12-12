@@ -43,7 +43,8 @@ public class LectureServiceImpl implements LectureService {
             try {
                 Note note = piste.getSequence()[this.step - 1];
 
-                if (note != null) audioService.jouerNote(note, piste.getVolume());
+                int ratio = this.step % 2 == 0 ? 2 : 1;
+                if (note != null) audioService.jouerNote(note, piste.getVolume()/ratio);
                 this.notifyObservers(this.step - 1);
                 this.incrementerStep();
             } catch (Exception e) {

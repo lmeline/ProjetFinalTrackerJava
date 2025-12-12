@@ -4,36 +4,26 @@ import fr.esgi.tracker.business.*;
 import fr.esgi.tracker.observer.LectureObserver;
 import fr.esgi.tracker.services.*;
 import fr.esgi.tracker.services.impl.*;
-import fr.esgi.tracker.utils.AudioPlayer;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import fr.esgi.tracker.App;
 import javafx.event.ActionEvent;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class TrackerController implements LectureObserver {
     private LectureService lectureService;
     private PisteService pisteService = new PisteServiceImpl();
     private InstrumentService instrumentService = new InstrumentServiceImpl();
+    private final EnregistrementService enregistrementService = new EnregistrementServiceImpl();
     private AudioService audioService;
 
 
@@ -100,16 +90,25 @@ public class TrackerController implements LectureObserver {
 
     private final PianoController pianoController = new PianoController(this);
     private final ButtonController buttonController = new ButtonController(this);
-    private final EnregistrementService enregistrementService = new EnregistrementServiceImpl();
 
 
     @FXML
     public void initialize() {
+        // Initialisation des services
+
+        //PisteService
         this.pisteService.chargerToutesLesPistes();
         this.pisteService.chargerPiste("init");
+
+        //InstrumentService
         this.instrumentService.chargerTousLesInstruments();
+        this.instrumentService.setInstrumentCourant(this.instrumentService.getInstrument("piano"));
+
+        //AudioService
         this.audioService = new AudioServiceImpl(this.instrumentService);
         this.audioService.loadAudioClips();
+
+        //LectureService
         this.lectureService = new LectureServiceImpl(this.pisteService, this.audioService);
         this.lectureService.addObserver(this);
 
@@ -157,7 +156,7 @@ public class TrackerController implements LectureObserver {
     @FXML
     public void noteTriggered(ActionEvent e) {
         Button btn = (Button) e.getSource();
-        Note note = new Note(Hauteur.valueOf(btn.getId()), instrumentService.getInstrument("piano"), 1.0f);
+        Note note = new Note(Hauteur.valueOf(btn.getId()), instrumentService.getInstrumentCourant(), 1.0f);
         this.audioService.jouerNote(note, 1.0F);
         System.out.println(btn.getId());
         if (enregistrementService.getStatutRecord() == StatutRecord.EN_COURS) {
