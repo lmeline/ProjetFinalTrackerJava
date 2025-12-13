@@ -78,6 +78,16 @@ public class LectureServiceImpl implements LectureService {
         notifyObservers(step);
     }
 
+    @Override
+    public void decrementerStep() {
+        if (this.step == 0) {
+            this.step = 63;
+        } else {
+            this.step --;
+        }
+        notifyObservers(step);
+    }
+
     /**
      * Arrête l'horloge (ScheduledFuture)
      */

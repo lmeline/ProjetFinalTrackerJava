@@ -54,16 +54,24 @@ public class PianoController {
                         case C: A3.fire(); break;
                         case F: ASharp3.fire(); break;
                         case V: B3.fire(); break;
-                        case DOLLAR: {
-                            if (trackerController.getEnregistrementService().getStatutRecord() == StatutRecord.EN_COURS && trackerController.getLectureService().getStatutLecture() == StatutLecture.ARRETE) {
-                                System.out.println("enter pressed");
-                                trackerController.getEnregistrementService().EnregistrerNote(null, trackerController.getPisteService(), trackerController.getLectureService().getStep());
-                                trackerController.getLectureService().incrementerStep();
-                                //trackerController.updatePisteView(trackerController.getPisteService().getPisteCourante(), trackerController.getLectureService().getStep() - 1);
-                            } else {
-                                trackerController.getLectureService().incrementerStep();
+                        case COMMA: {
+                            if (trackerController.getLectureService().getStatutLecture() == StatutLecture.EN_COURS){
+                                break;
                             }
+                            if (event.isShiftDown() && trackerController.getEnregistrementService().getStatutRecord() == StatutRecord.EN_COURS){
+                                trackerController.getEnregistrementService().SupprimerNote(trackerController.getPisteService().getPisteCourante(), trackerController.getLectureService().getStep());
+                            }
+                            trackerController.getLectureService().decrementerStep();
                         } break;
+                        case SEMICOLON: {
+                            if (trackerController.getLectureService().getStatutLecture() == StatutLecture.EN_COURS){
+                                break;
+                            }
+                            if (event.isShiftDown() && trackerController.getEnregistrementService().getStatutRecord() == StatutRecord.EN_COURS){
+                                trackerController.getEnregistrementService().SupprimerNote(trackerController.getPisteService().getPisteCourante(), trackerController.getLectureService().getStep());
+                            }
+                            trackerController.getLectureService().incrementerStep();
+                        }
                     }
                 });
 

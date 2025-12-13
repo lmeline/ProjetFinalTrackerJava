@@ -49,7 +49,7 @@
 }
 
 .slider .thumb {
-    -fx-background-color: #4F4F4F;
+    -fx-background-color: orange;
     -fx-pref-height: 20px;
     -fx-pref-width: 32px;
     -fx-border-radius: 5px;
@@ -71,4 +71,7 @@
 }
 
 .step_label {
+}
+
+.inst_label {
 }

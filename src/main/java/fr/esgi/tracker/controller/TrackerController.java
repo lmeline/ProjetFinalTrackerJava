@@ -148,7 +148,7 @@ public class TrackerController implements LectureObserver {
 
         //PisteService
         this.pisteService.chargerToutesLesPistes();
-        this.pisteService.chargerPiste("init");
+        this.pisteService.chargerPiste("hells_bells");
 
         //InstrumentService
         this.instrumentService.chargerTousLesInstruments();
@@ -325,9 +325,11 @@ public class TrackerController implements LectureObserver {
 
             Label stepLabel = (Label) row.lookup(".step_label");
             Label noteLabel = (Label) row.lookup(".note_label");
+            Label instrumentLabel = (Label) row.lookup(".inst_label");
 
             stepLabel.setText(String.format("%02d", stepIndex));
-            noteLabel.setText(note != null ? note.toString() : "-------");
+            noteLabel.setText(note != null ? note.getHauteur().toString().replace("Sharp", "♯") : "---");
+            instrumentLabel.setText(note != null ? note.getInstrument().getNom() : "------");
 
             row.getStyleClass().remove("active");
             if (i == centerIndex) {
