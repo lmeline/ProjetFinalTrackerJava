@@ -16,7 +16,7 @@ public class EnregistrementServiceImpl implements EnregistrementService {
 
     @Override
     public void SupprimerNote(Piste piste, int step) {
-        piste.getSequence()[step - 1] = null;
+        piste.getSequence()[step] = null;
     }
 
     @Override

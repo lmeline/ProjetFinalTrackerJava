@@ -22,19 +22,18 @@ public class PisteServiceImpl implements PisteService {
     @Override
     public Piste chargerPiste(String nom) {
         System.out.println("piste " + nom + " chargée");
-        this.pisteCourante = this.pistes.get(nom);
+        this.pisteCourante = this.pistes.get(nom).clone();
         return this.pisteCourante;
     }
 
     @Override
     public void enregistrerPiste(Piste piste, String nom) {
-        Piste newPiste = piste.clone();
-        newPiste.setNomPreset(nom);
-        this.pistes.put(newPiste.getNomPreset(), newPiste);
-        this.chargerPiste(newPiste.getNomPreset());
+        piste.setNomPreset(nom);
+        this.pistes.put(piste.getNomPreset(), piste);
+        this.chargerPiste(piste.getNomPreset());
         System.out.println("piste " + nom + " enregistrée");
         System.out.println("pisteCourante : " + this.pisteCourante.getNomPreset());
-        this.pisteDao.sauvegarder(newPiste);
+        this.pisteDao.sauvegarder(piste);
     }
 
     @Override

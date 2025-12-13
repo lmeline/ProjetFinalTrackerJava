@@ -57,9 +57,9 @@ public class PianoController {
                         case DOLLAR: {
                             if (trackerController.getEnregistrementService().getStatutRecord() == StatutRecord.EN_COURS && trackerController.getLectureService().getStatutLecture() == StatutLecture.ARRETE) {
                                 System.out.println("enter pressed");
-                                trackerController.getEnregistrementService().EnregistrerNote(null, trackerController.getPisteService(), trackerController.getLectureService().getStep() - 1);
+                                trackerController.getEnregistrementService().EnregistrerNote(null, trackerController.getPisteService(), trackerController.getLectureService().getStep());
                                 trackerController.getLectureService().incrementerStep();
-                                trackerController.updateTrackerList();
+                                //trackerController.updatePisteView(trackerController.getPisteService().getPisteCourante(), trackerController.getLectureService().getStep() - 1);
                             } else {
                                 trackerController.getLectureService().incrementerStep();
                             }

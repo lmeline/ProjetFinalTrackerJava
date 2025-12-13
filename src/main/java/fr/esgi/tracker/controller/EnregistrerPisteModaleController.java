@@ -30,10 +30,5 @@ public class EnregistrerPisteModaleController {
         });
     }
 
-    @FXML
-    private void EnregistrerPiste() {
-
-    }
-
 
 }

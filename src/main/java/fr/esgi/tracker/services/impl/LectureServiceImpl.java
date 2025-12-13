@@ -21,7 +21,7 @@ public class LectureServiceImpl implements LectureService {
     private ScheduledExecutorService horloge = Executors.newSingleThreadScheduledExecutor();
     private final ExecutorService audioExecutor = Executors.newSingleThreadExecutor();
     private ScheduledFuture<?> tache;
-    private int step = 1;
+    private int step = 0;
     private List<LectureObserver> observers = new ArrayList<>();
 
     public LectureServiceImpl(PisteService pisteService, AudioService audioService) {
@@ -32,18 +32,18 @@ public class LectureServiceImpl implements LectureService {
     @Override
     public void play() {
         Piste piste = this.pisteService.getPisteCourante();
-        if (this.statutLecture == StatutLecture.ARRETE && this.step != 1) {
-            this.step = 1;
-            this.notifyObservers(this.step - 1);
+        if (this.statutLecture == StatutLecture.ARRETE && this.step != 0) {
+            this.step = 0;
+            this.notifyObservers(this.step);
         }
         this.arreterHorloge();
         this.statutLecture = StatutLecture.EN_COURS;
         //this.prechargerSequence();
         this.tache = this.horloge.scheduleAtFixedRate(() -> {
             try {
-                Note note = piste.getSequence()[this.step - 1];
+                Note note = piste.getSequence()[this.step];
                 if (note != null) audioService.jouerNote(note, piste.getVolume());
-                this.notifyObservers(this.step - 1);
+                this.notifyObservers(this.step);
                 this.incrementerStep();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -55,8 +55,8 @@ public class LectureServiceImpl implements LectureService {
     public void stop() {
         this.arreterHorloge();
         this.statutLecture = StatutLecture.ARRETE;
-        this.step = 1;
-        this.notifyObservers(this.step -1);
+        this.step = 0;
+        this.notifyObservers(this.step);
     }
 
     @Override
@@ -70,8 +70,8 @@ public class LectureServiceImpl implements LectureService {
      */
     @Override
     public void incrementerStep() {
-        if (this.step == 64) {
-            this.step = 1;
+        if (this.step == 63) {
+            this.step = 0;
         } else {
             this.step ++;
         }

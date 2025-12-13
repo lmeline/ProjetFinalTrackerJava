@@ -21,10 +21,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 
 public class TrackerController implements LectureObserver {
     private LectureService lectureService;
@@ -40,10 +43,23 @@ public class TrackerController implements LectureObserver {
     @FXML private Button recordButton;
     @FXML private Button saveButton;
     @FXML Slider volumeSlider;
-    @FXML private TableView<Note> TrackerList;
-    @FXML private TableColumn<Note, String> NoteList;
+
     @FXML private ComboBox<String> piste_loader;
     @FXML private ComboBox<String> instrumentList;
+
+
+
+    @FXML private VBox pisteView;
+    @FXML private HBox stepMinusFour;
+    @FXML private HBox stepMinusThree;
+    @FXML private HBox stepMinusTwo;
+    @FXML private HBox stepMinusOne;
+    @FXML private HBox currentStep;
+    @FXML private HBox stepPlusOne;
+    @FXML private HBox stepPlusTwo;
+    @FXML private HBox stepPlusThree;
+    @FXML private HBox stepPlusFour;
+    private List<HBox> stepRows;
 
     // Touches Blanches
     @FXML private Button C2;
@@ -75,6 +91,7 @@ public class TrackerController implements LectureObserver {
 
     @FXML
     private void ButtonPlayPressed() {
+        System.out.println("pressed");
         if (lectureService.getStatutLecture() != StatutLecture.EN_COURS) {
             toggleButtonIcon(stopButton, "off");
             toggleButtonIcon(pauseButton, "off");
@@ -85,6 +102,7 @@ public class TrackerController implements LectureObserver {
 
     @FXML
     private void ButtonPausePressed() {
+        System.out.println("pressed");
         if (lectureService.getStatutLecture() == StatutLecture.EN_COURS) {
             toggleButtonIcon(stopButton, "off");
             toggleButtonIcon(pauseButton, "on");
@@ -147,14 +165,7 @@ public class TrackerController implements LectureObserver {
         this.initializeListeners();
         this.toggleButtonIcon(stopButton, "on");
 
-
-        // 1) Fournit le texte d'origine
-        NoteList.setCellValueFactory(cellData -> {
-            Note note = cellData.getValue();
-            String label = (note != null) ? note.toString() : "---------";
-            return new ReadOnlyStringWrapper(label);
-        });
-
+        this.initializePisteView();
 
 
 
@@ -169,7 +180,7 @@ public class TrackerController implements LectureObserver {
 
         piste_loader.valueProperty().addListener((obs, oldVal, newVal) -> {
             this.pisteService.chargerPiste(newVal);
-            updateTrackerList();
+            updatePisteView(pisteService.getPisteCourante(), 0);
             this.lectureService.stop();
         });
         piste_loader.setValue(pisteService.getPisteCourante().getNomPreset());
@@ -196,14 +207,15 @@ public class TrackerController implements LectureObserver {
     public void noteTriggered(ActionEvent e) {
         Button btn = (Button) e.getSource();
         Note note = new Note(Hauteur.valueOf(btn.getId()), instrumentService.getInstrumentCourant(), 1.0f);
-        this.audioService.jouerNote(note, pisteService.getPisteCourante().getVolume());
-        System.out.println(btn.getId());
+
         if (enregistrementService.getStatutRecord() == StatutRecord.EN_COURS) {
-            this.enregistrementService.EnregistrerNote(note, pisteService, lectureService.getStep()-1);
-            updateTrackerList();
+            this.enregistrementService.EnregistrerNote(note, pisteService, lectureService.getStep());
             if (lectureService.getStatutLecture() != StatutLecture.EN_COURS) {
                 lectureService.incrementerStep();
+                this.audioService.jouerNote(note, pisteService.getPisteCourante().getVolume());
             }
+        } else {
+            this.audioService.jouerNote(note, pisteService.getPisteCourante().getVolume());
         }
     }
     @FXML
@@ -218,61 +230,10 @@ public class TrackerController implements LectureObserver {
         }
     }
 
-    public void updateTrackerList() {
-
-        ObservableList<Note> notes = FXCollections.observableArrayList(pisteService.getPisteCourante().getSequence());
-        notes.add(0, null);
-        notes.add(0, null);
-        notes.add(0, null);
-        notes.add(0, null);
-        notes.add(0, null);
-        notes.add(0, null);
-        notes.add(null);
-        notes.add(null);
-        notes.add(null);
-        notes.add(null);
-        notes.add(null);
-        notes.add(null);
-        notes.add(null);
-
-        TrackerList.setItems(notes);
-
-        highlightStep(lectureService.getStep()+ 6);
-    }
-
-    private void highlightStep(int step) {
-        if (!TrackerList.getItems().isEmpty()) {
-            TrackerList.getSelectionModel().select(step); // sélectionne le premier élément
-            TrackerList.scrollTo(step);
-            NoteList.setCellFactory(col -> new TableCell<>() {
-                @Override
-                protected void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-
-                    if (empty || item == null) {
-                        setStyle("");
-                        setText(null);
-                        return;
-                    }
-
-                    int rowIndex = getIndex();
-
-                    // Ton highlight dynamique
-                    if (rowIndex == step + 6) {
-                        setStyle("-fx-background-color: red; -fx-text-fill: white;");
-                    } else {
-                        setStyle("");
-                    }
-
-                    setText(item);
-                }
-            });// scroll jusqu’au premier élément si nécessaire
-        }
-    }
 
     @Override
     public void onStepChange(int step) {
-        Platform.runLater(()-> highlightStep(step));
+        Platform.runLater(()-> updatePisteView(pisteService.getPisteCourante(), step));
     }
 
     public EnregistrementService getEnregistrementService() {
@@ -333,5 +294,47 @@ public class TrackerController implements LectureObserver {
         piste_loader.getItems().add(pisteService.getPisteCourante().getNomPreset());
         piste_loader.setValue(pisteService.getPisteCourante().getNomPreset());
     }
+
+    private void initializePisteView() {
+        stepRows  = List.of(
+        stepMinusFour,
+        stepMinusThree,
+        stepMinusTwo,
+        stepMinusOne,
+        currentStep,
+        stepPlusOne,
+        stepPlusTwo,
+        stepPlusThree,
+        stepPlusFour
+        );
+
+    }
+
+
+    public void updatePisteView(Piste piste, int currentStepIndex) {
+        int totalSteps = piste.getSequence().length;
+        int centerIndex = 4; // currentStep
+
+        for (int i = 0; i < stepRows.size(); i++) {
+            int stepIndex =
+                    (currentStepIndex + (i - centerIndex) + totalSteps) % totalSteps;
+
+            HBox row = stepRows.get(i);
+
+            Note note = piste.getSequence()[stepIndex];
+
+            Label stepLabel = (Label) row.lookup(".step_label");
+            Label noteLabel = (Label) row.lookup(".note_label");
+
+            stepLabel.setText(String.format("%02d", stepIndex));
+            noteLabel.setText(note != null ? note.toString() : "-------");
+
+            row.getStyleClass().remove("active");
+            if (i == centerIndex) {
+                row.getStyleClass().add("active");
+            }
+        }
+    }
+
 
 }
