@@ -3,6 +3,7 @@ package fr.esgi.tracker.services.impl;
 import fr.esgi.tracker.business.Hauteur;
 import fr.esgi.tracker.business.Note;
 import fr.esgi.tracker.business.Piste;
+import fr.esgi.tracker.dao.PisteDao;
 import fr.esgi.tracker.services.InstrumentService;
 import fr.esgi.tracker.services.PisteService;
 import fr.esgi.tracker.utils.PisteJsonManager;
@@ -16,6 +17,8 @@ public class PisteServiceImpl implements PisteService {
     private Piste pisteCourante;
     private final InstrumentService instrumentService = new InstrumentServiceImpl();
 
+    private PisteDao pisteDao = new PisteDao();
+
     @Override
     public Piste chargerPiste(String nom) {
         System.out.println("piste " + nom + " chargée");
@@ -26,7 +29,7 @@ public class PisteServiceImpl implements PisteService {
     @Override
     public void enregistrerPiste(Piste piste) {
         this.pistes.put(piste.getNomPreset(), piste);
-        PisteJsonManager.sauvegarderPisteEnJson(piste);
+        this.pisteDao.sauvegarder(piste);
     }
 
     @Override
@@ -39,15 +42,12 @@ public class PisteServiceImpl implements PisteService {
         List<Piste> pistes = new ArrayList<>();
 
         //Piste 1 :
-        Piste pisteInit = new Piste(
-                "init",
-                new Note[64]
-        );
+        Piste pisteInit = new Piste("init", new Note[64]);
 
         pistes.add(pisteInit);
 
-        PisteJsonManager.initializeDirectory(pistes);
-        this.pistes = PisteJsonManager.chargerToutesLesPistes();
+        this.pisteDao.initialiserDossier(pistes);
+        this.pistes = this.pisteDao.chargerTout();
     }
 
     @Override
