@@ -1,3 +1,28 @@
 .frame{
     background-color: #111215;
 }
+
+.whiteKey {
+    -fx-background-color: #ffffff;
+}
+
+.whiteKey:armed {
+    -fx-background-color: #f9f9f9;
+}
+
+.blackKey {
+    -fx-background-color: #000000;
+}
+
+.blackKey:armed {
+    -fx-background-color: #1C1C1C;
+}
+
+.playBackButton {
+    -fx-background-radius: 10px;
+    -fx-padding: 5px;
+    -fx-border-radius : 10px;
+    -fx-border-width : 1px;
+    -fx-border-color : gray;
+    -fx-background-insets: 0;
+}

@@ -5,40 +5,50 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="390.0" prefWidth="920.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.esgi.tracker.controller.TrackerController">
+<Pane prefHeight="390.0" prefWidth="920.0" style="-fx-background-color: #f5f5f5;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.esgi.tracker.controller.TrackerController">
    <children>
-      <HBox alignment="BOTTOM_CENTER" layoutX="283.0" layoutY="92.0" prefHeight="47.0" prefWidth="532.0" spacing="2.0">
+      <HBox alignment="BOTTOM_CENTER" layoutX="228.0" layoutY="91.0" prefHeight="47.0" prefWidth="565.0" spacing="2.0">
          <children>
-             <Button fx:id="playButton" alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#ButtonPlayPressed" style="-fx-background-radius: 40px;">
-                 <graphic>
-                     <SVGPath content="M0 0 L20 10 L0 20 Z" fill="green" scaleX="0.5" scaleY="0.5" />
-                 </graphic>
-             </Button>
-            <Button fx:id="pauseButton" alignment="TOP_CENTER" mnemonicParsing="false" onAction="#ButtonPausePressed" style="-fx-background-radius: 40px;">
-                <graphic>
-                    <SVGPath content="M0 0 H10 V20 H0 Z M20 0 H30 V20 H20 Z" fill="white" scaleX="0.5" scaleY="0.5" />
-                </graphic>
+             <Button fx:id="playButton" alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#ButtonPlayPressed" prefHeight="35.0" prefWidth="50.0" style="-fx-padding: 5px 5px 5px 9px;" styleClass="playBackButton">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/icons/play_off.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="pauseButton" alignment="TOP_CENTER" mnemonicParsing="false" onAction="#ButtonPausePressed" prefHeight="35.0" prefWidth="50.0" styleClass="playBackButton">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/icons/pause_off.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Button>
-            <Button fx:id="stopButton" alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#ButtonStopPressed" style="-fx-background-radius: 40px;" textAlignment="RIGHT">
-                 <graphic>
-                     <SVGPath content="M0 0 H20 V20 H0 Z" fill="white" scaleX="0.5" scaleY="0.5" />
-                 </graphic>
+            <Button fx:id="stopButton" alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#ButtonStopPressed" prefHeight="35.0" prefWidth="50.0" styleClass="playBackButton" textAlignment="RIGHT">
+                <graphic>
+                    <ImageView fitHeight="25.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@assets/icons/stop_off.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
              </Button>
-             <Button fx:id="recordButton" mnemonicParsing="false" style="-fx-background-radius: 40px;">
+             <Button fx:id="recordButton" mnemonicParsing="false" prefHeight="37.0" prefWidth="50.0" styleClass="playBackButton">
                  <graphic>
-                     <Circle fx:id="stopCircle" fill="#FF6666" radius="10" scaleX="0.5" scaleY="0.5" style="-fx-" />
-                 </graphic>
-             </Button>
-             <Button fx:id="saveButton" mnemonicParsing="false" prefHeight="28.0" prefWidth="34.0" style="-fx-background-radius: 40px;">
-                 <graphic>
-                     <SVGPath content="                             M2 0 H16 L20 4 V18 H2 Z                             M5 2 H12 V7 H5 Z                             M6 3 H11 V6 H6 Z                             M5 10 H15 V17 H5 Z                             " fill="dodgerblue" scaleX="0.5" scaleY="0.5" />
+                    <ImageView fitHeight="25.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@assets/icons/record_off.png" />
+                        </image>
+                    </ImageView>
                  </graphic>
              </Button>
          </children>
@@ -48,66 +58,66 @@
       </HBox>
       <AnchorPane layoutX="29.0" layoutY="157.0" prefHeight="202.0" prefWidth="771.0" style="-fx-background-color: #f5f5f5;">
          <children>
-             <Button fx:id="C2" alignment="BOTTOM_CENTER" layoutX="200.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: lightgrey; -fx-border-radius: 10px 0px 3px 10px;" text="C2" />
-             <Button fx:id="D2" alignment="BOTTOM_CENTER" layoutX="240.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: lightgrey; -fx-border-radius: 0px 0px 3px 3px;" text="D2" />
-             <Button fx:id="E2" alignment="BOTTOM_CENTER" layoutX="280.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: lightgrey; -fx-border-radius: 0px 0px 3px 3px;" text="E2" />
-            <Button fx:id="F2" alignment="BOTTOM_CENTER" layoutX="320.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: lightgrey; -fx-border-radius: 0px 0px 3px 3px;" text="F2" />
-            <Button fx:id="G2" alignment="BOTTOM_CENTER" layoutX="360.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: lightgrey; -fx-border-radius: 0px 0px 3px 3px;" text="G2" />
-            <Button fx:id="A2" alignment="BOTTOM_CENTER" layoutX="400.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: lightgrey; -fx-border-radius: 0px 0px 3px 3px;" text="A2" />
-            <Button fx:id="B2" alignment="BOTTOM_CENTER" layoutX="440.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: lightgrey; -fx-border-radius: 0px 0px 3px 3px;" text="B2" />
-            <Button fx:id="C3" alignment="BOTTOM_CENTER" layoutX="480.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: lightgrey; -fx-border-radius: 0px 0px 3px 3px;" text="C3" />
-            <Button fx:id="D3" alignment="BOTTOM_CENTER" layoutX="520.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: lightgrey; -fx-border-radius: 0px 0px 3px 3px;" text="D3" />
-            <Button fx:id="E3" alignment="BOTTOM_CENTER" layoutX="560.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: lightgrey; -fx-border-radius: 0px 0px 3px 3px;" text="E3" />
-            <Button fx:id="F3" alignment="BOTTOM_CENTER" layoutX="600.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: lightgrey; -fx-border-radius: 0px 0px 3px 3px;" text="F3" />
-            <Button fx:id="G3" alignment="BOTTOM_CENTER" layoutX="640.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: lightgrey; -fx-border-radius: 0px 0px 3px 3px;" text="G3" />
-            <Button fx:id="A3" alignment="BOTTOM_CENTER" layoutX="680.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: lightgrey; -fx-border-radius: 0px 0px 3px 3px;" text="A3" />
-            <Button fx:id="B3" alignment="BOTTOM_CENTER" layoutX="720.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="201.0" prefWidth="42.0" style="-fx-background-color: white; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: lightgrey; -fx-border-radius: 3px 10px 10px 3px; -fx-background-radius: 3px 10px 10px 3px;" text="B3" />
-            <Button fx:id="CSharp2" alignment="BOTTOM_CENTER" layoutX="225.0" layoutY="2.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="130.0" prefWidth="30.0" style="-fx-background-color: black; -fx-border-style: solid; -fx-border-width: 0px 2px 2px 2px; -fx-border-color: grey; -fx-text-fill: white;" text="C#">
+             <Button fx:id="C2" alignment="BOTTOM_CENTER" layoutX="200.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="201.0" prefWidth="42.0" style="-fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: lightgrey; -fx-border-radius: 10px 0px 3px 10px; -fx-background-radius: 10px 0px 3px 10px; -fx-background-insets: 1;" styleClass="whiteKey" text="C2" />
+             <Button fx:id="D2" alignment="BOTTOM_CENTER" layoutX="240.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="201.0" prefWidth="42.0" style="-fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: lightgrey; -fx-border-radius: 0px 0px 3px 3px; -fx-background-radius: 0px 0px 3px 3px; -fx-background-insets: 0 0 1 0;" styleClass="whiteKey" text="D2" />
+             <Button fx:id="E2" alignment="BOTTOM_CENTER" layoutX="280.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="201.0" prefWidth="42.0" style="-fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: lightgrey; -fx-border-radius: 0px 0px 3px 3px; -fx-background-radius: 0px 0px 3px 3px; -fx-background-insets: 0 0 1 0;" styleClass="whiteKey" text="E2" />
+            <Button fx:id="F2" alignment="BOTTOM_CENTER" layoutX="320.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="201.0" prefWidth="42.0" style="-fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: lightgrey; -fx-border-radius: 0px 0px 3px 3px; -fx-background-radius: 0px 0px 3px 3px; -fx-background-insets: 0 0 1 0;" styleClass="whiteKey" text="F2" />
+            <Button fx:id="G2" alignment="BOTTOM_CENTER" layoutX="360.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="201.0" prefWidth="42.0" style="-fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: lightgrey; -fx-border-radius: 0px 0px 3px 3px; -fx-background-radius: 0px 0px 3px 3px; -fx-background-insets: 0 0 1 0;" styleClass="whiteKey" text="G2" />
+            <Button fx:id="A2" alignment="BOTTOM_CENTER" layoutX="400.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="201.0" prefWidth="42.0" style="-fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: lightgrey; -fx-border-radius: 0px 0px 3px 3px; -fx-background-radius: 0px 0px 3px 3px; -fx-background-insets: 0 0 1 0;" styleClass="whiteKey" text="A2" />
+            <Button fx:id="B2" alignment="BOTTOM_CENTER" layoutX="440.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="201.0" prefWidth="42.0" style="-fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: lightgrey; -fx-border-radius: 0px 0px 3px 3px; -fx-background-radius: 0px 0px 3px 3px; -fx-background-insets: 0 0 1 0;" styleClass="whiteKey" text="B2" />
+            <Button fx:id="C3" alignment="BOTTOM_CENTER" layoutX="480.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="201.0" prefWidth="42.0" style="-fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: lightgrey; -fx-border-radius: 0px 0px 3px 3px; -fx-background-radius: 0px 0px 3px 3px; -fx-background-insets: 0 0 1 0;" styleClass="whiteKey" text="C3" />
+            <Button fx:id="D3" alignment="BOTTOM_CENTER" layoutX="520.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="201.0" prefWidth="42.0" style="-fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: lightgrey; -fx-border-radius: 0px 0px 3px 3px; -fx-background-radius: 0px 0px 3px 3px; -fx-background-insets: 0 0 1 0;" styleClass="whiteKey" text="D3" />
+            <Button fx:id="E3" alignment="BOTTOM_CENTER" layoutX="560.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="201.0" prefWidth="42.0" style="-fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: lightgrey; -fx-border-radius: 0px 0px 3px 3px; -fx-background-radius: 0px 0px 3px 3px; -fx-background-insets: 0 0 1 0;" styleClass="whiteKey" text="E3" />
+            <Button fx:id="F3" alignment="BOTTOM_CENTER" layoutX="600.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="201.0" prefWidth="42.0" style="-fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: lightgrey; -fx-border-radius: 0px 0px 3px 3px; -fx-background-radius: 0px 0px 3px 3px; -fx-background-insets: 0 0 1 0;" styleClass="whiteKey" text="F3" />
+            <Button fx:id="G3" alignment="BOTTOM_CENTER" layoutX="640.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="201.0" prefWidth="42.0" style="-fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: lightgrey; -fx-border-radius: 0px 0px 3px 3px; -fx-background-radius: 0px 0px 3px 3px; -fx-background-insets: 0 0 1 0;" styleClass="whiteKey" text="G3" />
+            <Button fx:id="A3" alignment="BOTTOM_CENTER" layoutX="680.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="201.0" prefWidth="42.0" style="-fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: lightgrey; -fx-border-radius: 0px 0px 3px 3px; -fx-background-radius: 0px 0px 3px 3px; -fx-background-insets: 0 0 1 0;" styleClass="whiteKey" text="A3" />
+            <Button fx:id="B3" alignment="BOTTOM_CENTER" layoutX="720.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="201.0" prefWidth="42.0" style="-fx-border-style: solid; -fx-border-width: 2px; -fx-border-color: lightgrey; -fx-border-radius: 3px 10px 10px 3px; -fx-background-radius: 3px 10px 10px 3px; -fx-background-insets: 1;" styleClass="whiteKey" text="B3" />
+            <Button fx:id="CSharp2" alignment="BOTTOM_CENTER" layoutX="225.0" layoutY="2.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="130.0" prefWidth="30.0" style="-fx-border-style: solid; -fx-border-width: 0px 2px 2px 2px; -fx-border-color: #5c5c5c; -fx-text-fill: white; -fx-border-radius: 0px 0px 2px 2px; -fx-background-insets: 0 0 1 0;" styleClass="blackKey" text="C#">
                <font>
                   <Font name="Arial" size="8.0" />
                </font>
             </Button>
-            <Button fx:id="DSharp2" alignment="BOTTOM_CENTER" layoutX="266.0" layoutY="2.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="130.0" prefWidth="30.0" style="-fx-background-color: black; -fx-border-style: solid; -fx-border-width: 0px 2px 2px 2px; -fx-border-color: grey; -fx-text-fill: white;" text="D#">
+            <Button fx:id="DSharp2" alignment="BOTTOM_CENTER" layoutX="266.0" layoutY="2.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="130.0" prefWidth="30.0" style="-fx-border-style: solid; -fx-border-width: 0px 2px 2px 2px; -fx-border-color: #5c5c5c; -fx-text-fill: white; -fx-border-radius: 0px 0px 2px 2px; -fx-background-insets: 0 0 1 0;" styleClass="blackKey" text="D#">
                <font>
                   <Font name="Arial" size="8.0" />
                </font>
             </Button>
-            <Button fx:id="FSharp2" alignment="BOTTOM_CENTER" layoutX="345.0" layoutY="2.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="130.0" prefWidth="30.0" style="-fx-background-color: black; -fx-border-style: solid; -fx-border-width: 0px 2px 2px 2px; -fx-border-color: grey; -fx-text-fill: white;" text="F#">
+            <Button fx:id="FSharp2" alignment="BOTTOM_CENTER" layoutX="345.0" layoutY="2.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="130.0" prefWidth="30.0" style="-fx-border-style: solid; -fx-border-width: 0px 2px 2px 2px; -fx-border-color: #5c5c5c; -fx-text-fill: white; -fx-border-radius: 0px 0px 2px 2px; -fx-background-insets: 0 0 1 0;" styleClass="blackKey" text="F#">
                <font>
                   <Font name="Arial" size="8.0" />
                </font>
             </Button>
-            <Button fx:id="GSharp2" alignment="BOTTOM_CENTER" layoutX="385.0" layoutY="2.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="130.0" prefWidth="30.0" style="-fx-background-color: black; -fx-border-style: solid; -fx-border-width: 0px 2px 2px 2px; -fx-border-color: grey; -fx-text-fill: white;" text="G#">
+            <Button fx:id="GSharp2" alignment="BOTTOM_CENTER" layoutX="385.0" layoutY="2.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="130.0" prefWidth="30.0" style="-fx-border-style: solid; -fx-border-width: 0px 2px 2px 2px; -fx-border-color: #5c5c5c; -fx-text-fill: white; -fx-border-radius: 0px 0px 2px 2px; -fx-background-insets: 0 0 1 0;" styleClass="blackKey" text="G#">
                <font>
                   <Font name="Arial" size="8.0" />
                </font>
             </Button>
-            <Button fx:id="ASharp2" alignment="BOTTOM_CENTER" layoutX="425.0" layoutY="2.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="130.0" prefWidth="30.0" style="-fx-background-color: black; -fx-border-style: solid; -fx-border-width: 0px 2px 2px 2px; -fx-border-color: grey; -fx-text-fill: white;" text="A#">
+            <Button fx:id="ASharp2" alignment="BOTTOM_CENTER" layoutX="425.0" layoutY="2.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="130.0" prefWidth="30.0" style="-fx-border-style: solid; -fx-border-width: 0px 2px 2px 2px; -fx-border-color: #5c5c5c; -fx-text-fill: white; -fx-border-radius: 0px 0px 2px 2px; -fx-background-insets: 0 0 1 0;" styleClass="blackKey" text="A#">
                <font>
                   <Font name="Arial" size="8.0" />
                </font>
             </Button>
-            <Button fx:id="CSharp3" alignment="BOTTOM_CENTER" layoutX="505.0" layoutY="2.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="130.0" prefWidth="30.0" style="-fx-background-color: black; -fx-border-style: solid; -fx-border-width: 0px 2px 2px 2px; -fx-border-color: grey; -fx-text-fill: white;" text="C#">
+            <Button fx:id="CSharp3" alignment="BOTTOM_CENTER" layoutX="505.0" layoutY="2.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="130.0" prefWidth="30.0" style="-fx-border-style: solid; -fx-border-width: 0px 2px 2px 2px; -fx-border-color: #5c5c5c; -fx-text-fill: white; -fx-border-radius: 0px 0px 2px 2px; -fx-background-insets: 0 0 1 0;" styleClass="blackKey" text="C#">
                <font>
                   <Font name="Arial" size="8.0" />
                </font>
             </Button>
-            <Button fx:id="DSharp3" alignment="BOTTOM_CENTER" layoutX="546.0" layoutY="2.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="130.0" prefWidth="30.0" style="-fx-background-color: black; -fx-border-style: solid; -fx-border-width: 0px 2px 2px 2px; -fx-border-color: grey; -fx-text-fill: white;" text="D#">
+            <Button fx:id="DSharp3" alignment="BOTTOM_CENTER" layoutX="546.0" layoutY="2.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="130.0" prefWidth="30.0" style="-fx-border-style: solid; -fx-border-width: 0px 2px 2px 2px; -fx-border-color: #5c5c5c; -fx-text-fill: white; -fx-border-radius: 0px 0px 2px 2px; -fx-background-insets: 0 0 1 0;" styleClass="blackKey" text="D#">
                <font>
                   <Font name="Arial" size="8.0" />
                </font>
             </Button>
-            <Button fx:id="FSharp3" alignment="BOTTOM_CENTER" layoutX="625.0" layoutY="2.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="130.0" prefWidth="30.0" style="-fx-background-color: black; -fx-border-style: solid; -fx-border-width: 0px 2px 2px 2px; -fx-border-color: grey; -fx-text-fill: white;" text="F#">
+            <Button fx:id="FSharp3" alignment="BOTTOM_CENTER" layoutX="625.0" layoutY="2.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="130.0" prefWidth="30.0" style="-fx-border-style: solid; -fx-border-width: 0px 2px 2px 2px; -fx-border-color: #5c5c5c; -fx-text-fill: white; -fx-border-radius: 0px 0px 2px 2px; -fx-background-insets: 0 0 1 0;" styleClass="blackKey" text="F#">
                <font>
                   <Font name="Arial" size="8.0" />
                </font>
             </Button>
-            <Button fx:id="GSharp3" alignment="BOTTOM_CENTER" layoutX="666.0" layoutY="2.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="130.0" prefWidth="30.0" style="-fx-background-color: black; -fx-border-style: solid; -fx-border-width: 0px 2px 2px 2px; -fx-border-color: grey; -fx-text-fill: white;" text="G#">
+            <Button fx:id="GSharp3" alignment="BOTTOM_CENTER" layoutX="666.0" layoutY="2.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="130.0" prefWidth="30.0" style="-fx-border-style: solid; -fx-border-width: 0px 2px 2px 2px; -fx-border-color: #5c5c5c; -fx-text-fill: white; -fx-border-radius: 0px 0px 2px 2px; -fx-background-insets: 0 0 1 0;" styleClass="blackKey" text="G#">
                <font>
                   <Font name="Arial" size="8.0" />
                </font>
             </Button>
-            <Button fx:id="ASharp3" alignment="BOTTOM_CENTER" layoutX="706.0" layoutY="2.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="130.0" prefWidth="30.0" style="-fx-background-color: black; -fx-border-style: solid; -fx-border-width: 0px 2px 2px 2px; -fx-border-color: grey; -fx-text-fill: white;" text="A#">
+            <Button fx:id="ASharp3" alignment="BOTTOM_CENTER" layoutX="706.0" layoutY="2.0" mnemonicParsing="false" onAction="#noteTriggered" prefHeight="130.0" prefWidth="30.0" style="-fx-border-style: solid; -fx-border-width: 0px 2px 2px 2px; -fx-border-color: #5c5c5c; -fx-text-fill: white; -fx-border-radius: 0px 0px 2px 2px; -fx-background-insets: 0 0 1 0;" styleClass="blackKey" text="A#">
                <font>
                   <Font name="Arial" size="8.0" />
                </font>
@@ -122,5 +132,14 @@
       <ComboBox layoutX="549.0" layoutY="27.0" prefHeight="25.0" prefWidth="110.0" promptText=" " />
        <ComboBox fx:id="piste_loader" layoutX="338.0" layoutY="27.0" prefHeight="25.0" prefWidth="143.0" promptText="Charger une piste" />
        <Button fx:id="creditButton" alignment="CENTER" layoutX="815.0" layoutY="27.0" mnemonicParsing="false" onAction="#openCredits" text="Crédits --&gt;" />
+       <Button fx:id="saveButton" layoutX="673.0" layoutY="22.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="43.0" styleClass="playBackButton">
+           <graphic>
+              <ImageView fitHeight="25.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                      <Image url="@assets/icons/save_diskette.png" />
+                  </image>
+              </ImageView>
+           </graphic>
+       </Button>
    </children>
 </Pane>

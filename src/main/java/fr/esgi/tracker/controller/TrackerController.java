@@ -76,18 +76,18 @@ public class TrackerController  {
     @FXML private Button ASharp3;
 
     @FXML
-    private void ButtonPlayPressed() {
-        buttonController.ButtonPlayPressed();
+    private void ButtonPlayPressed(ActionEvent event) {
+        buttonController.ButtonPlayPressed(event);
     }
 
     @FXML
-    private void ButtonPausePressed() {
-        buttonController.ButtonPausePressed();
+    private void ButtonPausePressed(ActionEvent event) {
+        buttonController.ButtonPausePressed(event);
     }
 
     @FXML
-    private void ButtonStopPressed() {
-        buttonController.ButtonStopPressed();
+    private void ButtonStopPressed(ActionEvent event) {
+        buttonController.ButtonStopPressed(event);
     }
     private final PianoController pianoController = new PianoController(this);
     private final ButtonController buttonController = new ButtonController(this);
