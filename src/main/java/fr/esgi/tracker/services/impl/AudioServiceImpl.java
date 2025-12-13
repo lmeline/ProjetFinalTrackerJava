@@ -1,73 +1,135 @@
 package fr.esgi.tracker.services.impl;
 
+import fr.esgi.tracker.business.Hauteur;
+import fr.esgi.tracker.business.Instrument;
 import fr.esgi.tracker.business.Note;
 import fr.esgi.tracker.services.AudioService;
-import fr.esgi.tracker.utils.AudioPlayer;
-import javafx.scene.media.AudioClip;
+import fr.esgi.tracker.services.InstrumentService;
+import fr.esgi.tracker.utils.AudioTools;
 
 import javax.sound.sampled.*;
-import java.io.BufferedInputStream;
-import java.io.InputStream;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.Map;
+
+
+import java.util.*;
 
 public class AudioServiceImpl implements AudioService {
-    private volatile SourceDataLine currentLine; // ligne en cours
-    @Override
-    public void jouerNote(Note note, float volume) {
-        /*try {
-            InputStream is = getClass().getResourceAsStream(note.getInstrument().getCheminFichier());
-            if (is == null) throw new IllegalArgumentException("Fichier audio introuvable");
 
-            AudioInputStream ais = AudioSystem.getAudioInputStream(new BufferedInputStream(is));
-            AudioFormat format = ais.getFormat();
+    private final InstrumentService instrumentService;
+    private Map<String, EnumMap<Hauteur, float[]>> samples = new HashMap<>();
+    private final List<Object[]> voices = Collections.synchronizedList(new ArrayList<>());
 
-            // Stop la note précédente si elle est en cours
-            if (currentLine != null && currentLine.isOpen()) {
-                currentLine.stop();
-                currentLine.close();
-            }
+    private SourceDataLine line;
+    private boolean running = false;
+    private final int bufferSize = 512;
+    private float[] mixer = new float[bufferSize];
 
-            // Création de la nouvelle ligne
-            SourceDataLine line = (SourceDataLine) AudioSystem.getLine(new DataLine.Info(SourceDataLine.class, format));
-            currentLine = line; // stocker la ligne actuelle
+    public AudioServiceImpl(InstrumentService instrumentService) {
+        this.instrumentService = instrumentService;
+        running = true;
+        this.initializeSourceDataLine();
+        this.startAudioLoop();
+    }
 
-            line.open(format);
-            if (line.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
-                FloatControl gain = (FloatControl) line.getControl(FloatControl.Type.MASTER_GAIN);
-                float dB = 20f * (float) Math.log10(volume);
-                gain.setValue(dB);
-            }
+    private void startAudioLoop() {
+        Thread audioThread = new Thread(this::audioLoop, "AudioEngine");
+        audioThread.setPriority(Thread.MAX_PRIORITY);
+        audioThread.start();
+    }
 
-            line.start();
-
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = ais.read(buffer)) != -1) {
-                line.write(buffer, 0, bytesRead);
-            }
-
-            line.drain();
-            line.stop();
-            line.close();
-            ais.close();
-
-            // La note est terminée, on supprime la référence
-            if (currentLine == line) currentLine = null;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
+    private void initializeSourceDataLine(){
         try {
-            AudioPlayer.playSound(note);
-        } catch (Exception e) {
+            AudioFormat fmt = new AudioFormat(44100, 16, 1, true, false);
+            line = AudioSystem.getSourceDataLine(fmt);
+            int bufferSizeBytes = 4096; // ou 8192 pour un peu plus de sécurité
+            line.open(fmt, bufferSizeBytes);
+            line.start();
+        } catch (LineUnavailableException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Précharge tous les samples en RAM dans Map<String, EnumMap<Hauteur, float[]>>
+     */
+    public void loadAudioClips() {
+        System.out.println("Début chargement samples...");
 
+        for (Instrument is : instrumentService.getAllInstruments().values()) {
+            EnumMap<Hauteur, float[]> hauteurMap = new EnumMap<>(Hauteur.class);
 
+            for (Hauteur h : Hauteur.values()) {
+                try {
+                    float[] data = AudioTools.getFloatArrayFromWav(is.getCheminFichier());
+                    hauteurMap.put(h, data);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
 
+            samples.put(is.getNom(), hauteurMap);
+        }
 
-    private double setHauteur(Note note) {
-        return note.getHauteur().getFrequence() / note.getInstrument().getHauteurDuSample().getFrequence();
+        System.out.println("Samples chargés !");
+    }
+
+    /**
+     * Jouer une note avec volume et pitch (ratio)
+     */
+    @Override
+    public void jouerNote(Note note, float volume) {
+        float[] data = samples.get(note.getInstrument().getNom()).get(note.getHauteur());
+
+        Object[] voice = new Object[]{data, 0f, volume, AudioTools.getPitchRatio(note)};
+
+        voices.add(voice);
+    }
+
+    /**
+     * Boucle audio continue : mixage et écriture vers SourceDataLine
+     */
+    private void audioLoop() {
+        while (running) {
+            mixer = AudioTools.clearMixArray(mixer);
+
+            synchronized (voices) {
+                Iterator<Object[]> it = voices.iterator();
+                while (it.hasNext()) {
+                    Object[] voice = it.next();
+                    float[] data = (float[]) voice[0];
+                    float position = (float) voice[1];
+                    float volume = (float) voice[2];
+                    float speed = (float) voice[3];
+
+                    for (int i = 0; i < bufferSize; i++) {
+                        int idx = (int) position;
+                        if (idx >= data.length) {
+                            it.remove(); // OK maintenant
+                            break;
+                        }
+                        mixer[i] += data[idx] * volume;
+                        position += speed;
+                    }
+
+                    voice[1] = position;
+                }
+            }
+
+            byte[] pcm = AudioTools.convertFloatArrayToPCM16Array(mixer);
+            line.write(pcm, 0, pcm.length);
+        }
+    }
+    /**
+     * Arrêter l’audio proprement
+     */
+    public void stopAudio() {
+        running = false;
+        if (line != null) {
+            line.drain();
+            line.close();
+        }
     }
 }
+

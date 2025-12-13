@@ -17,6 +17,13 @@ public class Piste {
         this.sequence = sequence;
     }
 
+    public Piste(String nomPreset){
+        this.nomPreset = nomPreset;
+        this.id = ++compteur;
+        this.volume = 1.0f;
+        this.sequence = null;
+    }
+
     public int getId() {
         return id;
     }
