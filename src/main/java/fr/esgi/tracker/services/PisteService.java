@@ -8,7 +8,7 @@ public interface PisteService {
 
     Piste chargerPiste(String nom);
 
-    void enregistrerPiste(Piste piste);
+    void enregistrerPiste(Piste piste, String nom);
 
     void supprimerPiste(Piste piste);
 

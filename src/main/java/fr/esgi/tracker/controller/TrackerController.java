@@ -5,9 +5,6 @@ import fr.esgi.tracker.observer.LectureObserver;
 import fr.esgi.tracker.services.*;
 import fr.esgi.tracker.services.impl.*;
 import javafx.application.Platform;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,12 +15,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import fr.esgi.tracker.App;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -39,9 +37,13 @@ public class TrackerController implements LectureObserver {
     @FXML private Button playButton;
     @FXML private Button pauseButton;
     @FXML private Button stopButton;
+    @FXML private Button recordButton;
+    @FXML private Button saveButton;
+    @FXML Slider volumeSlider;
     @FXML private TableView<Note> TrackerList;
     @FXML private TableColumn<Note, String> NoteList;
     @FXML private ComboBox<String> piste_loader;
+    @FXML private ComboBox<String> instrumentList;
 
     // Touches Blanches
     @FXML private Button C2;
@@ -72,23 +74,49 @@ public class TrackerController implements LectureObserver {
     @FXML private Button ASharp3;
 
     @FXML
-    private void ButtonPlayPressed(ActionEvent event) {
-        buttonController.ButtonPlayPressed(event);
+    private void ButtonPlayPressed() {
+        if (lectureService.getStatutLecture() != StatutLecture.EN_COURS) {
+            toggleButtonIcon(stopButton, "off");
+            toggleButtonIcon(pauseButton, "off");
+            toggleButtonIcon(playButton, "on");
+        }
+        buttonController.ButtonPlayPressed();
     }
 
     @FXML
-    private void ButtonPausePressed(ActionEvent event) {
-        buttonController.ButtonPausePressed(event);
+    private void ButtonPausePressed() {
+        if (lectureService.getStatutLecture() == StatutLecture.EN_COURS) {
+            toggleButtonIcon(stopButton, "off");
+            toggleButtonIcon(pauseButton, "on");
+            toggleButtonIcon(playButton, "off");
+        }
+        buttonController.ButtonPausePressed();
+    }
+
+    @FXML
+    private void ButtonStopPressed() {
+        if (lectureService.getStatutLecture() != StatutLecture.ARRETE) {
+            toggleButtonIcon(stopButton, "on");
+            toggleButtonIcon(pauseButton, "off");
+            toggleButtonIcon(playButton, "off");
+        }
+        buttonController.ButtonStopPressed();
+
     }
 
     @FXML
     private void ButtonRecordPressed() {
+        if (enregistrementService.getStatutRecord() != StatutRecord.ARRETE) {
+            toggleButtonIcon(recordButton, "off");
+        } else {
+            toggleButtonIcon(recordButton, "on");
+        }
+
         if (enregistrementService.getStatutRecord() == StatutRecord.ARRETE)
             enregistrementService.setStatutRecord(StatutRecord.EN_COURS);
         else {
             enregistrementService.setStatutRecord(StatutRecord.ARRETE);
         }
-        System.out.println(enregistrementService.getStatutRecord());
     }
 
 
@@ -116,6 +144,9 @@ public class TrackerController implements LectureObserver {
         this.lectureService = new LectureServiceImpl(this.pisteService, this.audioService);
         this.lectureService.addObserver(this);
 
+        this.initializeListeners();
+        this.toggleButtonIcon(stopButton, "on");
+
 
         // 1) Fournit le texte d'origine
         NoteList.setCellValueFactory(cellData -> {
@@ -127,7 +158,11 @@ public class TrackerController implements LectureObserver {
 
 
 
-
+        instrumentList.getItems().addAll(this.instrumentService.getAllInstruments().keySet());
+        instrumentList.valueProperty().addListener((obs, oldVal, newVal) -> {
+            this.instrumentService.setInstrumentCourant(this.instrumentService.getInstrument(newVal));
+        });
+        instrumentList.setValue(this.instrumentService.getInstrumentCourant().getNom());
 
 
         piste_loader.getItems().addAll(this.pisteService.getToutesLesPistes().keySet());
@@ -161,7 +196,7 @@ public class TrackerController implements LectureObserver {
     public void noteTriggered(ActionEvent e) {
         Button btn = (Button) e.getSource();
         Note note = new Note(Hauteur.valueOf(btn.getId()), instrumentService.getInstrumentCourant(), 1.0f);
-        this.audioService.jouerNote(note, 1.0F);
+        this.audioService.jouerNote(note, pisteService.getPisteCourante().getVolume());
         System.out.println(btn.getId());
         if (enregistrementService.getStatutRecord() == StatutRecord.EN_COURS) {
             this.enregistrementService.EnregistrerNote(note, pisteService, lectureService.getStep()-1);
@@ -246,6 +281,57 @@ public class TrackerController implements LectureObserver {
 
     public PisteService getPisteService() {
         return pisteService;
+    }
+
+    private void toggleButtonIcon(Button button, String value){
+        String buttonName = button.getId().replace("Button", "");
+        String path = "/fr/esgi/tracker/assets/icons/" + buttonName + "_" + value + ".png";
+        Image newImage = new Image(getClass().getResourceAsStream(path));
+        ImageView imageView = new ImageView(newImage);
+        imageView.setFitHeight(25);
+        imageView.setFitWidth(37);
+        imageView.setPickOnBounds(true);
+        imageView.setPreserveRatio(true);
+        button.setGraphic(imageView);
+        switch (value) {
+            case "on" :
+                button.getStyleClass().add(buttonName + "Time");
+                break;
+            case "off" :
+                button.getStyleClass().remove(buttonName + "Time");
+                break;
+        }
+    }
+
+    private void initializeListeners() {
+        volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            float val = newValue.floatValue()/100;
+            pisteService.getPisteCourante().setVolume(val);
+        });
+    }
+
+    @FXML
+    public void openSauvegardeModale() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/esgi/tracker/EnregistrerPisteModale.fxml"));
+            EnregistrerPisteModaleController controller = new EnregistrerPisteModaleController(this);
+            loader.setController(controller);
+            Parent root = loader.load();
+
+            Stage modalStage = new Stage();
+            modalStage.setTitle("Fenêtre Modale");
+            modalStage.initModality(Modality.APPLICATION_MODAL); // rend la fenêtre modale
+            modalStage.initOwner(((Node) saveButton.getScene().getRoot()).getScene().getWindow()); // parent window
+            modalStage.setScene(new Scene(root));
+            modalStage.showAndWait(); // bloque jusqu'à la fermeture
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updatePisteLoader() {
+        piste_loader.getItems().add(pisteService.getPisteCourante().getNomPreset());
+        piste_loader.setValue(pisteService.getPisteCourante().getNomPreset());
     }
 
 }

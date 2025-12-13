@@ -14,43 +14,16 @@ public class ButtonController {
     }
 
 
-    public void ButtonPlayPressed(ActionEvent event) {
-
-        System.out.println("Lecture démarrée");
-        Button btn = (Button) event.getSource();
-        Image image = new Image(getClass().getResourceAsStream("/fr/esgi/tracker/assets/icons/play_on.png"));
-        ImageView imageView = new ImageView(image);
-        imageView.setFitHeight(25);
-        imageView.setFitWidth(37);
-        imageView.setPickOnBounds(true);
-        imageView.setPreserveRatio(true);
-        btn.setGraphic(imageView);
+    public void ButtonPlayPressed() {
         trackerController.getLectureService().play();
     }
 
-    public void ButtonPausePressed(ActionEvent event) {
-        Button btn = (Button) event.getSource();
-        Image image = new Image(getClass().getResourceAsStream("/fr/esgi/tracker/assets/icons/pause_on.png"));
-        ImageView imageView = new ImageView(image);
-        imageView.setFitHeight(25);
-        imageView.setFitWidth(37);
-        imageView.setPickOnBounds(true);
-        imageView.setPreserveRatio(true);
-        btn.setGraphic(imageView);
-        System.out.println("Lecture mise en pause");
+    public void ButtonPausePressed() {
 
         trackerController.getLectureService().pause();
     }
 
-    public void ButtonStopPressed(ActionEvent event) {
-        Button btn = (Button) event.getSource();
-        Image image = new Image(getClass().getResourceAsStream("/fr/esgi/tracker/assets/icons/stop_on.png"));
-        ImageView imageView = new ImageView(image);
-        imageView.setFitHeight(25);
-        imageView.setFitWidth(37);
-        imageView.setPickOnBounds(true);
-        imageView.setPreserveRatio(true);
-        btn.setGraphic(imageView);
+    public void ButtonStopPressed() {
         trackerController.getLectureService().stop();
         System.out.println("Lecture arrêtée");
     }

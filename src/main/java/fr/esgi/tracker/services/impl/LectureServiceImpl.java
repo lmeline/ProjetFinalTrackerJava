@@ -42,9 +42,7 @@ public class LectureServiceImpl implements LectureService {
         this.tache = this.horloge.scheduleAtFixedRate(() -> {
             try {
                 Note note = piste.getSequence()[this.step - 1];
-
-                int ratio = this.step % 2 == 0 ? 2 : 1;
-                if (note != null) audioService.jouerNote(note, piste.getVolume()/ratio);
+                if (note != null) audioService.jouerNote(note, piste.getVolume());
                 this.notifyObservers(this.step - 1);
                 this.incrementerStep();
             } catch (Exception e) {
