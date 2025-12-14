@@ -5,8 +5,10 @@ import fr.esgi.tracker.observer.LectureObserver;
 import fr.esgi.tracker.services.*;
 import fr.esgi.tracker.services.impl.*;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -40,6 +42,7 @@ public class TrackerController implements LectureObserver {
     @FXML private Button recordButton;
     @FXML private Button saveButton;
     @FXML Slider volumeSlider;
+    @FXML Label volumeLabel;
     @FXML private ComboBox<String> liste_pistes;
     @FXML private ComboBox<String> liste_instruments;
 
@@ -258,6 +261,12 @@ public class TrackerController implements LectureObserver {
         volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             float val = newValue.floatValue()/100;
             pisteService.getPisteCourante().setVolume(val);
+        });
+
+        volumeLabel.textProperty().bind(Bindings.format("%.0f", volumeSlider.valueProperty()));
+        volumeLabel.setAlignment(Pos.CENTER);
+        volumeLabel.textProperty().addListener((obs, oldVal, newVal) -> {
+            volumeSlider.setValue(Float.parseFloat(newVal));
         });
 
     }

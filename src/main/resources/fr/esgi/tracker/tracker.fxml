@@ -67,6 +67,17 @@
                   <Slider fx:id="volumeSlider" blockIncrement="1.0" prefHeight="16.0" prefWidth="206.0" showTickMarks="true" style="-fx-block-increment: red;" value="100.0" />
                </children>
             </VBox>
+            <Label fx:id="volumeLabel" prefHeight="27.0" prefWidth="36.0" style="-fx-background-color: #092136; -fx-text-fill: #04bed6; -fx-background-radius: 4px; -fx-border-radius: 4px; -fx-border-width: 1px; -fx-border-color: gray; -fx-background-insets: 0.5;" text="50" textAlignment="CENTER">
+               <padding>
+                  <Insets bottom="4.0" left="6.0" right="6.0" top="4.0" />
+               </padding>
+               <HBox.margin>
+                  <Insets left="-10.0" top="8.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
          </children>
          <padding>
             <Insets left="5.0" />
@@ -183,7 +194,7 @@
             </HBox>
          </children>
       </HBox>
-       <Button fx:id="creditButton" alignment="CENTER" layoutX="737.0" layoutY="14.0" mnemonicParsing="false" onAction="#openCredits" style="-fx-border-radius: 5px; -fx-background-radius: 5px; -fx-border-width: 1px; -fx-border-color: gray; -fx-background-insets: 0.5;" text="A propos">
+       <Button fx:id="creditButton" alignment="CENTER" layoutX="741.0" layoutY="41.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openCredits" prefHeight="30.0" style="-fx-border-radius: 5px; -fx-background-radius: 5px; -fx-border-width: 1px; -fx-border-color: gray; -fx-background-insets: 0.5;" text="A propos">
          <font>
             <Font name="Monospaced Italic" size="13.0" />
          </font></Button>
