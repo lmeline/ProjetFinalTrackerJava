@@ -21,7 +21,8 @@ public class PisteServiceImpl implements PisteService {
 
     @Override
     public Piste chargerPiste(String nom) {
-        System.out.println("piste " + nom + " chargée");
+        System.out.println("chargerPiste appelé avec : " + nom);
+        System.out.println("clés existantes : " + pistes.keySet());
         this.pisteCourante = this.pistes.get(nom).clone();
         return this.pisteCourante;
     }
@@ -45,10 +46,43 @@ public class PisteServiceImpl implements PisteService {
     public void chargerToutesLesPistes() {
         List<Piste> pistes = new ArrayList<>();
 
-        //Piste 1 :
+        //Piste init :
         Piste pisteInit = new Piste("init", new Note[64]);
-
         pistes.add(pisteInit);
+
+
+        //Piste Hells Bells :
+        Note[] notes_hb = new Note[64];
+        notes_hb[0] = new Note(Hauteur.C3, instrumentService.getInstrument("guitElec"), 1.0f);
+        notes_hb[2] = new Note(Hauteur.G3, instrumentService.getInstrument("guitElec"), 1.0f);
+        notes_hb[4] = new Note(Hauteur.C3, instrumentService.getInstrument("guitElec"), 1.0f);
+        notes_hb[6] = new Note(Hauteur.F3, instrumentService.getInstrument("guitElec"), 1.0f);
+        notes_hb[10] = new Note(Hauteur.C3, instrumentService.getInstrument("guitElec"), 1.0f);
+        notes_hb[12] = new Note(Hauteur.ASharp2, instrumentService.getInstrument("guitElec"), 1.0f);
+        notes_hb[14] = new Note(Hauteur.DSharp3, instrumentService.getInstrument("guitElec"), 1.0f);
+        notes_hb[18] = new Note(Hauteur.C3, instrumentService.getInstrument("guitElec"), 1.0f);
+        notes_hb[20] = new Note(Hauteur.ASharp2, instrumentService.getInstrument("guitElec"), 1.0f);
+        notes_hb[22] = new Note(Hauteur.F3, instrumentService.getInstrument("guitElec"), 1.0f);
+        notes_hb[26] = new Note(Hauteur.C3, instrumentService.getInstrument("guitElec"), 1.0f);
+        notes_hb[28] = new Note(Hauteur.ASharp2, instrumentService.getInstrument("guitElec"), 1.0f);
+        notes_hb[32] = new Note(Hauteur.C3, instrumentService.getInstrument("guitElec"), 1.0f);
+        notes_hb[34] = new Note(Hauteur.G3, instrumentService.getInstrument("guitElec"), 1.0f);
+        notes_hb[36] = new Note(Hauteur.C3, instrumentService.getInstrument("guitElec"), 1.0f);
+        notes_hb[38] = new Note(Hauteur.F3, instrumentService.getInstrument("guitElec"), 1.0f);
+        notes_hb[42] = new Note(Hauteur.C3, instrumentService.getInstrument("guitElec"), 1.0f);
+        notes_hb[44] = new Note(Hauteur.ASharp2, instrumentService.getInstrument("guitElec"), 1.0f);
+        notes_hb[46] = new Note(Hauteur.DSharp3, instrumentService.getInstrument("guitElec"), 1.0f);
+        notes_hb[50] = new Note(Hauteur.C3, instrumentService.getInstrument("guitElec"), 1.0f);
+        notes_hb[52] = new Note(Hauteur.ASharp2, instrumentService.getInstrument("guitElec"), 1.0f);
+        notes_hb[54] = new Note(Hauteur.F3, instrumentService.getInstrument("guitElec"), 1.0f);
+        notes_hb[58] = new Note(Hauteur.DSharp3, instrumentService.getInstrument("guitElec"), 1.0f);
+        notes_hb[60] = new Note(Hauteur.D3, instrumentService.getInstrument("guitElec"), 1.0f);
+        Piste pisteHellsBells = new Piste("hells_bells", notes_hb);
+        pistes.add(pisteHellsBells);
+
+
+        //piste
+
 
         this.pisteDao.initialiserDossier(pistes);
         this.pistes = this.pisteDao.chargerTout();

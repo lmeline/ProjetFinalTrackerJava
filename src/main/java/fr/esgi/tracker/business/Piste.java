@@ -13,7 +13,7 @@ public class Piste implements Cloneable {
     public Piste(String nomPreset, Note[] sequence) {
         this.nomPreset = nomPreset;
         this.id = ++compteur;
-        this.volume = 1.0f;
+        this.volume = 0.5f;
         this.sequence = sequence;
     }
 

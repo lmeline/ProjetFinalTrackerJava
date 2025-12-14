@@ -10,12 +10,12 @@ public class EnregistrementServiceImpl implements EnregistrementService {
     private StatutRecord statutRecord = StatutRecord.ARRETE;
 
     @Override
-    public void EnregistrerNote(Note note, PisteService pisteService, int step) {
+    public void enregistrerNote(Note note, PisteService pisteService, int step) {
         pisteService.getPisteCourante().getSequence()[step] = note;
     }
 
     @Override
-    public void SupprimerNote(Piste piste, int step) {
+    public void supprimerNote(Piste piste, int step) {
         piste.getSequence()[step] = null;
     }
 

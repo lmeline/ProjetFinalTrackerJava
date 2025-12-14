@@ -9,8 +9,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane prefHeight="390" prefWidth="920" style="-fx-background-color: #1e1e2f;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.esgi.tracker.controller.CreditsController">
-   <AnchorPane>
+<StackPane prefHeight="420.0" prefWidth="835.0" style="-fx-background-color: #1e1e2f;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.esgi.tracker.controller.CreditsController">
+   <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="835.0">
       <children>
 
            <VBox fx:id="creditsBox" alignment="CENTER" layoutX="298.0" layoutY="102.0" spacing="15" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="100.0">

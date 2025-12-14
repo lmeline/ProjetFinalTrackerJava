@@ -54,7 +54,7 @@ public class AudioServiceImpl implements AudioService {
     /**
      * Précharge tous les samples en RAM dans Map<String, EnumMap<Hauteur, float[]>>
      */
-    public void loadAudioClips() {
+    public void loadSamples() {
         System.out.println("Début chargement samples...");
 
         for (Instrument is : instrumentService.getAllInstruments().values()) {
