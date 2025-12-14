@@ -109,8 +109,6 @@ public class TrackerController implements LectureObserver {
         this.pisteService.chargerToutesLesPistes();
         this.pisteService.chargerPiste("hells_bells");
 
-
-
         //AudioService
         this.audioService = new AudioServiceImpl(this.instrumentService);
         this.audioService.loadSamples();
@@ -126,9 +124,7 @@ public class TrackerController implements LectureObserver {
         this.initializeVolumeSlider();
         this.initializePianoKeys();
 
-
         this.toggleButtonIcon(stopButton, "on");
-
 
     }
 
@@ -227,7 +223,7 @@ public class TrackerController implements LectureObserver {
         }
     }
 
-    //Implémentation interface Observer
+    //Implémentation interface Observer (sur lectureService)
     @Override
     public void onStepChange(int step) {
         Platform.runLater(()-> updatePisteView(pisteService.getPisteCourante(), step));

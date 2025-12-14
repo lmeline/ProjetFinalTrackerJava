@@ -43,6 +43,5 @@ public class InstrumentServiceImpl implements InstrumentService {
         this.instruments.put("sw snare", new Instrument("sw snare", "/fr/esgi/tracker/instruments/sw_snare.wav", Hauteur.C3));
         this.instruments.put("sw hat", new Instrument("sw hat", "/fr/esgi/tracker/instruments/sw_hat.wav", Hauteur.C3));
         this.instruments.put("sw bass", new Instrument("sw bass", "/fr/esgi/tracker/instruments/sw_bass.wav", Hauteur.C3));
-        System.out.println("Instruments chargés");
     }
 }

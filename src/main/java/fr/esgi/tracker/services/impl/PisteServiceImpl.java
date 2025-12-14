@@ -21,8 +21,6 @@ public class PisteServiceImpl implements PisteService {
 
     @Override
     public Piste chargerPiste(String nom) {
-        System.out.println("chargerPiste appelé avec : " + nom);
-        System.out.println("clés existantes : " + pistes.keySet());
         this.pisteCourante = this.pistes.get(nom).clone();
         return this.pisteCourante;
     }
@@ -32,8 +30,6 @@ public class PisteServiceImpl implements PisteService {
         piste.setNomPreset(nom);
         this.pistes.put(piste.getNomPreset(), piste);
         this.chargerPiste(piste.getNomPreset());
-        System.out.println("piste " + nom + " enregistrée");
-        System.out.println("pisteCourante : " + this.pisteCourante.getNomPreset());
         this.pisteDao.sauvegarder(piste);
     }
 
@@ -80,9 +76,42 @@ public class PisteServiceImpl implements PisteService {
         Piste pisteHellsBells = new Piste("hells_bells", notes_hb);
         pistes.add(pisteHellsBells);
 
-
-        //piste
-
+        //Piste SynthWave rythm
+        Note[] notes_sw = new Note[64];
+        notes_sw[0] = new Note(Hauteur.C3, instrumentService.getInstrument("sw kick"), 1.0f);
+        notes_sw[2] = new Note(Hauteur.C3, instrumentService.getInstrument("sw hat"), 1.0f);
+        notes_sw[4] = new Note(Hauteur.C3, instrumentService.getInstrument("sw snare"), 1.0f);
+        notes_sw[6] = new Note(Hauteur.C3, instrumentService.getInstrument("sw hat"), 1.0f);
+        notes_sw[8] = new Note(Hauteur.C3, instrumentService.getInstrument("sw kick"), 1.0f);
+        notes_sw[10] = new Note(Hauteur.C3, instrumentService.getInstrument("sw hat"), 1.0f);
+        notes_sw[12] = new Note(Hauteur.C3, instrumentService.getInstrument("sw snare"), 1.0f);
+        notes_sw[14] = new Note(Hauteur.C3, instrumentService.getInstrument("sw hat"), 1.0f);
+        notes_sw[16] = new Note(Hauteur.C3, instrumentService.getInstrument("sw kick"), 1.0f);
+        notes_sw[18] = new Note(Hauteur.C3, instrumentService.getInstrument("sw hat"), 1.0f);
+        notes_sw[20] = new Note(Hauteur.C3, instrumentService.getInstrument("sw snare"), 1.0f);
+        notes_sw[22] = new Note(Hauteur.C3, instrumentService.getInstrument("sw hat"), 1.0f);
+        notes_sw[24] = new Note(Hauteur.C3, instrumentService.getInstrument("sw kick"), 1.0f);
+        notes_sw[26] = new Note(Hauteur.C3, instrumentService.getInstrument("sw hat"), 1.0f);
+        notes_sw[28] = new Note(Hauteur.C3, instrumentService.getInstrument("sw snare"), 1.0f);
+        notes_sw[30] = new Note(Hauteur.C3, instrumentService.getInstrument("sw hat"), 1.0f);
+        notes_sw[32] = new Note(Hauteur.C3, instrumentService.getInstrument("sw kick"), 1.0f);
+        notes_sw[34] = new Note(Hauteur.C3, instrumentService.getInstrument("sw hat"), 1.0f);
+        notes_sw[36] = new Note(Hauteur.C3, instrumentService.getInstrument("sw snare"), 1.0f);
+        notes_sw[38] = new Note(Hauteur.C3, instrumentService.getInstrument("sw hat"), 1.0f);
+        notes_sw[40] = new Note(Hauteur.C3, instrumentService.getInstrument("sw kick"), 1.0f);
+        notes_sw[42] = new Note(Hauteur.C3, instrumentService.getInstrument("sw hat"), 1.0f);
+        notes_sw[44] = new Note(Hauteur.C3, instrumentService.getInstrument("sw snare"), 1.0f);
+        notes_sw[46] = new Note(Hauteur.C3, instrumentService.getInstrument("sw hat"), 1.0f);
+        notes_sw[48] = new Note(Hauteur.C3, instrumentService.getInstrument("sw kick"), 1.0f);
+        notes_sw[50] = new Note(Hauteur.C3, instrumentService.getInstrument("sw hat"), 1.0f);
+        notes_sw[52] = new Note(Hauteur.C3, instrumentService.getInstrument("sw snare"), 1.0f);
+        notes_sw[54] = new Note(Hauteur.C3, instrumentService.getInstrument("sw hat"), 1.0f);
+        notes_sw[56] = new Note(Hauteur.C3, instrumentService.getInstrument("sw kick"), 1.0f);
+        notes_sw[58] = new Note(Hauteur.C3, instrumentService.getInstrument("sw hat"), 1.0f);
+        notes_sw[60] = new Note(Hauteur.C3, instrumentService.getInstrument("sw snare"), 1.0f);
+        notes_sw[62] = new Note(Hauteur.C3, instrumentService.getInstrument("sw hat"), 1.0f);
+        Piste pisteSw = new Piste("synthwave_drums", notes_sw);
+        pistes.add(pisteSw);
 
         this.pisteDao.initialiserDossier(pistes);
         this.pistes = this.pisteDao.chargerTout();

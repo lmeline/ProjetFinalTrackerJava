@@ -40,7 +40,6 @@ public class PisteJsonManager {
 
             if (Files.list(dossierPresets).findAny().isEmpty()) {
                 for (Piste piste : pistes) {
-                    System.out.println("piste " + piste.getNomPreset() + " sauvegardée !");
                     sauvegarderPisteEnJson(piste);
                 }
             }
@@ -62,7 +61,6 @@ public class PisteJsonManager {
 
             Files.writeString(fichierJson, pisteJson);
 
-            System.out.println("piste" + piste.getNomPreset() + "sauvegardée !");
 
         } catch (Exception e) {
             e.printStackTrace();
