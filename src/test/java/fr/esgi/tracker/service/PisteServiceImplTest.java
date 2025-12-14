@@ -95,19 +95,21 @@ class PisteServiceImplTest {
         assertTrue(resultat.containsKey("P1"));
     }
 
-    /* @Test
+    @Test
     @DisplayName("Devrait ajouter la piste à la map et demander la sauvegarde JSON")
     void testEnregistrerPiste() {
         // Arrange
         when(pisteMock.getNomPreset()).thenReturn("NouvellePiste");
+        String nomChoisi = "NouvellePiste";
 
         // Act
-        pisteService.enregistrerPiste(pisteMock);
+        pisteService.enregistrerPiste(pisteMock, nomChoisi);
 
         // Assert
         assertTrue(pistes.containsKey("NouvellePiste"));
+        assertEquals(nomChoisi, pistes.get("NouvellePiste").getNomPreset());
         verify(pisteDaoMock).sauvegarder(pisteMock);
-    } */
+    }
 
     @Test
     @DisplayName("Devrait initialiser et charger toutes les pistes")
