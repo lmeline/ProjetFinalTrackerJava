@@ -25,7 +25,6 @@ L'interface de composition fonctionne comme un tableur musical. Voici les comman
 
 1.  **Navigation :**
     * Utilisez les touches **`,`** (virgule) et **`;`** (point-virgule) pour déplacer le curseur vers le haut ou le bas dans la grille.
-    * Vous pouvez également cliquer directement sur une case avec la souris.
 
 2.  **Placer une note :**
     * Sélectionnez une ligne et appuyez sur une touche du clavier (voir section Piano) pour insérer la note.
