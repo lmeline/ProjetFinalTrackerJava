@@ -164,7 +164,6 @@ public class TrackerController implements LectureObserver {
 
     @FXML
     private void buttonPlayPressed() {
-        System.out.println("pressed");
         if (lectureService.getStatutLecture() != StatutLecture.EN_COURS) {
             toggleButtonIcon(stopButton, "off");
             toggleButtonIcon(pauseButton, "off");
@@ -175,7 +174,6 @@ public class TrackerController implements LectureObserver {
 
     @FXML
     private void buttonPausePressed() {
-        System.out.println("pressed");
         if (lectureService.getStatutLecture() == StatutLecture.EN_COURS) {
             toggleButtonIcon(stopButton, "off");
             toggleButtonIcon(pauseButton, "on");
@@ -277,6 +275,7 @@ public class TrackerController implements LectureObserver {
 
         liste_pistes.valueProperty().addListener((obs, oldVal, newVal) -> {
             this.pisteService.chargerPiste(newVal);
+            this.pisteService.getPisteCourante().setVolume((float) volumeSlider.getValue()/100);
             updatePisteView(pisteService.getPisteCourante(), 0);
             stopButton.fire();
         });
