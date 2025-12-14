@@ -65,16 +65,17 @@ L'application répond aux besoins fonctionnels suivants:
 
 L'application fournit un **piano de 2 octaves** , permettant de jouer un *sample* à différentes fréquences correspondant à des notes.
 
-* **Touches du Clavier :** Le **`PianoController`** gère les événements clavier et associe des touches spécifiques à des notes (par exemple, la touche `A` joue C-2, la touche `2` joue C#2, etc.).
-* **Contrôles Audio :** Lorsqu'une note est jouée, l'objet `Note` est transmis à l'`AudioService` (implémenté par `AudioServiceImpl`). Ce service ajuste le **taux de lecture (`rate`)** de l'`AudioClip` pour modifier la hauteur (`Hauteur`) du *sample* en utilisant la formule :
+* **Touches du Clavier :** les événements clavier sont associées à des touches spécifiques à des notes (par exemple, la touche `A` joue C-2, la touche `2` joue C#2, etc.).
+* **Contrôles Audio :** Lorsqu'une note est jouée, l'objet `Note` est transmis à l'`AudioService` (implémenté par `AudioServiceImpl`). Ce service ajuste la **vitesse de lecture (`rate`)** de l'échantillon audio pour modifier sa hauteur en utilisant la formule :
   $$\text{rate} = \frac{\text{Fréquence de la Note}}{\text{Fréquence du Sample d'origine}}$$
+  `**AudioServiceImpl`** utilise `SourceDataLine` pour gérer la lecture audio, initialisant une "boucle de lecture" continue (ou **buffer**), et convertissant (grossièrement) les échantillons audio en bytes pour alimenter le buffer.
 * **Classes Métier Impliquées :** `Note`, `Hauteur` (énumération des fréquences), et `Instrument`.
 
 ### Piste et Séquenceur (Tracker)
 
 La piste est la grille temporelle de composition, typiquement de **64 lignes**.
 
-* **Affichage :** Le composant `TrackerList` (`TableView`) affiche les 64 lignes de la séquence, gérées par le `TableauController`.
+* **Affichage :** Le composant `pisteView` (`Vbox`) affiche les 64 lignes de la séquence de manière dynamique, la `Vbox` contient 9 cases (`Hbox`) dans lesquelles sont injectés dynamiquement les lignes à afficher.
 * **Édition :** L'interface doit permettre d'indiquer une note sur chaque ligne de la piste.
     * **Service d'Enregistrement :** L'`EnregistrementService` (implémenté par `EnregistrementServiceImpl`) permet d'ajouter ou de supprimer une `Note` dans le tableau `Note[] sequence` de l'objet `Piste` à un *step* donné.
     * **Chargement/Sauvegarde :** Les boutons d'ouverture et d'enregistrement de piste sont gérés par le **`PisteService`**.
@@ -103,7 +104,7 @@ Le service de lecture gère la progression de la séquence musicale.
 * **Framework GUI :** JavaFX 21 (avec `javafx-controls`, `javafx-fxml`, `javafx-media`) 
 * **Gestionnaire de Projet :** Apache Maven
 * **Outils de Développement :** IntelliJ IDEA, Scene Builder 
-* **Architecture :** Projet Maven avec packages `business`, `service`, `service.impl`, `util`, et `controller`
+* **Architecture :** Projet Maven avec packages `business`, `service`, `service.impl`, `util`, `dao`, `observer`, `controller`
 
 ---
 
@@ -145,40 +146,103 @@ Le projet suit l'architecture standard Java/Maven, en séparant clairement les c
 --
 ```
 
-tracker_poc/
-├── README.md               # Le présent document.
-├── .gitignore              # Fichier de configuration Git.
-├── pom.xml                 # Configuration Maven (Dépendances JavaFX, JUnit, Mockito).
-├── .idea/                  # Configuration IntelliJ.
-└── src/
-    ├── main/
-    │   ├── java/
-    │   │   └── fr/esgi/tracker/
-    │   │       ├── module-info.java      # Définitions des modules et permissions (opens/exports).
-    │   │       ├── App.java              # Point de lancement JavaFX.
-    │   │       ├── business/             # Objets métier (Piste, Note, Instrument, Hauteur).
-    │   │       ├── controller/           # Contrôleurs FXML (TrackerController).
-    │   │       ├── dao/                  # Accès aux données (PisteDao).
-    │   │       ├── observer/             # Pattern Observer (LectureObserver).
-    │   │       ├── services/             # Interfaces de service.
-    │   │       │   └── impl/             # Implémentations (AudioServiceImpl, LectureServiceImpl).
-    │   │       └── utils/                # Utilitaires statiques (AudioTools, PisteJsonManager).
-    │   │
-    │   └── resources/
-    │       └── fr/esgi/tracker/
-    │           ├── tracker.fxml          # Vues FXML.
-    │           ├── style.css             # Feuilles de style.
-    │           └── instruments/          # Samples audio (.wav).
-    │
-    └── test/
-        ├── java/
-        │   └── fr/esgi/tracker/
-        │       ├── business/             # Tests unitaires des objets métier.
-        │       └── service/              # Tests unitaires des services (Mocks & Réflexion).
-        │
-        └── resources/
-            └── mockito-extensions/
-                └── org.mockito.plugins.MockMaker  # Configuration pour supporter le Mocking sur Java 21+.
+ProjetFinalTracker
+├── README.md
+├── doc                 
+│   └── diagramme
+│       ├── diagramme-classes-controller-puml.png
+│       ├── diagramme-classes-controller.png
+│       ├── diagramme-classes-metier.png
+│       ├── diagramme-classes-services-puml.png
+│       └── diagramme-classes-services.png
+├── pom.xml
+└── src
+    ├── main
+    │   ├── java
+    │   │   ├── fr
+    │   │   │   └── esgi
+    │   │   │       └── tracker
+    │   │   │           ├── App.java
+    │   │   │           ├── business
+    │   │   │           │   ├── Hauteur.java
+    │   │   │           │   ├── Instrument.java
+    │   │   │           │   ├── Note.java
+    │   │   │           │   ├── Piste.java
+    │   │   │           │   ├── StatutLecture.java
+    │   │   │           │   └── StatutRecord.java
+    │   │   │           ├── controller
+    │   │   │           │   ├── CreditsController.java
+    │   │   │           │   ├── EnregistrerPisteModaleController.java
+    │   │   │           │   └── TrackerController.java
+    │   │   │           ├── dao
+    │   │   │           │   └── PisteDao.java
+    │   │   │           ├── observer
+    │   │   │           │   ├── LectureObservable.java
+    │   │   │           │   └── LectureObserver.java
+    │   │   │           ├── services
+    │   │   │           │   ├── AudioService.java
+    │   │   │           │   ├── EnregistrementService.java
+    │   │   │           │   ├── InstrumentService.java
+    │   │   │           │   ├── LectureService.java
+    │   │   │           │   ├── PisteService.java
+    │   │   │           │   └── impl
+    │   │   │           │       ├── AudioServiceImpl.java
+    │   │   │           │       ├── EnregistrementServiceImpl.java
+    │   │   │           │       ├── InstrumentServiceImpl.java
+    │   │   │           │       ├── LectureServiceImpl.java
+    │   │   │           │       └── PisteServiceImpl.java
+    │   │   │           └── utils
+    │   │   │               ├── AudioTools.java
+    │   │   │               └── PisteJsonManager.java
+    │   │   └── module-info.java
+    │   └── resources
+    │       └── fr
+    │           └── esgi
+    │               └── tracker
+    │                   ├── EnregistrerPisteModale.fxml
+    │                   ├── assets
+    │                   │   ├── fonts
+    │                   │   │   └── LCD.ttf
+    │                   │   └── icons
+    │                   │       ├── grip_slider.png
+    │                   │       ├── pause_off.png
+    │                   │       ├── pause_on.png
+    │                   │       ├── play_off.png
+    │                   │       ├── play_on.png
+    │                   │       ├── record_off.png
+    │                   │       ├── record_on.png
+    │                   │       ├── save_diskette.png
+    │                   │       ├── stop_off.png
+    │                   │       └── stop_on.png
+    │                   ├── credits.fxml
+    │                   ├── instruments
+    │                   │   ├── guitar_amped_mid.wav
+    │                   │   ├── piano_C3.wav
+    │                   │   ├── sw_bass.wav
+    │                   │   ├── sw_hat.wav
+    │                   │   ├── sw_kick.wav
+    │                   │   └── sw_snare.wav
+    │                   ├── style.css
+    │                   └── tracker.fxml
+    └── test
+          ├── java
+          │   └── fr
+          │       └── esgi
+          │           └── tracker
+          │               ├── business
+          │               │   ├── InstrumentTest.java
+          │               │   ├── NoteTest.java
+          │               │   └── PisteTest.java
+          │               └── service
+          │                   ├── AudioServiceImplTest.java
+          │                   ├── EnregistrementServiceImplTest.java
+          │                   ├── InstrumentServiceImplTest.java
+          │                   ├── LectureServiceImplTest.java
+          │                   └── PisteServiceImplTest.java
+          └── resources
+              └── mockito-extensions
+                  └── org.mockito.plugins.MockMaker
+
 ```
 
 ---
