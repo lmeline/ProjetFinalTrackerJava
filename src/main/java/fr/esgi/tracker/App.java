@@ -19,7 +19,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("tracker"), 835,420 );
+        scene = new Scene(loadFXML("tracker"), 820,420 );
         stage.setScene(scene);
         stage.setTitle("Tracker");
         stage.setResizable(false);
@@ -36,6 +36,7 @@ public class App extends Application {
 
         stage.show();
     }
+
     public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }

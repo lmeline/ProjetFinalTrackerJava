@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -14,8 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.control.Tooltip?>
-<Pane prefHeight="420.0" prefWidth="835.0" style="-fx-background-color: #f5f5f5;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.esgi.tracker.controller.TrackerController">
+<Pane prefHeight="420.0" prefWidth="820.0" style="-fx-background-color: #f5f5f5;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.esgi.tracker.controller.TrackerController">
    <children>
       <HBox alignment="CENTER" layoutX="228.0" layoutY="107.0" prefHeight="50.0" prefWidth="565.0" spacing="2.0" style="-fx-spacing: 20px;">
          <children>
@@ -210,7 +210,7 @@
             </HBox>
          </children>
       </HBox>
-       <Button fx:id="creditButton" alignment="CENTER" layoutX="741.0" layoutY="41.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openCredits" prefHeight="30.0" style="-fx-border-radius: 5px; -fx-background-radius: 5px; -fx-border-width: 1px; -fx-border-color: gray; -fx-background-insets: 0.5;" text="A propos">
+       <Button fx:id="creditButton" alignment="CENTER" layoutX="723.0" layoutY="41.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openCredits" prefHeight="30.0" style="-fx-border-radius: 5px; -fx-background-radius: 5px; -fx-border-width: 1px; -fx-border-color: gray; -fx-background-insets: 0.5;" text="A propos">
          <font>
             <Font name="Monospaced Italic" size="13.0" />
          </font></Button>
