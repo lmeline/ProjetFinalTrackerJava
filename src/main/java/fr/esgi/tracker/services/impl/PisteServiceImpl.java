@@ -21,7 +21,11 @@ public class PisteServiceImpl implements PisteService {
 
     @Override
     public Piste chargerPiste(String nom) {
-        this.pisteCourante = this.pistes.get(nom).clone();
+        Piste piste = this.pistes.get(nom);
+        if (piste == null) {
+            return null;
+        }
+        this.pisteCourante = piste.clone();
         return this.pisteCourante;
     }
 

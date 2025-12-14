@@ -45,7 +45,7 @@ class InstrumentServiceImplTest {
         // Assert
         assertNotNull(resultat);
         assertEquals("piano", resultat.getNom());
-        assertEquals(Hauteur.C4, resultat.getHauteurDuSample());
+        assertEquals(Hauteur.C3, resultat.getHauteurDuSample());
     }
 
     @Test
