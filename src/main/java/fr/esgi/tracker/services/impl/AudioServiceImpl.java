@@ -52,7 +52,7 @@ public class AudioServiceImpl implements AudioService {
     }
 
     /**
-     * Précharge tous les samples en RAM dans Map<String, EnumMap<Hauteur, float[]>>
+     * Précharge tous les samples en RAM dans Map&lt;String, EnumMap&lt;Hauteur, float[]&gt;&gt;
      */
     public void loadSamples() {
         for (Instrument is : instrumentService.getAllInstruments().values()) {
