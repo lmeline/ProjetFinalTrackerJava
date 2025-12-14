@@ -15,7 +15,7 @@
 Le clavier de votre ordinateur est transformé en piano. L'application est configurée pour mapper les rangées de touches aux notes de musique :
 
 * **Notes naturelles (Blanches) :** Utilisez la rangée de lettres (ex: `A`, `Z`, `E`, `R`... en configuration AZERTY).
-    * *Exemple :* `A` = Do (C-2), `Z` = Ré (D-2)...
+    * *Exemple :* `A` = Do (C-2), `Z` = Ré (D-2),  `V` = Ré (B-3)...
 * **Altérations (Noires - Dièses) :** Utilisez la rangée de chiffres située juste au-dessus.
     * *Exemple :* `2` = Do# (C#2)...
 
@@ -35,6 +35,25 @@ L'interface de composition fonctionne comme un tableur musical. Voici les comman
 
 4.  **Jouer la piste :**
     * Appuyez sur le bouton **Play** pour écouter votre séquence.
+    
+5. **Augmenter le volume de la piste :**
+    * augmenter ou diminuer le volume de la piste grâce au curseur de **Volume** .
+
+6. **Charger une piste :**
+    * cliquer sur le bouton **presets pistes** pour charger une piste.
+
+7. **Enregistrer une note :**
+    * cliquer sur le bouton avec un icon rond **Record** pour enregistrer une note.
+
+8. **Enregistrer une piste :**
+    * cliquer sur le bouton avec un icon disquette qui est **Enregistrer** pour enregistrer une piste.
+9. **Mettre en pause la piste :**
+    * cliquer sur le bouton avec un icon pause qui est **Pause** pour mettre en pause la piste.
+10. **Stopper la piste :**
+    * cliquer sur le bouton avec un icon stop qui est **Stop** pour stopper la piste.
+11. **Choix de l'instrument**
+    * choisir son instrument grâce au menu **instrument**
+
 
 ---
 
@@ -66,6 +85,7 @@ Le service de lecture gère la progression de la séquence musicale.
 
 * **Contrôles :** Des boutons sont fournis pour :
     * **`Play` :** Débuter la lecture de la piste.
+    * **`Record` :** Enregistrer la piste.
     * **`Stop` :** Stopper la lecture et revenir au début de la séquence.
     * **`Pause` :** Mettre la lecture en pause (fonctionnalité gérée par le `LectureService`).
 * **Service de Lecture :** Le `LectureService` (implémenté par `LectureServiceImpl`) utilise un `ScheduledExecutorService` (`horloge`) pour déclencher la lecture des notes à un rythme fixe.
@@ -167,9 +187,9 @@ tracker_poc/
 
 Ce projet a été créé et conçu par :
 
-* Loise Meline
-* Nicolas Carpita
-* Jose Vasquez
-* Albin Riviere
+* Loïse MELINE
+* Nicolas CARPITA
+* Jose VASQUEZ
+* Albin RIVIERE
 
 Année : 2025-2026, B3 ESGI.
