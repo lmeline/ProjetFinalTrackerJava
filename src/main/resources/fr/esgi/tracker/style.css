@@ -79,16 +79,30 @@
 }
 
 .step_label_base {
-     -fx-text-fill: #a4a2a2;
+     -fx-text-fill:  #04bed6;
 }
 
 .inst_label {
 }
 
 .step_label_highlight {
- -fx-text-fill: #4e4e4e !important;
+ -fx-text-fill: #8cc702 !important;
  -fx-font-weight: bold;
 }
+
+.combo-box .list-cell {
+    -fx-text-fill: #04bed6;
+    -fx-background-color:  #092136;
+}
+
+.combo-box .list-cell:selected {
+    -fx-background-color:  #00324a;
+}
+
+.combo-box-base {
+    -fx-background-color:  #00324a ;
+}
+
 
 
 .combo-box, .combo-box .list-cell, .label, .button, .slider .tick-label {
