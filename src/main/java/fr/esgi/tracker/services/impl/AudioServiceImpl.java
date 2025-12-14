@@ -54,9 +54,7 @@ public class AudioServiceImpl implements AudioService {
     /**
      * Précharge tous les samples en RAM dans Map<String, EnumMap<Hauteur, float[]>>
      */
-    public void loadAudioClips() {
-        System.out.println("Début chargement samples...");
-
+    public void loadSamples() {
         for (Instrument is : instrumentService.getAllInstruments().values()) {
             EnumMap<Hauteur, float[]> hauteurMap = new EnumMap<>(Hauteur.class);
 
@@ -71,8 +69,6 @@ public class AudioServiceImpl implements AudioService {
 
             samples.put(is.getNom(), hauteurMap);
         }
-
-        System.out.println("Samples chargés !");
     }
 
     /**

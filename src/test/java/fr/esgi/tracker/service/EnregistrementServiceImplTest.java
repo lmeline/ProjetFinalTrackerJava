@@ -63,7 +63,7 @@ class EnregistrementServiceImplTest {
         when(piste.getSequence()).thenReturn(sequence);
 
         // Act
-        enregistrementService.EnregistrerNote(note, pisteService, stepIndex);
+        enregistrementService.enregistrerNote(note, pisteService, stepIndex);
 
         // Assert
         assertEquals(note, sequence[stepIndex]);
@@ -72,19 +72,18 @@ class EnregistrementServiceImplTest {
     }
 
     @Test
-    @DisplayName("Vérifier la suppression d'une note à l'index step - 1")
+    @DisplayName("Vérifier la suppression d'une note à l'index step")
     void testSupprimerNote() {
         // Arrange
         int stepInput = 5;
-        int realIndex = 4;
         // On préremplit le tableau pour la suppression future
-        sequence[realIndex] = note;
+        sequence[stepInput] = note;
         when(piste.getSequence()).thenReturn(sequence);
 
         // Act
-        enregistrementService.SupprimerNote(piste, stepInput);
+        enregistrementService.supprimerNote(piste, stepInput);
 
         // Assert
-        assertNull(sequence[realIndex], "La note à l'index 4 aurait dû être supprimée");
+        assertNull(sequence[stepInput], "La note à l'index 5 aurait dû être supprimée");
     }
 }

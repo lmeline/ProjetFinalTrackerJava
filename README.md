@@ -21,9 +21,21 @@ Le clavier de votre ordinateur est transformé en piano. L'application est confi
 
 ### Composition (Tracker)
 
-1.  **Sélectionner une case :** Cliquez sur une ligne de la grille (Step).
-2.  **Placer une note :** Appuyez sur une touche du clavier (voir ci-dessus) pour insérer la note correspondante.
-3.  **Jouer la piste :** Appuyez sur le bouton **Play** pour écouter votre séquence.
+L'interface de composition fonctionne comme un tableur musical. Voici les commandes essentielles :
+
+1.  **Navigation :**
+    * Utilisez les touches **`,`** (virgule) et **`;`** (point-virgule) pour déplacer le curseur vers le haut ou le bas dans la grille.
+    * Vous pouvez également cliquer directement sur une case avec la souris.
+
+2.  **Placer une note :**
+    * Sélectionnez une ligne et appuyez sur une touche du clavier (voir section Piano) pour insérer la note.
+
+3.  **Supprimer une note :**
+    * Assurez-vous d'être en mode **Record**.
+    * Maintenez la touche **`Shift`** (Majuscule) et appuyez sur **`,`** ou **`;`**. Cela supprimera la note présente sur la ligne courante.
+
+4.  **Jouer la piste :**
+    * Appuyez sur le bouton **Play** pour écouter votre séquence.
 
 ---
 

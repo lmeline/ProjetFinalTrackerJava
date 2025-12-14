@@ -1,5 +1,6 @@
 package fr.esgi.tracker.service;
 
+import fr.esgi.tracker.business.Note;
 import fr.esgi.tracker.business.Piste;
 import fr.esgi.tracker.dao.PisteDao;
 import fr.esgi.tracker.services.impl.PisteServiceImpl;
@@ -44,6 +45,7 @@ class PisteServiceImplTest {
     void testChargerPiste_Nominal() {
         // Arrange
         String nomPiste = "MaPisteTest";
+        when(pisteMock.clone()).thenReturn(pisteMock);
         pistes.put(nomPiste, pisteMock);
 
         // Act
@@ -98,14 +100,16 @@ class PisteServiceImplTest {
     @DisplayName("Devrait ajouter la piste à la map et demander la sauvegarde JSON")
     void testEnregistrerPiste() {
         // Arrange
-        when(pisteMock.getNomPreset()).thenReturn("NouvellePiste");
+        Piste piste = new Piste("AncienNom", new Note[64]);
+        String nomChoisi = "NouvellePiste";
 
         // Act
-        pisteService.enregistrerPiste(pisteMock);
+        pisteService.enregistrerPiste(piste, nomChoisi);
 
         // Assert
         assertTrue(pistes.containsKey("NouvellePiste"));
-        verify(pisteDaoMock).sauvegarder(pisteMock);
+        assertEquals(nomChoisi, pistes.get("NouvellePiste").getNomPreset());
+        verify(pisteDaoMock).sauvegarder(piste);
     }
 
     @Test

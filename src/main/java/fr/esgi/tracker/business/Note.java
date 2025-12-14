@@ -1,17 +1,22 @@
 package fr.esgi.tracker.business;
 
-import javafx.scene.media.AudioClip;
-
 import java.util.Objects;
 
 public class Note {
     private Hauteur hauteur;
     private Instrument instrument;
-    private float volume = 1.0F;
+    private float volume;
 
     public Note(Hauteur hauteur, Instrument instrument, float volume) {
         this.hauteur = hauteur;
         this.instrument = instrument;
+        if (volume > 1.0f) {
+            this.volume = 1.0f;
+        } else if (volume < 0.0f) {
+            this.volume = 0.0f;
+        } else {
+            this.volume = volume;
+        }
     }
 
     public Hauteur getHauteur() {

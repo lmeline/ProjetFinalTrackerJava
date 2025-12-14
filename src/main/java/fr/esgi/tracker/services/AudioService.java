@@ -11,5 +11,5 @@ public interface AudioService {
      */
     void jouerNote(Note note, float volume);
 
-    void loadAudioClips();
+    void loadSamples();
 }

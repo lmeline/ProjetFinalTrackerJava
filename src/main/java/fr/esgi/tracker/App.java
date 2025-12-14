@@ -1,9 +1,11 @@
 package fr.esgi.tracker;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -17,10 +19,24 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("tracker"), 640, 480);
+        scene = new Scene(loadFXML("tracker"), 820,420 );
         stage.setScene(scene);
+        stage.setTitle("Tracker");
+        stage.setResizable(false);
+
+        Font.loadFont(
+                getClass().getResourceAsStream("/fr/esgi/tracker/assets/fonts/LCD.ttf"),
+                14
+        );
+
+        stage.setOnCloseRequest(event -> {
+            Platform.exit();
+            System.exit(0);
+        });
+
         stage.show();
     }
+
     public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }

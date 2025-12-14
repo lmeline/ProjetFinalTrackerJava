@@ -61,7 +61,6 @@ public class PisteJsonManager {
 
             Files.writeString(fichierJson, pisteJson);
 
-            System.out.println("piste" + piste.getNomPreset() + "sauvegardée !");
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -3,7 +3,7 @@ package fr.esgi.tracker.business;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class Piste {
+public class Piste implements Cloneable {
     private int id;
     private String nomPreset;
     private static int compteur = 0;
@@ -13,7 +13,7 @@ public class Piste {
     public Piste(String nomPreset, Note[] sequence) {
         this.nomPreset = nomPreset;
         this.id = ++compteur;
-        this.volume = 1.0f;
+        this.volume = 0.5f;
         this.sequence = sequence;
     }
 
@@ -68,4 +68,11 @@ public class Piste {
     public String toString() {
         return "Piste " + this.getId() + " | preset : " + this.getNomPreset() + " | volume : " + this.getVolume();
     }
+
+    @Override
+    public Piste clone() {
+        Note[] notesClone = Arrays.copyOf(this.sequence, this.sequence.length); // nouveau tableau
+        return new Piste(this.nomPreset, notesClone);
+    }
+
 }

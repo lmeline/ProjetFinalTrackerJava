@@ -91,7 +91,7 @@ class LectureServiceImplTest {
 
         // Assert
         verify(audioService).jouerNote(eq(noteTest), anyFloat());
-        assertEquals(2, lectureService.getStep());
+        assertEquals(1, lectureService.getStep());
     }
 
     @Test
@@ -106,7 +106,7 @@ class LectureServiceImplTest {
 
         // Assert
         assertEquals(StatutLecture.ARRETE, lectureService.getStatutLecture());
-        assertEquals(1, lectureService.getStep());
+        assertEquals(0, lectureService.getStep());
         verify(tacheMock).cancel(false);
     }
 
@@ -129,13 +129,13 @@ class LectureServiceImplTest {
     @Test
     @DisplayName("Vérification Incrémentation Step")
     void testIncrementerStep_Boucle() throws Exception {
-        injecterChamp(lectureService, "step", 1);
-        lectureService.incrementerStep();
-        assertEquals(2, lectureService.getStep());
-
-        injecterChamp(lectureService, "step", 64);
+        injecterChamp(lectureService, "step", 0);
         lectureService.incrementerStep();
         assertEquals(1, lectureService.getStep());
+
+        injecterChamp(lectureService, "step", 63);
+        lectureService.incrementerStep();
+        assertEquals(0, lectureService.getStep());
     }
 
     @Test
