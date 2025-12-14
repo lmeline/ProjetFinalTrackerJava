@@ -25,7 +25,7 @@ public class App extends Application {
         stage.setResizable(false);
 
         Font.loadFont(
-                getClass().getResource("/fr/esgi/tracker/assets/fonts/LCD.ttf").toExternalForm(),
+                getClass().getResourceAsStream("/fr/esgi/tracker/assets/fonts/LCD.ttf"),
                 14
         );
 
