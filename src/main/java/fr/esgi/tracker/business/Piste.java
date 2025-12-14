@@ -3,7 +3,7 @@ package fr.esgi.tracker.business;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class Piste {
+public class Piste implements Cloneable {
     private int id;
     private String nomPreset;
     private static int compteur = 0;
@@ -67,5 +67,14 @@ public class Piste {
     @Override
     public String toString() {
         return "Piste " + this.getId() + " | preset : " + this.getNomPreset() + " | volume : " + this.getVolume();
+    }
+
+    @Override
+    public Piste clone() {
+        try {
+            return (Piste) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

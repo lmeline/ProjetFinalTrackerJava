@@ -2,7 +2,6 @@ package fr.esgi.tracker.services;
 
 import fr.esgi.tracker.business.Note;
 import fr.esgi.tracker.business.Piste;
-import fr.esgi.tracker.business.StatutLecture;
 import fr.esgi.tracker.business.StatutRecord;
 
 public interface EnregistrementService {

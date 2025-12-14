@@ -37,7 +37,7 @@ public class InstrumentServiceImpl implements InstrumentService {
     @Override
     public void chargerTousLesInstruments() {
         this.instruments = Map.of(
-                    "piano", new Instrument("piano", "/fr/esgi/tracker/instruments/piano_C3.wav", Hauteur.C4)
+                    "piano", new Instrument("piano", "/fr/esgi/tracker/instruments/piano_C3.wav", Hauteur.C3)
         );
         System.out.println("Instruments chargés");
     }
