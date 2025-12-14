@@ -23,6 +23,8 @@ public interface LectureService extends LectureObservable {
 
     void incrementerStep();
 
+    void decrementerStep();
+
     void setStatutLecture(StatutLecture statutLecture);
 
     StatutLecture getStatutLecture();

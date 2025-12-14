@@ -63,7 +63,7 @@ class EnregistrementServiceImplTest {
         when(piste.getSequence()).thenReturn(sequence);
 
         // Act
-        enregistrementService.EnregistrerNote(note, pisteService, stepIndex);
+        enregistrementService.enregistrerNote(note, pisteService, stepIndex);
 
         // Assert
         assertEquals(note, sequence[stepIndex]);
@@ -82,7 +82,7 @@ class EnregistrementServiceImplTest {
         when(piste.getSequence()).thenReturn(sequence);
 
         // Act
-        enregistrementService.SupprimerNote(piste, stepInput);
+        enregistrementService.supprimerNote(piste, stepInput);
 
         // Assert
         assertNull(sequence[realIndex], "La note à l'index 4 aurait dû être supprimée");

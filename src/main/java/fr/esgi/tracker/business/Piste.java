@@ -13,7 +13,7 @@ public class Piste implements Cloneable {
     public Piste(String nomPreset, Note[] sequence) {
         this.nomPreset = nomPreset;
         this.id = ++compteur;
-        this.volume = 1.0f;
+        this.volume = 0.5f;
         this.sequence = sequence;
     }
 
@@ -71,10 +71,8 @@ public class Piste implements Cloneable {
 
     @Override
     public Piste clone() {
-        try {
-            return (Piste) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
+        Note[] notesClone = Arrays.copyOf(this.sequence, this.sequence.length); // nouveau tableau
+        return new Piste(this.nomPreset, notesClone);
     }
+
 }
