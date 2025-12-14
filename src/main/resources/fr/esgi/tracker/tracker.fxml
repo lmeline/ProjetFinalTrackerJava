@@ -14,6 +14,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.Tooltip?>
+<Pane prefHeight="420.0" prefWidth="835.0" style="-fx-background-color: #f5f5f5;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.esgi.tracker.controller.TrackerController">
 <Pane prefHeight="420.0" prefWidth="835.0" style="-fx-background-color: #f5f5f2;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.esgi.tracker.controller.TrackerController">
    <children>
       <HBox alignment="CENTER" layoutX="228.0" layoutY="107.0" prefHeight="50.0" prefWidth="565.0" spacing="2.0" style="-fx-spacing: 20px;">
@@ -28,6 +30,9 @@
                            </image>
                         </ImageView>
                      </graphic>
+                       <tooltip>
+                           <Tooltip text="Play" />
+                       </tooltip>
                   </Button>
                   <Button fx:id="pauseButton" alignment="TOP_CENTER" mnemonicParsing="false" onAction="#buttonPausePressed" prefHeight="35.0" prefWidth="50.0" styleClass="playBackButton">
                      <graphic>
@@ -37,6 +42,9 @@
                            </image>
                         </ImageView>
                      </graphic>
+                      <tooltip>
+                          <Tooltip text="Pause" />
+                      </tooltip>
                   </Button>
                   <Button fx:id="stopButton" alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#buttonStopPressed" prefHeight="35.0" prefWidth="50.0" styleClass="playBackButton" textAlignment="RIGHT">
                       <graphic>
@@ -46,6 +54,9 @@
                               </image>
                           </ImageView>
                       </graphic>
+                      <tooltip>
+                          <Tooltip text="Stop" />
+                      </tooltip>
                    </Button>
                    <Button fx:id="recordButton" mnemonicParsing="false" onAction="#buttonRecordPressed" prefHeight="37.0" prefWidth="50.0" style="-fx-border-radius: 5px 10px 10px 5px;" styleClass="playBackButton">
                        <graphic>
@@ -55,6 +66,9 @@
                               </image>
                           </ImageView>
                        </graphic>
+                       <tooltip>
+                           <Tooltip text="Record" />
+                       </tooltip>
                    </Button>
                </children>
             </HBox>
@@ -170,6 +184,9 @@
                                     </image>
                                 </ImageView>
                              </graphic>
+                             <tooltip>
+                                 <Tooltip text="Sauvegarder une piste" />
+                             </tooltip>
                          </Button>
                      </children>
                   </HBox>

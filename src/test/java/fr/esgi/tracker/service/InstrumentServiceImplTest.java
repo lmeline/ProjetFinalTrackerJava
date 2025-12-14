@@ -25,7 +25,7 @@ class InstrumentServiceImplTest {
     }
 
     @Test
-    @DisplayName("Devrait charger les instruments par défaut à l'initialisation")
+    @DisplayName("Vérification chargement initial des instruments")
     void testChargementInitial() {
         // Act
         Map<String, Instrument> instruments = instrumentService.getAllInstruments();
@@ -37,7 +37,7 @@ class InstrumentServiceImplTest {
     }
 
     @Test
-    @DisplayName("Devrait récupérer un instrument spécifique par son nom")
+    @DisplayName("Récupération d'un instrument par son nom")
     void testGetInstrument_Nominal() {
         // Act
         Instrument resultat = instrumentService.getInstrument("piano");
@@ -49,7 +49,7 @@ class InstrumentServiceImplTest {
     }
 
     @Test
-    @DisplayName("Devrait retourner null pour un instrument inconnu")
+    @DisplayName("Vérification instrument Null")
     void testGetInstrument_Inconnu() {
         // Act
         Instrument resultat = instrumentService.getInstrument("guitare_imaginare");
@@ -59,7 +59,7 @@ class InstrumentServiceImplTest {
     }
 
     @Test
-    @DisplayName("Devrait modifier et récupérer l'instrument courant")
+    @DisplayName("Vérification recupération Intrument courant")
     void testInstrumentCourant() {
         // Arrange
         Instrument piano = instrumentService.getInstrument("piano");
