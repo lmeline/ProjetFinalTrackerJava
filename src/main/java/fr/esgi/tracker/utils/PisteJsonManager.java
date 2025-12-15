@@ -12,11 +12,24 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+/**
+ * Classe utilitaire de gestion des pistes au format JSON.
+ * Permet la lecture et l’écriture des données des pistes
+ * sur le système de fichiers.
+ */
 
 public class PisteJsonManager {
 
+    /**
+     * Dossier contenant les fichiers JSON des pistes.
+     * Il est créé dans le répertoire personnel de l’utilisateur.
+     */
     private static final Path dossierPresets = Paths.get(System.getProperty("user.home"), "ProjetFinalTracker", "presets");
 
+    /**
+     * Charge l’ensemble des pistes stockées au format JSON
+     * depuis le dossier des presets.
+     */
     public static Map<String, Piste> chargerToutesLesPistes() {
         Map<String, Piste> pistes = new HashMap<>();
         for (File fichier : dossierPresets.toFile().listFiles()) {
@@ -32,6 +45,11 @@ public class PisteJsonManager {
         return pistes;
     }
 
+    /**
+     * Initialise le dossier de sauvegarde des pistes.
+     * Si le dossier est vide, les pistes fournies
+     * sont automatiquement sauvegardées.
+     */
     public static void initializeDirectory(List<Piste> pistes) {
         try {
             if (!Files.exists(dossierPresets)) {
@@ -48,6 +66,10 @@ public class PisteJsonManager {
         }
     }
 
+    /**
+     * Sauvegarde une piste dans un fichier JSON
+     * au sein du dossier des presets.
+     */
     public static void sauvegarderPisteEnJson(Piste piste) {
         try {
             Gson gson = new GsonBuilder()
@@ -67,6 +89,10 @@ public class PisteJsonManager {
         }
     }
 
+    /**
+     * Charge une piste depuis un fichier JSON
+     * identifié par son nom.
+     */
     public static Piste chargerPisteDepuisJson(String nom) throws Exception {
         Path jsonFile = dossierPresets.resolve(nom + ".json");
         if (!Files.exists(jsonFile)) {

@@ -3,6 +3,9 @@ package fr.esgi.tracker.services;
 import fr.esgi.tracker.business.Piste;
 
 import java.util.Map;
+/**
+ * Service métier de gestion des pistes musicales.
+ */
 
 public interface PisteService {
 

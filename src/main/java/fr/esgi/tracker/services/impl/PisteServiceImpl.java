@@ -11,6 +11,11 @@ import fr.esgi.tracker.utils.PisteJsonManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+/**
+ * Implémentation du service de gestion des pistes musicales.
+ * Ce service permet de charger, enregistrer, supprimer
+ * et fournir les pistes utilisées dans l’application.
+ */
 
 public class PisteServiceImpl implements PisteService {
     private Map<String, Piste> pistes;
@@ -19,6 +24,10 @@ public class PisteServiceImpl implements PisteService {
 
     private PisteDao pisteDao = new PisteDao();
 
+    /**
+     * Charge une piste à partir de son nom et
+     * définit cette piste comme piste courante.
+     */
     @Override
     public Piste chargerPiste(String nom) {
         Piste piste = this.pistes.get(nom);
@@ -29,6 +38,10 @@ public class PisteServiceImpl implements PisteService {
         return this.pisteCourante;
     }
 
+    /**
+     * Enregistre une piste sous un nom donné
+     * et la rend disponible dans la liste des pistes.
+     */
     @Override
     public void enregistrerPiste(Piste piste, String nom) {
         piste.setNomPreset(nom);
@@ -37,11 +50,19 @@ public class PisteServiceImpl implements PisteService {
         this.pisteDao.sauvegarder(piste);
     }
 
+    /**
+     * Supprime une piste de la liste des pistes disponibles.
+     */
     @Override
     public void supprimerPiste(Piste piste) {
         this.pistes.remove(piste.getNomPreset());
     }
 
+    /**
+     * Charge toutes les pistes disponibles.
+     * Initialise des pistes par défaut et
+     * récupère les pistes persistées.
+     */
     @Override
     public void chargerToutesLesPistes() {
         List<Piste> pistes = new ArrayList<>();
@@ -121,11 +142,17 @@ public class PisteServiceImpl implements PisteService {
         this.pistes = this.pisteDao.chargerTout();
     }
 
+    /**
+     * Retourne la piste actuellement sélectionnée.
+     */
     @Override
     public Piste getPisteCourante() {
         return this.pisteCourante;
     }
 
+    /**
+     * Retourne l’ensemble des pistes disponibles.
+     */
     @Override
     public Map<String, Piste> getToutesLesPistes() {
         return this.pistes;

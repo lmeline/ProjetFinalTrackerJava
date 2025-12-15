@@ -3,6 +3,9 @@ package fr.esgi.tracker.services;
 import fr.esgi.tracker.business.Note;
 import fr.esgi.tracker.business.Piste;
 import fr.esgi.tracker.business.StatutRecord;
+/**
+ * Service dédié à l’enregistrement des pistes musicales.
+ */
 
 public interface EnregistrementService {
     void enregistrerNote(Note note, PisteService pisteService, int step);

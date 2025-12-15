@@ -14,6 +14,11 @@ import java.util.Map;
 
 
 import java.util.*;
+/**
+ * Implémentation du service audio.
+ * Cette classe gère le chargement des samples,
+ * le mixage audio en temps réel et la lecture des notes.
+ */
 
 public class AudioServiceImpl implements AudioService {
 
@@ -26,6 +31,9 @@ public class AudioServiceImpl implements AudioService {
     private final int bufferSize = 512;
     private float[] mixer = new float[bufferSize];
 
+    /**
+     * Initialise le service audio et démarre le moteur de lecture.
+     */
     public AudioServiceImpl(InstrumentService instrumentService) {
         this.instrumentService = instrumentService;
         running = true;
@@ -33,12 +41,19 @@ public class AudioServiceImpl implements AudioService {
         this.startAudioLoop();
     }
 
+    /**
+     * Démarre la boucle audio dans un thread dédié
+     * avec une priorité élevée.
+     */
     private void startAudioLoop() {
         Thread audioThread = new Thread(this::audioLoop, "AudioEngine");
         audioThread.setPriority(Thread.MAX_PRIORITY);
         audioThread.start();
     }
 
+    /**
+     * Initialise la ligne audio utilisée pour la sortie sonore.
+     */
     private void initializeSourceDataLine(){
         try {
             AudioFormat fmt = new AudioFormat(44100, 16, 1, true, false);
@@ -52,7 +67,8 @@ public class AudioServiceImpl implements AudioService {
     }
 
     /**
-     * Précharge tous les samples en RAM dans Map&lt;String, EnumMap&lt;Hauteur, float[]&gt;&gt;
+     * Précharge tous les samples audio en mémoire
+     * afin d’optimiser la lecture en temps réel.
      */
     public void loadSamples() {
         for (Instrument is : instrumentService.getAllInstruments().values()) {
@@ -72,7 +88,8 @@ public class AudioServiceImpl implements AudioService {
     }
 
     /**
-     * Jouer une note avec volume et pitch (ratio)
+     * Joue une note en prenant en compte le volume
+     * et le ratio de pitch associé à la hauteur.
      */
     @Override
     public void jouerNote(Note note, float volume) {
@@ -84,7 +101,8 @@ public class AudioServiceImpl implements AudioService {
     }
 
     /**
-     * Boucle audio continue : mixage et écriture vers SourceDataLine
+     * Boucle audio continue assurant le mixage
+     * et l’écriture des données audio vers la sortie.
      */
     private void audioLoop() {
         while (running) {
@@ -117,8 +135,10 @@ public class AudioServiceImpl implements AudioService {
             line.write(pcm, 0, pcm.length);
         }
     }
+
     /**
-     * Arrêter l’audio proprement
+     * Arrête proprement le moteur audio
+     * et libère les ressources associées.
      */
     public void stopAudio() {
         running = false;
@@ -128,4 +148,3 @@ public class AudioServiceImpl implements AudioService {
         }
     }
 }
-
