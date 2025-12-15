@@ -1,6 +1,13 @@
 package fr.esgi.tracker.business;
 
+/**
+ * Représente la hauteur (pitch) d’une note musicale.
+ * <p>
+ * Chaque valeur correspond à une note définie par sa fréquence
+ * exprimée en Hertz (Hz).
+ */
 public enum Hauteur {
+
     C2(65.41),
     CSharp2(69.30),
     D2(73.42),
@@ -27,7 +34,8 @@ public enum Hauteur {
     B3(246.94),
     C4(261.62);
 
-    private final double frequence;;
+    /** Fréquence associée à la hauteur, en Hertz. */
+    private final double frequence;
 
     Hauteur(double frequence) {
         this.frequence = frequence;

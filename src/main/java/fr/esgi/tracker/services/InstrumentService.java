@@ -3,6 +3,9 @@ package fr.esgi.tracker.services;
 import fr.esgi.tracker.business.Instrument;
 
 import java.util.Map;
+/**
+ * Service de gestion des instruments.
+ */
 
 public interface InstrumentService {
 
