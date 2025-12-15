@@ -3,11 +3,13 @@ module fr.esgi.tracker {
     requires javafx.fxml;
     requires java.desktop;
     requires javafx.media;
-    requires org.json;
-    //requires fr.esgi.tracker;
+    requires javafx.base;
+    requires javafx.graphics;
+    requires com.google.gson;
 
     opens fr.esgi.tracker to javafx.fxml;
     opens fr.esgi.tracker.controller to javafx.fxml;
-    //opens fr.esgi.tracker.dto to javafx.base;
+    opens fr.esgi.tracker.business to com.google.gson;
+
     exports fr.esgi.tracker;
 }

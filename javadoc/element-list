@@ -1,0 +1,9 @@
+module:fr.esgi.tracker
+fr.esgi.tracker
+fr.esgi.tracker.business
+fr.esgi.tracker.controller
+fr.esgi.tracker.dao
+fr.esgi.tracker.observer
+fr.esgi.tracker.services
+fr.esgi.tracker.services.impl
+fr.esgi.tracker.utils
