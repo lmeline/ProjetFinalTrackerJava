@@ -148,100 +148,102 @@ Le projet suit l'architecture standard Java/Maven, en séparant clairement les c
 
 ProjetFinalTracker
 ├── README.md
-├── doc                 
+├── doc
 │   └── diagramme
-│       ├── diagramme-classes-controller-puml.png
-│       ├── diagramme-classes-controller.png
-│       ├── diagramme-classes-metier.png
-│       ├── diagramme-classes-services-puml.png
-│       └── diagramme-classes-services.png
+│       ├── business_entities.png
+│       ├── controllers.png
+│       ├── dao.png
+│       ├── observer_observable_interfaces.png
+│       ├── services_implementations.png
+│       ├── services_interfaces.png
+│       └── utils.png
 ├── pom.xml
-└── src
-    ├── main
-    │   ├── java
-    │   │   ├── fr
-    │   │   │   └── esgi
-    │   │   │       └── tracker
-    │   │   │           ├── App.java
-    │   │   │           ├── business
-    │   │   │           │   ├── Hauteur.java
-    │   │   │           │   ├── Instrument.java
-    │   │   │           │   ├── Note.java
-    │   │   │           │   ├── Piste.java
-    │   │   │           │   ├── StatutLecture.java
-    │   │   │           │   └── StatutRecord.java
-    │   │   │           ├── controller
-    │   │   │           │   ├── CreditsController.java
-    │   │   │           │   ├── EnregistrerPisteModaleController.java
-    │   │   │           │   └── TrackerController.java
-    │   │   │           ├── dao
-    │   │   │           │   └── PisteDao.java
-    │   │   │           ├── observer
-    │   │   │           │   ├── LectureObservable.java
-    │   │   │           │   └── LectureObserver.java
-    │   │   │           ├── services
-    │   │   │           │   ├── AudioService.java
-    │   │   │           │   ├── EnregistrementService.java
-    │   │   │           │   ├── InstrumentService.java
-    │   │   │           │   ├── LectureService.java
-    │   │   │           │   ├── PisteService.java
-    │   │   │           │   └── impl
-    │   │   │           │       ├── AudioServiceImpl.java
-    │   │   │           │       ├── EnregistrementServiceImpl.java
-    │   │   │           │       ├── InstrumentServiceImpl.java
-    │   │   │           │       ├── LectureServiceImpl.java
-    │   │   │           │       └── PisteServiceImpl.java
-    │   │   │           └── utils
-    │   │   │               ├── AudioTools.java
-    │   │   │               └── PisteJsonManager.java
-    │   │   └── module-info.java
-    │   └── resources
-    │       └── fr
-    │           └── esgi
-    │               └── tracker
-    │                   ├── EnregistrerPisteModale.fxml
-    │                   ├── assets
-    │                   │   ├── fonts
-    │                   │   │   └── LCD.ttf
-    │                   │   └── icons
-    │                   │       ├── grip_slider.png
-    │                   │       ├── pause_off.png
-    │                   │       ├── pause_on.png
-    │                   │       ├── play_off.png
-    │                   │       ├── play_on.png
-    │                   │       ├── record_off.png
-    │                   │       ├── record_on.png
-    │                   │       ├── save_diskette.png
-    │                   │       ├── stop_off.png
-    │                   │       └── stop_on.png
-    │                   ├── credits.fxml
-    │                   ├── instruments
-    │                   │   ├── guitar_amped_mid.wav
-    │                   │   ├── piano_C3.wav
-    │                   │   ├── sw_bass.wav
-    │                   │   ├── sw_hat.wav
-    │                   │   ├── sw_kick.wav
-    │                   │   └── sw_snare.wav
-    │                   ├── style.css
-    │                   └── tracker.fxml
-    └── test
-          ├── java
-          │   └── fr
-          │       └── esgi
-          │           └── tracker
-          │               ├── business
-          │               │   ├── InstrumentTest.java
-          │               │   ├── NoteTest.java
-          │               │   └── PisteTest.java
-          │               └── service
-          │                   ├── AudioServiceImplTest.java
-          │                   ├── EnregistrementServiceImplTest.java
-          │                   ├── InstrumentServiceImplTest.java
-          │                   ├── LectureServiceImplTest.java
-          │                   └── PisteServiceImplTest.java
-          └── resources
-              └── mockito-extensions
-                  └── org.mockito.plugins.MockMaker
+└──src
+   ├── main
+   │   ├── java
+   │   │   ├── fr
+   │   │   │   └── esgi
+   │   │   │       └── tracker
+   │   │   │           ├── App.java
+   │   │   │           ├── business
+   │   │   │           │   ├── Hauteur.java
+   │   │   │           │   ├── Instrument.java
+   │   │   │           │   ├── Note.java
+   │   │   │           │   ├── Piste.java
+   │   │   │           │   ├── StatutLecture.java
+   │   │   │           │   └── StatutRecord.java
+   │   │   │           ├── controller
+   │   │   │           │   ├── CreditsController.java
+   │   │   │           │   ├── EnregistrerPisteModaleController.java
+   │   │   │           │   └── TrackerController.java
+   │   │   │           ├── dao
+   │   │   │           │   └── PisteDao.java
+   │   │   │           ├── observer
+   │   │   │           │   ├── LectureObservable.java
+   │   │   │           │   └── LectureObserver.java
+   │   │   │           ├── services
+   │   │   │           │   ├── AudioService.java
+   │   │   │           │   ├── EnregistrementService.java
+   │   │   │           │   ├── InstrumentService.java
+   │   │   │           │   ├── LectureService.java
+   │   │   │           │   ├── PisteService.java
+   │   │   │           │   └── impl
+   │   │   │           │       ├── AudioServiceImpl.java
+   │   │   │           │       ├── EnregistrementServiceImpl.java
+   │   │   │           │       ├── InstrumentServiceImpl.java
+   │   │   │           │       ├── LectureServiceImpl.java
+   │   │   │           │       └── PisteServiceImpl.java
+   │   │   │           └── utils
+   │   │   │               ├── AudioTools.java
+   │   │   │               └── PisteJsonManager.java
+   │   │   └── module-info.java
+   │   └── resources
+   │       └── fr
+   │           └── esgi
+   │               └── tracker
+   │                   ├── EnregistrerPisteModale.fxml
+   │                   ├── assets
+   │                   │   ├── fonts
+   │                   │   │   └── LCD.ttf
+   │                   │   └── icons
+   │                   │       ├── grip_slider.png
+   │                   │       ├── pause_off.png
+   │                   │       ├── pause_on.png
+   │                   │       ├── play_off.png
+   │                   │       ├── play_on.png
+   │                   │       ├── record_off.png
+   │                   │       ├── record_on.png
+   │                   │       ├── save_diskette.png
+   │                   │       ├── stop_off.png
+   │                   │       └── stop_on.png
+   │                   ├── credits.fxml
+   │                   ├── instruments
+   │                   │   ├── guitar_amped_mid.wav
+   │                   │   ├── piano_C3.wav
+   │                   │   ├── sw_bass.wav
+   │                   │   ├── sw_hat.wav
+   │                   │   ├── sw_kick.wav
+   │                   │   └── sw_snare.wav
+   │                   ├── style.css
+   │                   └── tracker.fxml
+   └── test
+       ├── java
+       │   └── fr
+       │       └── esgi
+       │           └── tracker
+       │               ├── business
+       │               │   ├── InstrumentTest.java
+       │               │   ├── NoteTest.java
+       │               │   └── PisteTest.java
+       │               └── service
+       │                   ├── AudioServiceImplTest.java
+       │                   ├── EnregistrementServiceImplTest.java
+       │                   ├── InstrumentServiceImplTest.java
+       │                   ├── LectureServiceImplTest.java
+       │                   └── PisteServiceImplTest.java
+       └── resources
+           └── mockito-extensions
+               └── org.mockito.plugins.MockMaker
 
 ```
 
