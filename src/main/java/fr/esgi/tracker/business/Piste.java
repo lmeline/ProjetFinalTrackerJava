@@ -3,6 +3,13 @@ package fr.esgi.tracker.business;
 import java.util.Arrays;
 import java.util.Objects;
 
+/**
+ * Représente une piste musicale de l’application.
+ * Contient les informations nécessaires à la lecture
+ * et à la gestion d’une séquence de notes.
+ */
+
+
 public class Piste implements Cloneable {
     private int id;
     private String nomPreset;
@@ -10,6 +17,10 @@ public class Piste implements Cloneable {
     private float volume;
     private Note[] sequence;
 
+    /**
+     * Crée une piste associée à un preset et à une séquence de notes.
+     * Le volume est initialisé à une valeur par défaut.
+     */
     public Piste(String nomPreset, Note[] sequence) {
         this.nomPreset = nomPreset;
         this.id = ++compteur;
@@ -17,6 +28,10 @@ public class Piste implements Cloneable {
         this.sequence = sequence;
     }
 
+    /**
+     * Crée une piste associée à un preset sans séquence de notes.
+     * Le volume est initialisé à sa valeur maximale.
+     */
     public Piste(String nomPreset){
         this.nomPreset = nomPreset;
         this.id = ++compteur;
@@ -52,6 +67,10 @@ public class Piste implements Cloneable {
         this.nomPreset = nomPreset;
     }
 
+    /**
+     * Permet de comparer deux pistes afin de déterminer
+     * si elles possèdent les mêmes caractéristiques.
+     */
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -64,11 +83,19 @@ public class Piste implements Cloneable {
         return Objects.hash(getId(), getNomPreset(), getVolume(), Arrays.hashCode(getSequence()));
     }
 
+    /**
+     * Fournit une représentation textuelle de la piste,
+     * principalement utilisée pour l’affichage.
+     */
     @Override
     public String toString() {
         return "Piste " + this.getId() + " | preset : " + this.getNomPreset() + " | volume : " + this.getVolume();
     }
 
+    /**
+     * Crée une copie de la piste en dupliquant la séquence de notes.
+     * La nouvelle piste est indépendante de l’originale.
+     */
     @Override
     public Piste clone() {
         Note[] notesClone = Arrays.copyOf(this.sequence, this.sequence.length); // nouveau tableau

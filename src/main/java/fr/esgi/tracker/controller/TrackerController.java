@@ -26,6 +26,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Contrôleur principal de l’application.
+ * Gère les interactions utilisateur liées aux pistes musicales.
+ */
+
+
 public class TrackerController implements LectureObserver {
     //Services
     private LectureService lectureService;
@@ -99,7 +105,11 @@ public class TrackerController implements LectureObserver {
     //-----------------------------------------------------
 
     //Methodes appelées par l'interface
-
+    /**
+     * Initialise le contrôleur principal.
+     * Configure les services, charge les données
+     * et initialise les éléments de l’interface.
+     */
     @FXML
     public void initialize() {
         // Initialisation des services
@@ -130,7 +140,9 @@ public class TrackerController implements LectureObserver {
         this.toggleButtonIcon(stopButton, "on");
 
     }
-
+    /**
+     * Ouvre l’écran des crédits de l’application.
+     */
     @FXML
     private void openCredits(ActionEvent event) {
         try {
@@ -142,7 +154,10 @@ public class TrackerController implements LectureObserver {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Ouvre la fenêtre modale permettant
+     * d’enregistrer la piste courante.
+     */
     @FXML
     public void openSauvegardeModale() {
         try {
@@ -161,7 +176,9 @@ public class TrackerController implements LectureObserver {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Lance la lecture de la piste courante.
+     */
     @FXML
     private void buttonPlayPressed() {
         if (lectureService.getStatutLecture() != StatutLecture.EN_COURS) {
@@ -171,7 +188,9 @@ public class TrackerController implements LectureObserver {
         }
         this.lectureService.play();
     }
-
+    /**
+     * Met la lecture en pause.
+     */
     @FXML
     private void buttonPausePressed() {
         if (lectureService.getStatutLecture() == StatutLecture.EN_COURS) {
@@ -181,7 +200,9 @@ public class TrackerController implements LectureObserver {
         }
         this.lectureService.pause();
     }
-
+    /**
+     * Arrête la lecture de la piste.
+     */
     @FXML
     private void buttonStopPressed() {
         if (lectureService.getStatutLecture() != StatutLecture.ARRETE) {
@@ -192,7 +213,9 @@ public class TrackerController implements LectureObserver {
         this.lectureService.stop();
 
     }
-
+    /**
+     * Active ou désactive le mode d’enregistrement.
+     */
     @FXML
     private void buttonRecordPressed() {
         if (enregistrementService.getStatutRecord() != StatutRecord.ARRETE) {
@@ -207,7 +230,10 @@ public class TrackerController implements LectureObserver {
             enregistrementService.setStatutRecord(StatutRecord.ARRETE);
         }
     }
-
+    /**
+     * Gère le déclenchement d’une note via l’interface
+     * ou le clavier.
+     */
     @FXML
     public void noteTriggered(ActionEvent e) {
         Button btn = (Button) e.getSource();
@@ -225,6 +251,10 @@ public class TrackerController implements LectureObserver {
     }
 
     //Implémentation interface Observer (sur lectureService)
+    /**
+     * Met à jour l’affichage lors d’un changement d’étape
+     * pendant la lecture.
+     */
     @Override
     public void onStepChange(int step) {
         Platform.runLater(()-> updatePisteView(pisteService.getPisteCourante(), step));
@@ -232,7 +262,10 @@ public class TrackerController implements LectureObserver {
 
 
     // Methodes additionnelles
-
+    /**
+     * Met à jour l’icône et le style d’un bouton
+     * selon son état actif ou inactif.
+     */
     private void toggleButtonIcon(Button button, String value){
         String buttonName = button.getId().replace("Button", "");
         String path = "/fr/esgi/tracker/assets/icons/" + buttonName + "_" + value + ".png";
@@ -252,7 +285,10 @@ public class TrackerController implements LectureObserver {
                 break;
         }
     }
-
+    /**
+     * Initialise le curseur de volume et
+     * synchronise son affichage avec la piste courante.
+     */
     private void initializeVolumeSlider() {
         volumeSlider.setValue(pisteService.getPisteCourante().getVolume() * 100);
         //Volume
@@ -268,7 +304,9 @@ public class TrackerController implements LectureObserver {
         });
 
     }
-
+    /**
+     * Initialise la liste déroulante des pistes disponibles.
+     */
     private void initializeListePistes() {
         liste_pistes.getItems().addAll(this.pisteService.getToutesLesPistes().keySet());
         liste_pistes.setValue(pisteService.getPisteCourante().getNomPreset());
@@ -280,11 +318,16 @@ public class TrackerController implements LectureObserver {
             stopButton.fire();
         });
     }
+    /**
+     * Met à jour la liste des pistes après un enregistrement.
+     */
     public void updateListePistes() {
         liste_pistes.getItems().add(pisteService.getPisteCourante().getNomPreset());
         liste_pistes.setValue(pisteService.getPisteCourante().getNomPreset());
     }
-
+    /**
+     * Initialise la liste déroulante des instruments.
+     */
     private void initializeListeInstruments() {
         liste_instruments.getItems().addAll(this.instrumentService.getAllInstruments().keySet());
         liste_instruments.setValue(this.instrumentService.getInstrumentCourant().getNom());
@@ -293,7 +336,9 @@ public class TrackerController implements LectureObserver {
             this.instrumentService.setInstrumentCourant(this.instrumentService.getInstrument(newVal));
         });
     }
-
+    /**
+     * Initialise l’affichage graphique de la piste.
+     */
     private void initializePisteView() {
         stepRows  = List.of(
         stepMinusFour,
@@ -308,6 +353,10 @@ public class TrackerController implements LectureObserver {
         );
         updatePisteView(pisteService.getPisteCourante(), 0);
     }
+    /**
+     * Met à jour l’affichage des notes en fonction
+     * de l’étape courante de lecture.
+     */
     private void updatePisteView(Piste piste, int currentStepIndex) {
         int totalSteps = piste.getSequence().length;
         int centerIndex = 4; // currentStep
@@ -348,7 +397,10 @@ public class TrackerController implements LectureObserver {
             }
         }
     }
-
+    /**
+     * Initialise les touches du piano et
+     * associe les événements clavier correspondants.
+     */
     private void initializePianoKeys() {
         C2.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {

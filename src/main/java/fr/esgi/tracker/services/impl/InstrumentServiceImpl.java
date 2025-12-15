@@ -7,34 +7,59 @@ import fr.esgi.tracker.services.InstrumentService;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+/**
+ * Implémentation du service de gestion des instruments.
+ * Ce service permet de charger, stocker et fournir
+ * les instruments disponibles dans l’application.
+ */
 
 public class InstrumentServiceImpl implements InstrumentService {
 
     private Map<String, Instrument> instruments = new LinkedHashMap<>();
     private Instrument instrumentCourant;
 
+    /**
+     * Retourne l’instrument actuellement sélectionné.
+     */
     public Instrument getInstrumentCourant() {
         return instrumentCourant;
     }
 
+    /**
+     * Définit l’instrument actuellement sélectionné.
+     */
     public void setInstrumentCourant(Instrument instrumentCourant) {
         this.instrumentCourant = instrumentCourant;
     }
 
+    /**
+     * Initialise le service et charge l’ensemble
+     * des instruments disponibles.
+     */
     public InstrumentServiceImpl() {
         this.chargerTousLesInstruments();
     }
 
+    /**
+     * Retourne un instrument à partir de son nom.
+     */
     @Override
     public Instrument getInstrument(String nom) {
         return this.instruments.get(nom);
     }
 
+    /**
+     * Retourne l’ensemble des instruments chargés.
+     */
     @Override
     public Map<String, Instrument> getAllInstruments() {
         return this.instruments;
     }
 
+    /**
+     * Charge tous les instruments de l’application
+     * et les rend disponibles pour la lecture.
+     */
     @Override
     public void chargerTousLesInstruments() {
         this.instruments.put("piano", new Instrument("piano", "/fr/esgi/tracker/instruments/piano_C3.wav", Hauteur.C3));

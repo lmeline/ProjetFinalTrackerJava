@@ -5,9 +5,18 @@ import fr.esgi.tracker.business.Note;
 import javax.sound.sampled.*;
 import java.net.URL;
 import java.util.Arrays;
+/**
+ * Classe utilitaire pour les opérations liées à l’audio.
+ * Elle fournit des méthodes statiques pour le traitement
+ * et la conversion des données audio.
+ */
 
 public class AudioTools {
 
+    /**
+     * Charge un fichier WAV et le convertit en tableau de valeurs flottantes.
+     * Les données audio sont normalisées entre -1.0 et 1.0.
+     */
     public static float[] getFloatArrayFromWav(String path) throws Exception {
         URL url = AudioTools.class.getResource(path);
         AudioInputStream in = AudioSystem.getAudioInputStream(url);
@@ -27,6 +36,10 @@ public class AudioTools {
         return out;
     }
 
+    /**
+     * Convertit un tableau de valeurs flottantes en données PCM 16 bits,
+     * prêtes à être envoyées vers une ligne audio.
+     */
     public static byte[] convertFloatArrayToPCM16Array(float[] mixArray) {
         byte[] pcm = new byte[mixArray.length * 2];
         for (int i = 0; i < mixArray.length; i++) {
@@ -38,12 +51,20 @@ public class AudioTools {
         return pcm;
     }
 
+    /**
+     * Réinitialise un tableau de mixage audio
+     * en mettant toutes les valeurs à zéro.
+     */
     public static float[] clearMixArray(float[] mixArray){
         float[] mix = new float[mixArray.length];
         Arrays.fill(mix, 0);
         return mix;
     }
 
+    /**
+     * Calcule le ratio de pitch à appliquer à une note
+     * en fonction de sa hauteur et de celle du sample d’origine.
+     */
     public static float getPitchRatio(Note note) {
         return (float) (note.getHauteur().getFrequence() /
                 note.getInstrument().getHauteurDuSample().getFrequence());

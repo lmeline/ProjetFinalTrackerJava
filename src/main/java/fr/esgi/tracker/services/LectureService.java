@@ -3,6 +3,10 @@ package fr.esgi.tracker.services;
 import fr.esgi.tracker.business.StatutLecture;
 import fr.esgi.tracker.observer.LectureObservable;
 
+/**
+ * Service dédié à la lecture des pistes musicales.
+ */
+
 public interface LectureService extends LectureObservable {
     /**
      * Lance la lecture du tracker

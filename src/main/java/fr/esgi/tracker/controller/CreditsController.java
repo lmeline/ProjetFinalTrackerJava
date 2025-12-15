@@ -11,11 +11,21 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 
+/**
+ * Contrôleur de l’écran des crédits de l’application.
+ * Il gère l’affichage de l’écran ainsi que le retour
+ * vers l’écran principal.
+ */
+
 public class CreditsController {
 
     @FXML
     private Button backButton;
 
+    /**
+     * Permet de revenir à l’écran principal de l’application
+     * lors de l’interaction avec le bouton de retour.
+     */
     @FXML
     public void switchToPrimary() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/fr/esgi/tracker/Tracker.fxml"));
@@ -23,6 +33,11 @@ public class CreditsController {
         stage.setScene(new Scene(root));
     }
 
+    /**
+     * Initialise les composants de l’interface.
+     * Applique une animation d’apparition au bouton
+     * et gère les effets visuels lors du survol de la souris.
+     */
     @FXML
     public void initialize() {
         backButton.setOpacity(0);

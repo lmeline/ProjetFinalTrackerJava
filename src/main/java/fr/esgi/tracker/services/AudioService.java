@@ -1,6 +1,9 @@
 package fr.esgi.tracker.services;
 
 import fr.esgi.tracker.business.Note;
+/**
+ * Service de gestion des éléments audio de l’application.
+ */
 
 public interface AudioService {
 
