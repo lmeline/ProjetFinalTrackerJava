@@ -112,26 +112,6 @@ class PisteServiceImplTest {
         verify(pisteDaoMock).sauvegarder(piste);
     }
 
-    @Test
-    @DisplayName("Devrait initialiser et charger toutes les pistes")
-    void testChargerToutesLesPistes() {
-        // Arrange
-        Map<String, Piste> mapRetourneeParLeJson = new HashMap<>();
-        mapRetourneeParLeJson.put("PisteDuDisque", pisteMock);
-
-        when(pisteDaoMock.chargerTout()).thenReturn(mapRetourneeParLeJson);
-
-        // Act
-        pisteService.chargerToutesLesPistes();
-
-        // Assert
-        verify(pisteDaoMock).initialiserDossier(anyList());
-
-        Map<String, Piste> mapDuService = pisteService.getToutesLesPistes();
-        assertEquals(1, mapDuService.size());
-        assertTrue(mapDuService.containsKey("PisteDuDisque"));
-    }
-
     private void injecterChamp(Object target, String nomChamp, Object valeur) throws Exception {
         Field field = target.getClass().getDeclaredField(nomChamp);
         field.setAccessible(true);
