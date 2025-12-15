@@ -59,16 +59,13 @@ class EnregistrementServiceImplTest {
     void testEnregistrerNote() {
         // Arrange
         int stepIndex = 3;
-        when(pisteService.getPisteCourante()).thenReturn(piste);
         when(piste.getSequence()).thenReturn(sequence);
 
         // Act
-        enregistrementService.enregistrerNote(note, pisteService, stepIndex);
+        enregistrementService.enregistrerNote(note, piste, stepIndex);
 
         // Assert
         assertEquals(note, sequence[stepIndex]);
-        // Vérifie que la méthode getPisteCourante a été appelée
-        verify(pisteService).getPisteCourante();
     }
 
     @Test

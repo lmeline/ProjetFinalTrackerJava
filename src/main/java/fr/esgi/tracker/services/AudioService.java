@@ -14,5 +14,8 @@ public interface AudioService {
      */
     void jouerNote(Note note, float volume);
 
+    /**
+     * Charge les samples des instruments pour toutes les notes disponibles
+     */
     void loadSamples();
 }

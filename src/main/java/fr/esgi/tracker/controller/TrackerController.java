@@ -115,11 +115,9 @@ public class TrackerController implements LectureObserver {
         // Initialisation des services
 
         //InstrumentService
-        this.instrumentService.chargerTousLesInstruments();
         this.instrumentService.setInstrumentCourant(this.instrumentService.getInstrument("guitElec"));
 
         //PisteService
-        this.pisteService.chargerToutesLesPistes();
         this.pisteService.chargerPiste("hells_bells");
 
         //AudioService
@@ -240,7 +238,7 @@ public class TrackerController implements LectureObserver {
         Note note = new Note(Hauteur.valueOf(btn.getId()), instrumentService.getInstrumentCourant(), 1.0f);
 
         if (enregistrementService.getStatutRecord() == StatutRecord.EN_COURS) {
-            this.enregistrementService.enregistrerNote(note, pisteService, lectureService.getStep());
+            this.enregistrementService.enregistrerNote(note, pisteService.getPisteCourante(), lectureService.getStep());
             if (lectureService.getStatutLecture() != StatutLecture.EN_COURS) {
                 lectureService.incrementerStep();
                 this.audioService.jouerNote(note, pisteService.getPisteCourante().getVolume());

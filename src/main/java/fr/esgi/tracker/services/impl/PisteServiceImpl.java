@@ -24,6 +24,10 @@ public class PisteServiceImpl implements PisteService {
 
     private PisteDao pisteDao = new PisteDao();
 
+    public PisteServiceImpl() {
+        this.chargerToutesLesPistes();
+    }
+
     /**
      * Charge une piste à partir de son nom et
      * définit cette piste comme piste courante.
@@ -61,10 +65,9 @@ public class PisteServiceImpl implements PisteService {
     /**
      * Charge toutes les pistes disponibles.
      * Initialise des pistes par défaut et
-     * récupère les pistes persistées.
+     * les persistent dans le stockage, puis charge le contenu du stockage dans un Map.
      */
-    @Override
-    public void chargerToutesLesPistes() {
+    private void chargerToutesLesPistes() {
         List<Piste> pistes = new ArrayList<>();
 
         //Piste init :

@@ -17,6 +17,13 @@ public class InstrumentServiceImpl implements InstrumentService {
 
     private Map<String, Instrument> instruments = new LinkedHashMap<>();
     private Instrument instrumentCourant;
+    /**
+     * Initialise le service et charge l’ensemble
+     * des instruments disponibles.
+     */
+    public InstrumentServiceImpl() {
+        this.chargerTousLesInstruments();
+    }
 
     /**
      * Retourne l’instrument actuellement sélectionné.
@@ -30,14 +37,6 @@ public class InstrumentServiceImpl implements InstrumentService {
      */
     public void setInstrumentCourant(Instrument instrumentCourant) {
         this.instrumentCourant = instrumentCourant;
-    }
-
-    /**
-     * Initialise le service et charge l’ensemble
-     * des instruments disponibles.
-     */
-    public InstrumentServiceImpl() {
-        this.chargerTousLesInstruments();
     }
 
     /**
@@ -58,10 +57,9 @@ public class InstrumentServiceImpl implements InstrumentService {
 
     /**
      * Charge tous les instruments de l’application
-     * et les rend disponibles pour la lecture.
+     * et les rend disponibles à l'utilisation.
      */
-    @Override
-    public void chargerTousLesInstruments() {
+    private void chargerTousLesInstruments() {
         this.instruments.put("piano", new Instrument("piano", "/fr/esgi/tracker/instruments/piano_C3.wav", Hauteur.C3));
         this.instruments.put("guitElec", new Instrument("guitElec", "/fr/esgi/tracker/instruments/guitar_amped_mid.wav", Hauteur.C3));
         this.instruments.put("sw kick", new Instrument("sw kick", "/fr/esgi/tracker/instruments/sw_kick.wav", Hauteur.C3));

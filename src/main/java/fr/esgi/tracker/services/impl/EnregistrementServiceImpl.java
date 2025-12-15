@@ -19,8 +19,8 @@ public class EnregistrementServiceImpl implements EnregistrementService {
      * à l’étape indiquée.
      */
     @Override
-    public void enregistrerNote(Note note, PisteService pisteService, int step) {
-        pisteService.getPisteCourante().getSequence()[step] = note;
+    public void enregistrerNote(Note note, Piste piste, int step) {
+        piste.getSequence()[step] = note;
     }
 
     /**

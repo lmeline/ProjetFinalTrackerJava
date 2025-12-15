@@ -9,15 +9,31 @@ import java.util.Map;
 
 public interface InstrumentService {
 
-
+    /**
+     * Retourne un instrument en fonction de son nom
+     * @param nom le nom de l'instrument
+     * @return l'instrument demandé
+     */
     Instrument getInstrument(String nom);
 
+    /**
+     * Retourne un Map de tout les instruments préchargés
+     * @return tous les instruments
+     */
     Map<String, Instrument> getAllInstruments();
 
-    void chargerTousLesInstruments();
 
+    /**
+     * Défini un instrument courant
+     * @param instrument l'instrument à definir comme courant
+     */
     void setInstrumentCourant(Instrument instrument);
 
+
+    /**
+     * Retourne l'instrument courant
+     * @return l'instrument courant
+     */
     Instrument getInstrumentCourant();
 
 
